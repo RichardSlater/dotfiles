@@ -1,0 +1,32 @@
+[core]
+        editor = nvim
+        eol = lf
+        autocrlf = input
+[user]
+        email = git@richard-slater.co.uk
+        name = Richard Slater
+        signingkey = BD2F7463669601C6
+[color]
+        ui = true
+[diff]
+        tool = nvimdiff
+[difftool]
+        prompt = false
+[difftool "nvimdiff"]
+        cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[merge]
+        tool = nvimdiff
+[mergetool]
+        prompt = true
+[mergetool "nvimdiff"]
+        cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
+[branch]
+        autosetupmerge = true
+[push]
+        default = simple
+[pull]
+        rebase = true
+[commit]
+        gpgsign = true
+[gpg]
+        program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
