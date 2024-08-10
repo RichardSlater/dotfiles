@@ -1,0 +1,9 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+[cd]
+    command = "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+[diff]
+    command = "C:\\Program Files\\Neovim\\bin\\nvim.exe"
+    args = ["-d"]
+[data]
+    email = {{ $email | quote }}
