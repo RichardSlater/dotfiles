@@ -28,8 +28,8 @@
 									<base>
 										<cereal_class_version>200</cereal_class_version>
 									</base>
-									<cookie>1025</cookie>
-									<blobCookie>1025</blobCookie>
+									<cookie>1473</cookie>
+									<blobCookie>1473</blobCookie>
 									<dpiCookie>0</dpiCookie>
 									<deviceId>{d567bf99-d736-4fff-af48-e40c9d244285}</deviceId>
 									<slotIndex>0</slotIndex>
@@ -136,19 +136,6 @@
 						</value1>
 						<value2>
 							<polymorphic_id>2147483652</polymorphic_id>
-							<polymorphic_name>MacroRecordingProperty</polymorphic_name>
-							<ptr_wrapper>
-								<valid>1</valid>
-								<data>
-									<cereal_class_version>200</cereal_class_version>
-									<base/>
-									<enabledIndicatorColor>#ffff0000</enabledIndicatorColor>
-									<disabledIndicatorColor>#ff000000</disabledIndicatorColor>
-								</data>
-							</ptr_wrapper>
-						</value2>
-						<value3>
-							<polymorphic_id>2147483653</polymorphic_id>
 							<polymorphic_name>AdvancedLightingsProperty::Proxy</polymorphic_name>
 							<ptr_wrapper>
 								<valid>1</valid>
@@ -191,9 +178,9 @@
 									</properties>
 								</data>
 							</ptr_wrapper>
-						</value3>
-						<value4>
-							<polymorphic_id>2147483654</polymorphic_id>
+						</value2>
+						<value3>
+							<polymorphic_id>2147483653</polymorphic_id>
 							<polymorphic_name>TouchpadPerformanceProperty</polymorphic_name>
 							<ptr_wrapper>
 								<valid>1</valid>
@@ -202,6 +189,19 @@
 									<base/>
 									<pointerSpeed>50</pointerSpeed>
 									<tappingSpeed>50</tappingSpeed>
+								</data>
+							</ptr_wrapper>
+						</value3>
+						<value4>
+							<polymorphic_id>2147483654</polymorphic_id>
+							<polymorphic_name>MacroRecordingProperty</polymorphic_name>
+							<ptr_wrapper>
+								<valid>1</valid>
+								<data>
+									<cereal_class_version>200</cereal_class_version>
+									<base/>
+									<enabledIndicatorColor>#ffff0000</enabledIndicatorColor>
+									<disabledIndicatorColor>#ff000000</disabledIndicatorColor>
 								</data>
 							</ptr_wrapper>
 						</value4>
@@ -1801,7 +1801,7 @@
 																									<cereal_class_version>200</cereal_class_version>
 																									<base>
 																										<cereal_class_version>400</cereal_class_version>
-																										<id>{e31eb026-4552-4bb1-b8c4-671d39246a3f}</id>
+																										<id>{5bc1b571-71fd-4973-81fa-c458a36e3dd2}</id>
 																										<name>Reactive</name>
 																										<keys size="dynamic"/>
 																										<enabled>true</enabled>
@@ -1851,7 +1851,7 @@
 																								<id>2147483688</id>
 																								<data>
 																									<base>
-																										<id>{1a715b50-e2bd-4563-9064-7ae6c61600da}</id>
+																										<id>{d4ec63f6-b819-459b-86e0-41ccc390cb01}</id>
 																										<name>Visor</name>
 																										<keys size="dynamic"/>
 																										<enabled>true</enabled>
@@ -1879,8 +1879,8 @@
 																													<brightness>10</brightness>
 																												</base>
 																												<colors>
-																													<first>4294901961</first>
-																													<second>4294901973</second>
+																													<first>4294901955</first>
+																													<second>4294901922</second>
 																												</colors>
 																												<random>false</random>
 																												<speed>1</speed>
@@ -1897,7 +1897,7 @@
 																								<id>2147483690</id>
 																								<data>
 																									<base>
-																										<id>{fa88632f-8981-4a90-a0f6-79df4be3d22f}</id>
+																										<id>{2e55c2ec-5364-412b-85b5-44d5fe2b7359}</id>
 																										<name>Base</name>
 																										<keys size="dynamic"/>
 																										<enabled>true</enabled>
@@ -1930,11 +1930,11 @@
 																														<value0>
 																															<cereal_class_version>200</cereal_class_version>
 																															<time>0</time>
-																															<color>#ff39eba9</color>
+																															<color>#ff22edff</color>
 																														</value0>
 																														<value1>
 																															<time>1</time>
-																															<color>#ff39eba9</color>
+																															<color>#ff22edff</color>
 																														</value1>
 																													</transitions>
 																												</base>
@@ -1985,7 +1985,7 @@
 										<value0>
 											<key>
 												<cereal_class_version>301</cereal_class_version>
-												<capability>StandardRgb</capability>
+												<capability>DramRgb</capability>
 												<deviceId></deviceId>
 												<modelId>
 													<usbVid>0</usbVid>
@@ -2008,7 +2008,7 @@
 										</value0>
 										<value1>
 											<key>
-												<capability>DramRgb</capability>
+												<capability>StandardRgb</capability>
 												<deviceId></deviceId>
 												<modelId>
 													<usbVid>0</usbVid>
