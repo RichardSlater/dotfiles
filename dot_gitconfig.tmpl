@@ -5,7 +5,7 @@
 [user]
         email = {{ .email | quote }}
         name = Richard Slater
-        signingkey = BD2F7463669601C6
+        signingkey = BB08D26976020885
 [color]
         ui = true
 [diff]
@@ -28,5 +28,12 @@
         rebase = true
 [commit]
         gpgsign = true
+{{ if eq .chezmoi.os "windows" -}}
 [gpg]
         program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+[gpg]
+        program = /usr/local/bin/gpg
+{{ end -}}

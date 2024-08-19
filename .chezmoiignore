@@ -1,6 +1,12 @@
 README.md
 LICENSE
 
+# ignore if NOT Linux
+{{- if ne .chezmoi.os "linux" }}
+/nvim
+{{- end }}
+
+# ignore if NOT Windows
 {{- if ne .chezmoi.os "windows" }}
 /Documents
 {{- end }}
