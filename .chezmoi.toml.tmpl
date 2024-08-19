@@ -1,4 +1,5 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $email := promptStringOnce . "role" "Role (personal/work)" -}}
 
 {{ if eq .chezmoi.os "windows" }}
 [cd]
@@ -10,3 +11,4 @@
 
 [data]
     email = {{ $email | quote }}
+    role = {{ $role | quote }}

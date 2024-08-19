@@ -1,0 +1,40 @@
+{{ if eq .chezmoi.os "windows" }}
+
+winget install --id Git.Git --source winget
+winget install --id GoLang.Go --source winget
+winget install --id 7zip.7zip --source winget
+winget install --id Neovim.Neovim --source winget
+winget install --id RedHat.Podman --source winget
+winget install --id OpenJS.NodeJS --source winget
+winget install --id Microsoft.OpenJDK.21 --source winget
+winget install --id Microsoft.PowerShell --source winget
+winget install --id GnuPG.GnuPG --source winget
+winget install --id JetBrains.Rider --source winget
+winget install --id DominikReichl.KeePass --source winget
+winget install --id Microsoft.DotNet.SDK.8 --source winget
+winget install --id Discord.Discord --source winget
+winget install --id Google.Chrome.EXE --source winget
+winget install --id Hugo.Hugo.Extended --source winget
+winget install --id JanDeDobbeleer.OhMyPosh --source winget
+winget install --id pnpm.pnpm --source winget
+winget install --id zig.zig --source winget
+winget install --id Microsoft.PowerToys --source winget
+winget install --id Microsoft.VisualStudioCode --source winget
+winget install --id Python.Python.3.9 --source winget
+winget install --id Microsoft.WindowsTerminal --source winget
+
+{{ if eq .chezmoi.role "personal" }}
+
+winget install --id Mozilla.Thunderbird --source winget
+winget install --id LINQPad.LINQPad.8 --source winget
+winget install --id VideoLAN.VLC --source winget
+winget install --id calibre.calibre --source winget
+winget install --id Corsair.iCUE.5 --source winget
+winget install --id BlenderFoundation.Blender --source winget
+winget install --id BleachBit.BleachBit --source winget
+winget install --id OBSProject.OBSStudio --source winget
+winget install --id Iterate.Cyberduck --source winget
+winget install --id Gyan.FFmpeg --source winget
+
+{{ end }}
+{{ end }}
