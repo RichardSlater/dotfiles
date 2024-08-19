@@ -6,6 +6,7 @@ LICENSE
 /.config
 /.profile
 /.bashrc
+/.zshrc
 {{- end }}
 
 # ignore if NOT Windows
