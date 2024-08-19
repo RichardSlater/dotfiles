@@ -1,4 +1,4 @@
 README.md
 {{- if ne .chezmoi.os "windows" }}
-./readonly_Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+./readonly_Documents/*
 {{- end }}
