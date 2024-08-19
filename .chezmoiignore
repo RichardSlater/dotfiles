@@ -1,4 +1,6 @@
 README.md
+LICENSE
+
 {{- if ne .chezmoi.os "windows" }}
-./readonly_Documents/*
+/Documents
 {{- end }}
