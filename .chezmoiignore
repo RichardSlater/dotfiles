@@ -4,6 +4,8 @@ LICENSE
 # ignore if NOT Linux
 {{- if ne .chezmoi.os "linux" }}
 /.config
+/.profile
+/.bashrc
 {{- end }}
 
 # ignore if NOT Windows
