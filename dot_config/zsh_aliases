@@ -1,0 +1,10 @@
+alias ll="ls -la"
+alias ls="ls --color=auto"
+
+alias vi="nvim"
+alias vim="nvim"
+
+alias k="kubectl"
+alias g="git"
+alias gp="git pull"
+alias gpu="git push origin head"
