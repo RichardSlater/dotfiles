@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+
+sudo apt install -y zsh zsh-syntax-highlighting zsh-autosuggestions
+
+{{ end }}
