@@ -1,5 +1,5 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $email := promptStringOnce . "role" "Role (personal/work)" -}}
+{{- $role := promptStringOnce . "role" "Role (personal/work)" -}}
 
 {{ if eq .chezmoi.os "windows" }}
 [cd]
