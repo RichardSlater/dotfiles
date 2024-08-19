@@ -3,7 +3,11 @@
 
 {{ if eq .chezmoi.os "windows" }}
 [cd]
-    command = "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    command = "pwsh.exe"
+    args = ["-NoLogo"]
+[interpreters.ps1]
+    command = "pwsh.exe"
+    args = ["-NoLogo"]
 [diff]
     command = "C:\\Program Files\\Neovim\\bin\\nvim.exe"
     args = ["-d"]
