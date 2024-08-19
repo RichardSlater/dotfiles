@@ -9,4 +9,6 @@ LICENSE
 # ignore if NOT Windows
 {{- if ne .chezmoi.os "windows" }}
 /Documents
+/AppData
+/.config
 {{- end }}
