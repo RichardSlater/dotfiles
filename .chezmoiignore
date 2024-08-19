@@ -3,12 +3,12 @@ LICENSE
 
 # ignore if NOT Linux
 {{- if ne .chezmoi.os "linux" }}
-/nvim
+/.config
 {{- end }}
 
 # ignore if NOT Windows
 {{- if ne .chezmoi.os "windows" }}
 /Documents
 /AppData
-/.config
+/nvim
 {{- end }}
