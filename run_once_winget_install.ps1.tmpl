@@ -12,7 +12,6 @@ winget install --id GnuPG.GnuPG --source winget
 winget install --id JetBrains.Rider --source winget
 winget install --id DominikReichl.KeePass --source winget
 winget install --id Microsoft.DotNet.SDK.8 --source winget
-winget install --id Discord.Discord --source winget
 winget install --id Google.Chrome.EXE --source winget
 winget install --id Hugo.Hugo.Extended --source winget
 winget install --id JanDeDobbeleer.OhMyPosh --source winget
@@ -25,6 +24,7 @@ winget install --id Microsoft.WindowsTerminal --source winget
 
 {{ if eq .role "personal" }}
 
+winget install --id Discord.Discord --source winget
 winget install --id Mozilla.Thunderbird --source winget
 winget install --id LINQPad.LINQPad.8 --source winget
 winget install --id VideoLAN.VLC --source winget
