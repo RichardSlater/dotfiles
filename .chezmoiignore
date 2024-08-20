@@ -13,5 +13,6 @@ LICENSE
 {{- if ne .chezmoi.os "windows" }}
 /Documents
 /AppData
+/Pictures
 /nvim
 {{- end }}
