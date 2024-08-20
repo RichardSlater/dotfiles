@@ -8,3 +8,8 @@ Set-Alias -Name vim -Value nvim
 
 $env:VISUAL = "nvim"
 $env:EDITOR = "nvim"
+
+$openSshExecutable = "C:\Windows\System32\OpenSSH\ssh.exe";
+if (Test-Path $openSshExecutable) {
+    $env:GIT_SSH=$openSshExecutable;
+}
