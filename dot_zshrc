@@ -8,7 +8,7 @@ bindkey ^S history-incremental-search-forward
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/.zsh_history
 
 # Use modern completion system
 autoload -Uz compinit
@@ -39,17 +39,30 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-if command -v oh-my-posh &> /dev/null
-then
+
+# set PATH so it includes user's private bin if it exists
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+
+# set PATH so it includes user's private bin if it exists
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+
+# set NeoVim path if it exists
+[ -d "/opt/nvim-linux64/bin" ] && PATH="$PATH:/opt/nvim-linux64/bin"
+
+# set snap path
+[ -d "/snap/bin" ] && PATH="$PATH:/snap/bin"
+
+# Aliases
+[ -f $HOME/.config/zsh_aliases ] && source $HOME/.config/zsh_aliases
+
+# zsh Syntax Highlighting
+[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if command -v oh-my-posh &> /dev/null; then
   # oh my posh
   eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/RichardSlater/dotfiles/master/dot_config/oh-my-posh/cloud-native.omp.json')"
-fi
-
-if [ -f $HOME/.config/zsh_aliases ]; then
-  source $HOME/.config/zsh_aliases
-fi
-
-if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
