@@ -147,7 +147,7 @@
                 },
                 "guid": "{4e20291f-fdd5-41f9-ad14-5ec11ef51fc0}",
                 "hidden": false,
-                "icon": "C:\\Users\\mcp\\Pictures\\favicon.png",
+                "icon": "%USERPROFILE%\\Pictures\\icons\\podman.png",
                 "name": "Podman Machine",
                 "padding": "8",
                 "scrollbarState": "hidden",
