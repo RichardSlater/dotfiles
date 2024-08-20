@@ -8,3 +8,5 @@ alias k="kubectl"
 alias g="git"
 alias gp="git pull"
 alias gpu="git push origin head"
+
+alias code="/mnt/c/Users/mcp/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
