@@ -1,9 +1,17 @@
-{{ if eq .chezmoi.os "linux" -}}
+{{ if eq .osRelease.idLike "debian" -}}
 #!/usr/bin/env bash
 
 echo "Installing apt packages, press Ctrl+C to cancel, or enter password."
 
-sudo apt install -y zsh zsh-syntax-highlighting zsh-autosuggestions unzip ffmpeg golang-go 
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+
+sudo apt install -y \
+  zsh \
+  zsh-syntax-highlighting \
+  zsh-autosuggestions \
+  unzip \
+  ffmpeg \
+  golang-go 
 
 sudo ln -s /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe /usr/local/bin/gpg
 sudo ln -s /mnt/c/Windows/System32/OpenSSH/ssh.exe /usr/local/bin/ssh
