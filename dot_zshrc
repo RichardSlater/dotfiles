@@ -11,8 +11,8 @@ SAVEHIST=10000
 HISTFILE=~/.cache/.zsh_history
 
 # configure editors
-EDITOR=vi
-VISUAL=vi
+EDITOR=vim
+VISUAL=vim
 
 # Use modern completion system
 autoload -Uz compinit
