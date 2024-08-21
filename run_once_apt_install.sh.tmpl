@@ -1,4 +1,4 @@
-{{ if eq .osRelease.idLike "debian" -}}
+{{ if eq .chezmoi.osRelease.idLike "debian" -}}
 #!/usr/bin/env bash
 
 echo "Installing apt packages, press Ctrl+C to cancel, or enter password."
@@ -13,9 +13,12 @@ sudo apt install -y \
   ffmpeg \
   golang-go 
 
-sudo ln -s /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe /usr/local/bin/gpg
-sudo ln -s /mnt/c/Windows/System32/OpenSSH/ssh.exe /usr/local/bin/ssh
-sudo ln -s /mnt/c/Windows/System32/OpenSSH/ssh-add.exe /usr/local/bin/ssh-add
+GPG_DIR=/mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/
+SSH_DIR=/mnt/c/Windows/System32/OpenSSH/
+
+[ -f ${GPG_DIR}gpg.exe ] && [ ! -f /usr/local/bin/gpg ] && sudo ln -s ${GPG_DIR}gpg.exe /usr/local/bin/gpg
+[ -f ${SSH_DIR}ssh.exe ] && [ ! -f /usr/local/bin/ssh ] && sudo ln -s ${SSH_DIR}ssh.exe /usr/local/bin/ssh
+[ -f ${SSH_DIR}ssh-add.exe ] && [ ! -f /usr/local/bin/ssh-add ] && sudo ln -s ${SSH_DIR}ssh-add.exe /usr/local/bin/ssh-add
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
