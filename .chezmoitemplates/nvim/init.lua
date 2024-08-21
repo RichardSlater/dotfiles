@@ -43,6 +43,12 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
+-- colorscheme options
+require("tokyonight").setup({
+  style = "night",
+})
+vim.cmd[[colorscheme tokyonight]]
+
 -- Disable Mousevim.opt.mousescroll = "ver:0,hor:0"
 vim.keymap.set("", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("", "<down>", "<nop>", { noremap = true })
