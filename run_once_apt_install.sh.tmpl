@@ -11,14 +11,15 @@ sudo apt install -y \
   zsh-autosuggestions \
   unzip \
   ffmpeg \
-  golang-go 
+  golang-go \
+  libevent-dev ncurses-dev build-essential bison pkg-config
 
 GPG_DIR=/mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/
 SSH_DIR=/mnt/c/Windows/System32/OpenSSH/
 
-[ -f ${GPG_DIR}gpg.exe ] && [ ! -f /usr/local/bin/gpg ] && sudo ln -s ${GPG_DIR}gpg.exe /usr/local/bin/gpg
-[ -f ${SSH_DIR}ssh.exe ] && [ ! -f /usr/local/bin/ssh ] && sudo ln -s ${SSH_DIR}ssh.exe /usr/local/bin/ssh
-[ -f ${SSH_DIR}ssh-add.exe ] && [ ! -f /usr/local/bin/ssh-add ] && sudo ln -s ${SSH_DIR}ssh-add.exe /usr/local/bin/ssh-add
+[ -f "${GPG_DIR}gpg.exe" ] && [ ! -L /usr/local/bin/gpg ] && sudo ln -s ${GPG_DIR}gpg.exe /usr/local/bin/gpg
+[ -f "${SSH_DIR}ssh.exe" ] && [ ! -L /usr/local/bin/ssh ] && sudo ln -s ${SSH_DIR}ssh.exe /usr/local/bin/ssh
+[ -f "${SSH_DIR}ssh-add.exe" ] && [ ! -L /usr/local/bin/ssh-add ] && sudo ln -s ${SSH_DIR}ssh-add.exe /usr/local/bin/ssh-add
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
