@@ -86,7 +86,7 @@
           "background": "#394b70",
           "template": " ⎈ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
           "properties": {
-            "display_error": true,
+            "display_error": false,
             "parse_kubeconfig": true,
             "context_aliases": {
               "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
