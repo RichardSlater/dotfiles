@@ -67,7 +67,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 if command -v oh-my-posh &> /dev/null; then
   # oh my posh
-  eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/RichardSlater/dotfiles/master/dot_config/oh-my-posh/cloud-native.omp.json')"
+  eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/RichardSlater/dotfiles/master/dot_config/oh-my-posh/cloud-native-tokyo-night.omp.json')"
 fi
 
 

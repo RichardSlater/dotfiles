@@ -125,6 +125,6 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 alias vi=/opt/nvim-linux64/bin/nvim
 alias vim=/opt/nvim-linux64/bin/nvim
 
-eval "$(/home/richardslater/.local/bin/oh-my-posh init bash --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cloud-native-azure.omp.json')"
+eval "$(/home/richardslater/.local/bin/oh-my-posh init bash --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cloud-native-tokyo-night.omp.json)"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
