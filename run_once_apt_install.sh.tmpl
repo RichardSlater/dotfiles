@@ -21,6 +21,8 @@ SSH_DIR=/mnt/c/Windows/System32/OpenSSH/
 [ -f "${SSH_DIR}ssh.exe" ] && [ ! -L /usr/local/bin/ssh ] && sudo ln -s ${SSH_DIR}ssh.exe /usr/local/bin/ssh
 [ -f "${SSH_DIR}ssh-add.exe" ] && [ ! -L /usr/local/bin/ssh-add ] && sudo ln -s ${SSH_DIR}ssh-add.exe /usr/local/bin/ssh-add
 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 {{ end }}
