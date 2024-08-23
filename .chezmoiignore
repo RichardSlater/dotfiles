@@ -11,6 +11,10 @@ LICENSE
 /.zshrc
 {{- end }}
 
+{{- if and (ne .chezmoi.os "linux") (ne .chezmoi.osRelease.idLike "debian") }}
+/scripts/debian
+{{- end }}
+
 # ignore if NOT Windows
 {{- if ne .chezmoi.os "windows" }}
 /Documents
