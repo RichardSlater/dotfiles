@@ -8,12 +8,8 @@ if In_wsl then
 			["*"] = { "/mnt/c/Windows/system32/clip.exe" },
 		},
 		paste = {
-			["+"] = {
-				"pwsh -c '[Console]::Out.Write($(Get-Clipboard -Raw).ToString().Replace(\"`r\", [String]::Empty))'",
-			},
-			["*"] = {
-				"pwsh -c '[Console]::Out.Write($(Get-Clipboard -Raw).ToString().Replace(\"`r\", [String]::Empty))'",
-			},
+			["+"] = { "/mnt/c/Program Files/Neovim/bin/win32yank.exe" },
+			["*"] = { "/mnt/c/Program Files/Neovim/bin/win32yank.exe" },
 		},
 		cache_enabled = false,
 	}
