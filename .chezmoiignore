@@ -11,7 +11,7 @@ LICENSE
 /.zshrc
 {{- end }}
 
-{{- if and (ne .chezmoi.os "linux") (ne .chezmoi.osRelease.idLike "debian") }}
+{{- if not ( and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.idLike "debian") ) }}
 /scripts/debian
 {{- end }}
 
