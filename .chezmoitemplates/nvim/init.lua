@@ -9,10 +9,10 @@ if In_wsl then
 		},
 		paste = {
 			["+"] = {
-				'/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+				"pwsh -c '[Console]::Out.Write($(Get-Clipboard -Raw).ToString().Replace(\"`r\", [String]::Empty))'",
 			},
 			["*"] = {
-				'/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+				"pwsh -c '[Console]::Out.Write($(Get-Clipboard -Raw).ToString().Replace(\"`r\", [String]::Empty))'",
 			},
 		},
 		cache_enabled = false,
