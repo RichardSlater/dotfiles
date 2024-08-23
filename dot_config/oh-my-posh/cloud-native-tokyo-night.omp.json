@@ -11,7 +11,8 @@
           "style": "diamond",
           "template": " {{ if .SSHSession }}\ueba9 {{ end }}{{ .UserName }} ",
           "trailing_diamond": "\ue0b0",
-          "type": "session"
+          "type": "session",
+          "min_width": 120
         },
         {
           "background": "#41a6b5",
@@ -19,7 +20,8 @@
           "style": "diamond",
           "template": " {{ .HostName | lower }} ",
           "trailing_diamond": "\ue0b0",
-          "type": "session"
+          "type": "session",
+          "min_width": 120
         },
         {
           "background": "#7aa2f7",
@@ -30,7 +32,21 @@
           },
           "style": "powerline",
           "template": " \uf07b  {{ .Path }} ",
-          "type": "path"
+          "type": "path",
+          "min_width": 120
+        },
+        {
+          "background": "#7aa2f7",
+          "foreground": "#292e42",
+          "leading_diamond": "\ue0b6",
+          "properties": {
+            "style": "folder"
+          },
+          "style": "diamond",
+          "template": " \uf07b  {{ .Path }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "path",
+          "max_width": 120
         },
         {
           "background": "#ffc777",
