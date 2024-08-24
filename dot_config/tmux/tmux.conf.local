@@ -225,7 +225,7 @@ tmux_conf_theme_window_status_bell_attr="blink,bold"
 
 # window last status style
 tmux_conf_theme_window_status_last_fg="$col_fg"
-tmux_conf_theme_window_status_last_bg="$col_verydarkblue"
+tmux_conf_theme_window_status_last_bg="$col_midgray"
 tmux_conf_theme_window_status_last_attr="none"
 
 # status left/right sections separators
