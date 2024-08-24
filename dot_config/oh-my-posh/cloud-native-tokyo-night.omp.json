@@ -46,7 +46,7 @@
           "template": " \uf07b  {{ .Path }} ",
           "trailing_diamond": "\ue0b0",
           "type": "path",
-          "max_width": 120
+          "max_width": 119
         },
         {
           "background": "#ffc777",
