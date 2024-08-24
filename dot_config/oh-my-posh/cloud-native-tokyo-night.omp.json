@@ -78,7 +78,7 @@
           },
           "style": "diamond",
           "template": " \ue23a {{ if gt .Code 0 }}\uf00d {{ reason .Code }}{{ else }}\uf42e{{ end }} ",
-          "trailing_diamond": "\ue0b4",
+          "trailing_diamond": "\ue0b0",
           "type": "status"
         }
       ],
@@ -91,7 +91,7 @@
           "background": "#7aa2f7",
           "foreground": "#1f2335",
           "style": "diamond",
-          "template": "<#7aa2f7,transparent>\ue0b6</> \uf489  {{ .Name }} ",
+          "template": "<#7aa2f7,transparent>\ue0b2</> \uf489  {{ .Name }} ",
           "type": "shell"
         },
         {
@@ -99,7 +99,7 @@
           "style": "diamond",
           "foreground": "#c0caf5",
           "background": "#394b70",
-          "template": "<#394b70,#7aa2f7>\ue0b2</> ⎈ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
+          "template": "<#394b70,#7aa2f7>\ue0b2</> \udb84\udcfe {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
           "min_width": 120,
           "properties": {
             "display_error": false,
@@ -116,7 +116,7 @@
           "leading_diamond": "\ue0b2",
           "trailing_diamond": "",
           "style": "diamond",
-          "template": " ⧖ {{ .FormattedMs }} ",
+          "template": " \uf520 {{ .FormattedMs }} ",
           "type": "executiontime",
           "properties": {
             "threshold": 500,
