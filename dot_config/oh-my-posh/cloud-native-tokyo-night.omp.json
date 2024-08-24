@@ -91,21 +91,21 @@
           "background": "#7aa2f7",
           "foreground": "#1f2335",
           "style": "diamond",
-          "template": "<#7aa2f7,transparent>\ue0b6</> \uf489  {{ .Name }} <#394b70,#7aa2f7>\ue0b2</>",
+          "template": "<#7aa2f7,transparent>\ue0b6</> \uf489  {{ .Name }} ",
           "type": "shell"
         },
         {
           "type": "kubectl",
           "style": "diamond",
-          "powerline_symbol": "",
           "foreground": "#c0caf5",
           "background": "#394b70",
-          "template": " ⎈ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
+          "template": " <#394b70,#7aa2f7>\ue0b2</> ⎈ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
+          "min_width": 120,
           "properties": {
             "display_error": false,
             "parse_kubeconfig": true,
             "context_aliases": {
-              "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
+              "podman-kube": "local"
             }
           }
         },
@@ -114,9 +114,9 @@
           "foreground": "#1f2335",
           "invert_powerline": true,
           "leading_diamond": "\ue0b2",
+          "trailing_diamond": "",
           "style": "diamond",
           "template": " ⧖ {{ .FormattedMs }} ",
-          "trailing_diamond": "\ue0b4",
           "type": "executiontime",
           "properties": {
             "threshold": 500,
