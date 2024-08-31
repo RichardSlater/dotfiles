@@ -96,9 +96,9 @@ require("lualine").setup({
 		lualine_c = { { "filename", separator = { right = "" }, color = { bg = "#292e42" } } },
 		lualine_x = {
 			{
-				noice.api.status.get,
+				noice.api.status.mode.get,
+				cond = noice.api.status.mode.has,
 				separator = { left = "" },
-				cond = noice.api.status.has,
 				color = { bg = "#7dcfff", fg = "#1f2335" },
 			},
 			{ "encoding", separator = { left = "" }, color = { bg = "#bb9af7", fg = "#1f2335" } },
