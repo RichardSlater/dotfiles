@@ -30,6 +30,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		os.exit(1)
 	end
 end
+
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
@@ -42,6 +43,16 @@ require("lazy").setup({
 			"nvim-lualine/lualine.nvim",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 		},
+		{ "nvim-telescope/telescope.nvim", tag = "0.1.8" },
+		{
+			"nvim-neo-tree/neo-tree.nvim",
+			branch = "v3.x",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+				"MunifTanjim/nui.nvim",
+			},
+		},
 	},
 	install = { colorscheme = { "tokyonight" } },
 	checker = { enabled = true },
@@ -49,6 +60,16 @@ require("lazy").setup({
 
 local custom_tokyonight = require("lualine.themes.tokyonight")
 custom_tokyonight.normal.c.bg = "#1a1b26"
+
+local noice = require("noice")
+noice.setup({
+	routes = {
+		{
+			view = "notify",
+			filter = { event = "msg_showmode" },
+		},
+	},
+})
 
 require("lualine").setup({
 	options = {
@@ -74,6 +95,12 @@ require("lualine").setup({
 		lualine_b = { "branch", "diff", "diagnostics" },
 		lualine_c = { { "filename", separator = { right = "" }, color = { bg = "#292e42" } } },
 		lualine_x = {
+			{
+				noice.api.status.get,
+				separator = { left = "" },
+				cond = noice.api.status.has,
+				color = { bg = "#7dcfff", fg = "#1f2335" },
+			},
 			{ "encoding", separator = { left = "" }, color = { bg = "#bb9af7", fg = "#1f2335" } },
 			{ "fileformat", separator = { left = "" }, color = { bg = "#9d7cd8", fg = "#1f2335" } },
 			{ "filetype", separator = { left = "" }, color = { bg = "#414868", fg = "#ffffff" } },
@@ -108,6 +135,7 @@ require("tokyonight").setup({
 	on_colors = function() end,
 	on_highlights = function() end,
 })
+
 vim.cmd([[colorscheme tokyonight]])
 
 -- Disable Mousevim.opt.mousescroll = "ver:0,hor:0"
@@ -115,5 +143,8 @@ vim.keymap.set("", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("", "<down>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
+
+-- create keybinding for neotree
+vim.keymap.set("n", "<C-\\>", "<Cmd>Neotree toggle<CR>")
 
 vim.opt.mouse = ""
