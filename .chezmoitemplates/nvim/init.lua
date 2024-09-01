@@ -147,4 +147,8 @@ vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
 -- create keybinding for neotree
 vim.keymap.set("n", "<C-\\>", "<Cmd>Neotree toggle<CR>")
 
+-- disable mouse
 vim.opt.mouse = ""
+
+-- disable relative line numbers
+vim.opt.relativenumber = false
