@@ -9,4 +9,4 @@ alias g="git"
 alias gp="git pull"
 alias gpu="git push origin head"
 
-source ./windows_aliases
+source $HOME/.config/windows_aliases
