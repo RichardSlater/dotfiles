@@ -50,6 +50,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # set PATH so it includes user's private bin if it exists
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 
+# set PATH so it includes local bin if it exists
+[ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH"
+
 # set NeoVim path if it exists
 [ -d "/opt/nvim-linux64/bin" ] && PATH="$PATH:/opt/nvim-linux64/bin"
 
@@ -77,3 +80,19 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/rslater/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/rslater/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/rslater/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/rslater/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
