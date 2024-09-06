@@ -6,6 +6,7 @@ LICENSE
 /.config/nvim
 /.config/tmux
 /.config/zsh_aliases
+/.local
 /.profile
 /.bashrc
 /.zshrc
