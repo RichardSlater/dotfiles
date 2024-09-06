@@ -24,6 +24,15 @@
           "min_width": 120
         },
         {
+          "type": "os",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "background": "#3d59a1",
+          "foreground": "#ffffff",
+          "template": " {{ if .WSL }}{{.Env.CHEZMOI_OS_RELEASE_VERSION_ID}}{{ end }} {{.Icon}}  ",
+          "min_width": 120
+        },
+        {
           "background": "#7aa2f7",
           "foreground": "#292e42",
           "powerline_symbol": "\ue0b0",
