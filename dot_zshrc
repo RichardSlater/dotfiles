@@ -50,6 +50,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # set PATH so it includes user's private bin if it exists
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 
+# set PATH so it includes GO's local bin if it exists
+[ -d "/usr/local/go/bin" ] && PATH="/usr/local/go/bin:$PATH"
+
 # set PATH so it includes local bin if it exists
 [ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH"
 
