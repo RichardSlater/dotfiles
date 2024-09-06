@@ -29,7 +29,7 @@
           "powerline_symbol": "\ue0b0",
           "background": "#3d59a1",
           "foreground": "#ffffff",
-          "template": " {{ if .WSL }}{{.Env.CHEZMOI_OS_RELEASE_VERSION_ID}}{{ end }} {{.Icon}}  ",
+          "template": "{{ if .WSL }} {{.Env.CHEZMOI_OS_RELEASE_VERSION_ID}}{{ end }} {{.Icon}}  ",
           "min_width": 120
         },
         {
