@@ -9,4 +9,6 @@ alias g="git"
 alias gp="git pull"
 alias gpu="git push origin head"
 
+[ -f /usr/bin/bat ] && alias cat=/usr/bin/bat --paging=never
+
 source $HOME/.config/windows_aliases
