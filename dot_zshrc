@@ -15,7 +15,7 @@ EDITOR=vim
 VISUAL=vim
 
 # convenience variables
-DISTRO_RELEASE=$(lsb_release --short --release)
+export DISTRO_RELEASE=$(lsb_release --short --release)
 
 # Use modern completion system
 autoload -Uz compinit
