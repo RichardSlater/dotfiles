@@ -152,7 +152,7 @@ tmux_conf_theme_status_attr="none"
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_terminal_title="#h | $CHEZMOI_OS_RELEASE_VERSION_ID | #S ● #I #W"
+tmux_conf_theme_terminal_title="#h | $DISTRO_RELEASE | #S ● #I #W"
 
 # window status style
 #   - built-in variables are:
