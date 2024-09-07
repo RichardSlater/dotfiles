@@ -29,7 +29,7 @@
           "powerline_symbol": "\ue0b0",
           "background": "#3d59a1",
           "foreground": "#ffffff",
-          "template": " {{ .Icon }} {{ if .WSL }} {{ .Env.DISTRO_RELEASE }} {{ end }}",
+          "template": " {{ .Icon }} {{ if .WSL }} {{ .Env.DISTRO_RELEASE }}{{ end }} ",
           "min_width": 120
         },
         {
