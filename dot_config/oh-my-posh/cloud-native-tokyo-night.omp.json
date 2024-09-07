@@ -170,7 +170,7 @@
     "foreground": "#3b4261",
     "template": " $ "
   },
-  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "console_title_template": "{{ if .WSL }} {{.Env.DISTRO_RELEASE}}{{ end }} • {{ .Shell }} in {{ .Folder }}",
   "final_space": true,
   "version": 2
 }
