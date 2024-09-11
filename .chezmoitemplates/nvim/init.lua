@@ -67,6 +67,15 @@ require("lazy").setup({
 			end,
 			ft = { "markdown" },
 		},
+		{
+			"ibhagwan/fzf-lua",
+			-- optional for icon support
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			config = function()
+				-- calling `setup` is optional for customization
+				require("fzf-lua").setup({})
+			end,
+		},
 	},
 	install = { colorscheme = { "tokyonight" } },
 	checker = { enabled = true },

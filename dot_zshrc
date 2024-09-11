@@ -74,7 +74,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # Fuzzy finder
 if [ -f ~/.config/.fzf.zsh ]; then
   source ~/.config/.fzf.zsh
-  source <(fzf --zsh)
 fi
 
 # oh my posh
