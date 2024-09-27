@@ -4,6 +4,12 @@ alias ls="ls --color=auto"
 alias vi="nvim"
 alias vim="nvim"
 
+if command -v podman &> /dev/null; then
+  if ! [ command -v docker ] &> /dev/null; then
+    alias docker="podman"
+  fi
+fi
+
 alias k="kubectl"
 alias g="git"
 alias gp="git pull"
