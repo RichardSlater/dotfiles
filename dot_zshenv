@@ -1,0 +1,4 @@
+. "$HOME/.cargo/env"
+
+[ -d $HOME/.foundry ] &&
+export PATH="$PATH:$HOME/.foundry/bin"
