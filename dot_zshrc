@@ -76,6 +76,12 @@ if [ -f ~/.config/.fzf.zsh ]; then
   source ~/.config/.fzf.zsh
 fi
 
+# chezmoi
+if [ -f ~/.local/chezmoi ]; then
+  chezmoi update
+  chezmoi apply
+fi
+
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
   if [ -f "$HOME/.config/oh-my-posh/cloud-native-tokyo-night.omp.json" ]; then
@@ -104,7 +110,6 @@ fi
 
 unset __conda_setup
 # <<< conda initialize <<<
-
 
 # pnpm
 export PNPM_HOME="/home/richardslater/.local/share/pnpm"
