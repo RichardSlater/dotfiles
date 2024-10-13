@@ -46,120 +46,84 @@
     {
         "defaults": 
         {
+            "adjustIndistinguishableColors": "indexed",
+            "colorScheme": "Tokyo Night",
+            "font": 
+            {
+                "face": "FiraCode Nerd Font",
+                "size": 12
+            },
             "startingDirectory": "C:\\source"
         },
         "list": 
         [
             {
-                "commandline": "%SystemRoot%\\System32\\cmd.exe",
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font"
-                },
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "hidden": true,
-                "name": "Command Prompt"
-            },
-            {
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font Mono"
-                },
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            },
-            {
-                "colorScheme": "Campbell Powershell (modified)",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -nologo",
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font",
-                    "size": 12
-                },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "colorScheme": "Tokyo Night",
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font",
-                    "size": 12
-                },
-                "guid": "{acbafd15-cbbb-5bb3-8a61-bed446ff4b83}",
+                "commandline": "wsl ~ -d podman-machine-default",
+                "cursorShape": "filledBox",
+                "guid": "{4e20291f-fdd5-41f9-ad14-5ec11ef51fc0}",
                 "hidden": false,
-                "name": "Ubuntu (24.04)",
+                "icon": "%USERPROFILE%\\Pictures\\icons\\podman.png",
+                "name": "Podman Machine",
+                "tabTitle": "Podman Machine"
+            },
+            {
+                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Pictures\\icons\\debian.png",
+                "name": "Debian",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
+                "hidden": false,
+                "name": "Ubuntu 24.04.1 LTS",
                 "source": "CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc"
             },
             {
-                "experimental.retroTerminalEffect": false,
+                "guid": "{4ff56d04-d9cf-57ea-bae2-ad396374e7e3}",
+                "hidden": false,
+                "name": "Ubuntu 22.04.5 LTS",
+                "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
+            },
+            {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": true,
                 "name": "Windows PowerShell"
             },
             {
-                "colorScheme": "Tokyo Night",
-                "commandline": "wsl ~ -d podman-machine-default",
-                "cursorShape": "filledBox",
-                "experimental.retroTerminalEffect": false,
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font Mono",
-                    "size": 12
-                },
-                "guid": "{4e20291f-fdd5-41f9-ad14-5ec11ef51fc0}",
-                "hidden": false,
-                "icon": "%USERPROFILE%\\Pictures\\icons\\podman.png",
-                "name": "Podman Machine",
-                "padding": "8",
-                "scrollbarState": "hidden",
-                "tabTitle": "Podman Machine"
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": true,
+                "name": "Command Prompt"
             },
             {
-                "colorScheme": "Tokyo Night",
-                "font": 
-                {
-                    "face": "FiraCode Nerd Font",
-                    "size": 12
-                },
-                "commandline": "wsl ~ -d debian",
-                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
-                "hidden": false,
-                "icon": "%USERPROFILE%\\Pictures\\icons\\debian.png",
-                "name": "Debian",
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": true,
+                "name": "Git Bash",
+                "source": "Git"
+            },
+            {
+                "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
+                "hidden": true,
+                "name": "Ubuntu-22.04",
                 "source": "Windows.Terminal.Wsl"
             }
         ]
     },
     "schemes": 
     [
-        {
-            "background": "#1A1B2C",
-            "black": "#0C0C0C",
-            "blue": "#0037DA",
-            "brightBlack": "#767676",
-            "brightBlue": "#3B78FF",
-            "brightCyan": "#61D6D6",
-            "brightGreen": "#16C60C",
-            "brightPurple": "#B4009E",
-            "brightRed": "#E74856",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#F9F1A5",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#3A96DD",
-            "foreground": "#CCCCCC",
-            "green": "#13A10E",
-            "name": "Campbell Powershell (modified)",
-            "purple": "#881798",
-            "red": "#C50F1F",
-            "selectionBackground": "#FFFFFF",
-            "white": "#CCCCCC",
-            "yellow": "#C19C00"
-        },
         {
             "background": "#1A1B26",
             "black": "#414868",
@@ -182,52 +146,6 @@
             "selectionBackground": "#28344A",
             "white": "#C0CAF5",
             "yellow": "#E0AF68"
-        },
-        {
-            "background": "#300A24",
-            "black": "#171421",
-            "blue": "#0037DA",
-            "brightBlack": "#767676",
-            "brightBlue": "#08458F",
-            "brightCyan": "#2C9FB3",
-            "brightGreen": "#26A269",
-            "brightPurple": "#A347BA",
-            "brightRed": "#C01C28",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#A2734C",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#3A96DD",
-            "foreground": "#FFFFFF",
-            "green": "#26A269",
-            "name": "Ubuntu-22.04-ColorScheme",
-            "purple": "#881798",
-            "red": "#C21A23",
-            "selectionBackground": "#FFFFFF",
-            "white": "#CCCCCC",
-            "yellow": "#A2734C"
-        },
-        {
-            "background": "#300A24",
-            "black": "#171421",
-            "blue": "#0037DA",
-            "brightBlack": "#767676",
-            "brightBlue": "#08458F",
-            "brightCyan": "#2C9FB3",
-            "brightGreen": "#26A269",
-            "brightPurple": "#A347BA",
-            "brightRed": "#C01C28",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#A2734C",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#3A96DD",
-            "foreground": "#FFFFFF",
-            "green": "#26A269",
-            "name": "Ubuntu-ColorScheme",
-            "purple": "#881798",
-            "red": "#C21A23",
-            "selectionBackground": "#FFFFFF",
-            "white": "#CCCCCC",
-            "yellow": "#A2734C"
         }
     ],
     "themes": []
