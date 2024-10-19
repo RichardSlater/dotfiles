@@ -12,6 +12,12 @@ LICENSE
 /.zshrc
 {{- end }}
 
+{{- if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+/.local/bin/ssh
+/.local/bin/ssh-add
+/.local/bin/scp
+{{- end }}
+
 {{- if not ( and (eq .chezmoi.os "linux") ( or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") ) ) }}
 /scripts/debian
 {{- end }}
