@@ -82,6 +82,11 @@ if [ -f ~/.local/chezmoi ]; then
   chezmoi apply
 fi
 
+# keybinds
+if [ -f ~/.config/zsh_keybinds ]; then
+  source ~/.config/zsh_keybinds
+fi
+
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
   if [ -f "$HOME/.config/oh-my-posh/cloud-native-tokyo-night.omp.json" ]; then
