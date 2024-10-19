@@ -37,7 +37,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
-    "launchMode": "focus",
+    "launchMode": "default",
     "newTabMenu": 
     [
         {
@@ -76,6 +76,10 @@
                 "tabTitle": "Podman Machine"
             },
             {
+                "font": 
+                {
+                    "size": 8
+                },
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
                 "icon": "%USERPROFILE%\\Pictures\\icons\\debian.png",
@@ -121,6 +125,14 @@
                 "hidden": true,
                 "name": "Ubuntu-22.04",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{c397f356-5e7b-55bc-956b-8cb4b9762c26}",
+                "hidden": false,
+                "icon": "C:\\Users\\mcp\\Pictures\\nixos_logo.png",
+                "name": "NixOS",
+                "source": "Windows.Terminal.Wsl",
+                "startingDirectory": "~"
             }
         ]
     },
