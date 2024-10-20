@@ -1,48 +1,59 @@
 [core]
-        editor = nvim
-        eol = lf
-        autocrlf = input
-[user]
-        email = {{ .email | quote }}
-        name = Richard Slater
-        signingkey = BB08D26976020885
-[color]
-        ui = true
-[diff]
-        tool = nvimdiff
-[difftool]
-        prompt = false
-[difftool "nvimdiff"]
-        cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[merge]
-        tool = nvimdiff
-[mergetool]
-        prompt = true
-[mergetool "nvimdiff"]
-        cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
-[branch]
-        autosetupmerge = true
-[push]
-        default = simple
-[pull]
-        rebase = true
-[commit]
-        gpgsign = true
-{{ if eq .chezmoi.os "windows" -}}
-[gpg]
-        program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
-{{ end -}}
+editor = nvim
+eol = lf
+autocrlf = input
 
+[user]
+email = {{ .email | quote }}
+name = Richard Slater
+signingkey = BB08D26976020885
+
+[color]
+ui = true
+
+[diff]
+tool = nvimdiff
+
+[difftool]
+prompt = false
+
+[difftool "nvimdiff"]
+cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+
+[merge]
+tool = nvimdiff
+
+[mergetool]
+prompt = true
+
+[mergetool "nvimdiff"]
+cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
+
+[branch]
+autosetupmerge = true
+
+[push]
+default = simple
+
+[pull]
+rebase = true
+
+[commit]
+gpgsign = true
+{{ if eq .chezmoi.os "windows" -}}
+
+[gpg]
+program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
+{{ end }}
 {{ if eq .chezmoi.os "linux" -}}
 [gpg]
 {{    if stat ("/usr/local/bin/gpg") -}}
         program = /usr/local/bin/gpg
-{{    else if stat ("$HOME/.local/bin/gpg") -}}
-        program = $HOME/.local/bin/gpg
+{{    else if stat ("$HOME/.local/bin/gpg" | expandenv) -}}
+        program = {{ "$HOME/.local/bin/gpg" | expandenv }}
 {{    else -}}
         program = gpg
 {{    end -}}
-{{ end -}}
-
+{{ end }}
 [init]
-        defaultBranch = main
+defaultBranch = main
