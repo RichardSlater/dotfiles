@@ -127,3 +127,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# taskctl
+if command -v taskctl &> /dev/null; then
+  . <(taskctl completion zsh)
+fi
+# taskctl end
