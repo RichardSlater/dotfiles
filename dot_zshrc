@@ -11,8 +11,12 @@ SAVEHIST=10000
 HISTFILE=~/.cache/.zsh_history
 
 # configure editors
-EDITOR=vim
-VISUAL=vim
+if command -v nvim &> /dev/null; then
+  EDITOR=$(which nvim)
+else
+  EDITOR=vi
+fi
+VISUAL=$EDITOR
 
 # convenience variables
 export DISTRO_RELEASE=$(lsb_release --short --release | tr -d \")
