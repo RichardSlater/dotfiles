@@ -6,7 +6,11 @@ autocrlf = input
 [user]
 email = {{ .email | quote }}
 name = Richard Slater
+{{- if eq .email "git@scetrov.live" }} 
+signingkey = CB9EDC6120241EF1FEA1EF65D53B150BA3B869B9
+{{ else }}
 signingkey = BB08D26976020885
+{{ end }}
 
 [color]
 ui = true
