@@ -16,6 +16,7 @@ alias k="kubectl"
 alias g="git"
 alias gp="git pull"
 alias gpu="git push origin head"
+alias bat="batcat"
 
 [ -f /usr/bin/bat ] && alias cat=/usr/bin/bat --paging=never
 
