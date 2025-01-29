@@ -19,3 +19,7 @@ $openSshExecutable = "C:\Windows\System32\OpenSSH\ssh.exe";
 if (Test-Path $openSshExecutable) {
     $env:GIT_SSH=$openSshExecutable;
 }
+
+Set-PSReadlineKeyHandler -Key ctrl+d -Function DeleteCharOrExit
+Set-PSReadlineKeyHandler -Key ctrl+l -Function ClearScreen
+
