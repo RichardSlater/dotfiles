@@ -38,6 +38,18 @@ install_ansible() {
     fi
 }
 
+# Function to install with ansible-galaxy
+install_roles() {
+    REQUIREMENTS="${HOME}/.local/share/chezmoi/scripts/ansible/requirements.yml"
+    if [ ! -f "$REQUIREMENTS" ]; then
+        echo "Error: Playbook '$REQUIREMENTS' not found!"
+        exit 1
+    fi
+
+    echo "Installing requirements"
+    ansible-galaxy install -r $REQUIREMENTS
+}
+
 # Function to run the playbook
 run_playbook() {
     PLAYBOOK="${HOME}/.local/share/chezmoi/scripts/ansible/playbook.yml"
@@ -52,4 +64,5 @@ run_playbook() {
 
 # Main Execution
 install_ansible
+install_roles
 run_playbook
