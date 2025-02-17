@@ -10,7 +10,15 @@ chezmoi init --apply --verbose RichardSlater
 ## Linux Install
 
 ```sh
+sudo apt update && sudo apt install -y curl git
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply RichardSlater
+```
+
+### Configure SSH Push/Pull URL
+
+```sh
+chezmoi cd
+git remote set-url --push origin git@github.com:RichardSlater/dotfiles.git
 ```
 
 ## Transient Install
