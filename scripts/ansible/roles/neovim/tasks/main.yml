@@ -1,0 +1,48 @@
+---
+- name: Install dependencies for Neovim build
+  apt:
+    name:
+      - ninja-build
+      - gettext
+      - cmake
+      - unzip
+      - curl
+      - git
+      - build-essential
+      - pkg-config
+      - libtool
+      - automake
+      - g++
+      - libncurses5-dev
+      - libncursesw5-dev
+    state: present
+    update_cache: yes
+
+- name: Clone Neovim repository
+  git:
+    repo: "{{ nvim_repo }}"
+    dest: "{{ nvim_dest }}"
+    depth: 1
+    update: yes
+
+- name: Build Neovim
+  command:
+    cmd: "make CMAKE_BUILD_TYPE=Release"
+    chdir: "{{ nvim_dest }}"
+  args:
+    creates: "{{ nvim_dest }}/build/bin/nvim"
+
+- name: Install Neovim
+  command:
+    cmd: "make install"
+    chdir: "{{ nvim_dest }}"
+  become: true
+
+- name: Verify Neovim installation
+  command: "nvim --version"
+  register: nvim_version
+  changed_when: false
+
+- name: Show installed Neovim version
+  debug:
+    msg: "{{ nvim_version.stdout }}"

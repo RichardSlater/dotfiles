@@ -1,0 +1,32 @@
+---
+- name: Update Ubuntu/Debian system
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: full
+
+    - name: Remove unnecessary packages
+      apt:
+        autoremove: yes
+        autoclean: yes
+
+- name: Change shell
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Change shell to zsh (example)
+      user:
+        name: "{{ ansible_user_id }}"
+        shell: "/bin/zsh"
+
+- name: Run roles for system setup
+  hosts: localhost
+  become: true
+  roles:
+    - neovim
