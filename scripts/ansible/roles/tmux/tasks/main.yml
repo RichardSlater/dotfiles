@@ -1,0 +1,94 @@
+---
+- name: Install dependencies for tmux build
+  become: true
+  apt:
+    name:
+      - build-essential
+      - autoconf
+      - automake
+      - pkg-config
+      - libevent-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - bison
+      - git
+      - wget
+      - jq
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Get latest tmux release info
+  uri:
+    url: "https://api.github.com/repos/tmux/tmux/releases/latest"
+    return_content: yes
+  register: github_response
+
+- name: Extract latest tarball URL
+  set_fact:
+    tmux_tarball_url: "{{ github_response.json.tarball_url }}"
+    tmux_version: "{{ github_response.json.tag_name }}"
+
+- name: Debug - Show latest tmux version
+  debug:
+    msg: "Latest tmux version: {{ tmux_version }}"
+
+- name: Create source directory
+  file:
+    path: "{{ tmux_src_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Download latest tmux source code
+  get_url:
+    url: "{{ tmux_tarball_url }}"
+    dest: "{{ tmux_src_dir }}/tmux.tar.gz"
+
+- name: Extract tmux source
+  ansible.builtin.unarchive:
+    src: "{{ tmux_src_dir }}/tmux.tar.gz"
+    dest: "{{ tmux_src_dir }}"
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+
+- name: Ensure correct permissions for source directory
+  file:
+    path: "{{ tmux_src_dir }}"
+    state: directory
+    mode: "0755"
+    recurse: yes
+
+- name: Run autogen.sh to prepare the build system
+  command:
+    cmd: "./autogen.sh"
+    chdir: "{{ tmux_src_dir }}"
+  args:
+    creates: "{{ tmux_src_dir }}/configure"
+
+- name: Configure tmux build
+  command:
+    cmd: "./configure --prefix={{ tmux_install_dir }}"
+    chdir: "{{ tmux_src_dir }}"
+  args:
+    creates: "{{ tmux_src_dir }}/Makefile"
+
+- name: Compile tmux
+  command:
+    cmd: "make"
+    chdir: "{{ tmux_src_dir }}"
+  args:
+    creates: "{{ tmux_src_dir }}/tmux"
+
+- name: Install tmux
+  become: true
+  command:
+    cmd: "make install"
+    chdir: "{{ tmux_src_dir }}"
+
+- name: Verify tmux installation
+  command: "{{ tmux_install_dir }}/bin/tmux -V"
+  register: tmux_version_output
+  changed_when: false
+
+- name: Show installed tmux version
+  debug:
+    msg: "Installed tmux version: {{ tmux_version_output.stdout }}"
