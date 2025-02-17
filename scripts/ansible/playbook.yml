@@ -30,3 +30,5 @@
   become: true
   roles:
     - neovim
+    - bat
+    - fzf

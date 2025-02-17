@@ -1,0 +1,31 @@
+---
+- name: Install dependencies for fzf
+  become: true
+  apt:
+    name:
+      - git
+      - build-essential
+      - curl
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Clone fzf repository
+  git:
+    repo: "https://github.com/junegunn/fzf.git"
+    dest: "{{ fzf_install_dir }}"
+    depth: 1
+    update: yes
+
+- name: Build and install fzf
+  command:
+    cmd: "./install --all"
+    chdir: "{{ fzf_install_dir }}"
+  args:
+    creates: "{{ fzf_install_dir }}/bin/fzf"
+
+- name: Ensure fzf is available globally
+  become: true
+  file:
+    src: "{{ fzf_install_dir }}/bin/fzf"
+    dest: "/usr/local/bin/fzf"
+    state: link
