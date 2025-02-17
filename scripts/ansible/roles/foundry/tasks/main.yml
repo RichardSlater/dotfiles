@@ -1,0 +1,43 @@
+---
+- name: Install dependencies for Foundry
+  become: true
+  apt:
+    name:
+      - curl
+      - git
+      - build-essential
+      - libssl-dev
+      - pkg-config
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Check if foundryup is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.foundry/bin/foundryup"
+  register: foundryup_stat
+
+- name: Download and install Foundry
+  shell: "curl -L https://foundry.paradigm.xyz | bash"
+  args:
+    creates: "{{ ansible_env.HOME }}/.foundry/bin/foundryup"
+  when: not foundryup_stat.stat.exists
+
+- name: Initialize Foundry
+  shell: "{{ ansible_env.HOME }}/.foundry/bin/foundryup"
+  args:
+    creates: "{{ ansible_env.HOME }}/.foundry/bin/forge"
+
+- name: Add Foundry binaries to PATH
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PATH="$HOME/.foundry/bin:$PATH"'
+    create: yes
+
+- name: Verify Foundry installation
+  command: "{{ ansible_env.HOME }}/.foundry/bin/forge --version"
+  register: foundry_version
+  changed_when: false
+
+- name: Show installed Foundry version
+  debug:
+    msg: "Installed Foundry version: {{ foundry_version.stdout }}"

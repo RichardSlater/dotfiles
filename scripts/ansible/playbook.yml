@@ -36,3 +36,9 @@
     - pwsh
     - hurricanehrndz.rustup
     - tmux
+
+- name: Run roles for user
+  hosts: localhost
+  roles:
+    - foundry
+    

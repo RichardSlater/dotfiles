@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Richard Slater
+  description: "Ansible role to install Foundry (foundry-rs) from source."
+  license: "MIT"
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
+    - foundry
+    - rust
+    - ethereum
+    - smart-contracts
+dependencies: []
