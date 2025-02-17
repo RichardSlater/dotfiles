@@ -1,6 +1,3 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $role := promptStringOnce . "role" "Role (personal/work)" -}}
-
 {{ if eq .chezmoi.os "windows" }}
 [cd]
     command = "pwsh.exe"
@@ -14,5 +11,5 @@
 {{ end }}
 
 [data]
-    email = {{ $email | quote }}
-    role = {{ $role | quote }}
+    email = "{{- if eq .chezmoi.username "scetrov" -}}git@scetrov.live{{- else if eq .chezmoi.username "rslater" -}}richard.slater@ensono.com{{- else -}}github@richard-slater.co.uk{{- end -}}"
+    role = "{{- if eq .chezmoi.username "scetrov" -}}personal{{- else if eq .chezmoi.username "rslater" -}}work{{- else -}}personal{{- end -}}"
