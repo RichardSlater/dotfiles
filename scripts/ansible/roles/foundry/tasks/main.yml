@@ -27,12 +27,6 @@
   args:
     creates: "{{ ansible_env.HOME }}/.foundry/bin/forge"
 
-- name: Add Foundry binaries to PATH
-  lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
-    line: 'export PATH="$HOME/.foundry/bin:$PATH"'
-    create: yes
-
 - name: Verify Foundry installation
   command: "{{ ansible_env.HOME }}/.foundry/bin/forge --version"
   register: foundry_version
