@@ -81,7 +81,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Fuzzy finder
-[ -f "$HOME/.config/.fzf.zsh" ] && source "$HOME/.config/.fzf.zsh"
+if command -v fzf &> /dev/null; then
+  source "$HOME/.config/.fzf.zsh"
+fi
 
 # chezmoi
 if [ -f "$HOME/.local/chezmoi" ]; then
