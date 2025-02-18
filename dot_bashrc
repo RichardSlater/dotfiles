@@ -144,4 +144,4 @@ if command -v oh-my-posh &> /dev/null; then
 fi
 
 [ -f ~/.config/.fzf.bash ] && source ~/.config/.fzf.bash
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

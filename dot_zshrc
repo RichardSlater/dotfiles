@@ -124,7 +124,7 @@ unset __conda_setup
 
 # pnpm start
 if [ -f "$HOME/.local/shar/pnpm" ]; then
-  export PNPM_HOME="/home/richardslater/.local/share/pnpm"
+  export PNPM_HOME="$HOME/.local/share/pnpm"
   case ":$PATH:" in
     *":$PNPM_HOME:"*) ;;
     *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -137,3 +137,5 @@ if command -v taskctl &> /dev/null; then
   . <(taskctl completion zsh)
 fi
 # taskctl end
+
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
