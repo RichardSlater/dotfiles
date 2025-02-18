@@ -8,7 +8,7 @@ bindkey ^S history-incremental-search-forward
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/.zsh_history
+HISTFILE="$HOME/.cache/.zsh_history"
 
 # configure editors
 if command -v nvim &> /dev/null; then
@@ -81,16 +81,16 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Fuzzy finder
-[ -f ~/.config/.fzf.zsh ] && source ~/.config/.fzf.zsh
+[ -f "$HOME/.config/.fzf.zsh" ] && source "$HOME/.config/.fzf.zsh"
 
 # chezmoi
-if [ -f ~/.local/chezmoi ]; then
+if [ -f "$HOME/.local/chezmoi" ]; then
   chezmoi update
   chezmoi apply
 fi
 
 # keybinds
-[ -f ~/.config/zsh_keybinds ] && source ~/.config/zsh_keybinds
+[ -f "$HOME/.config/zsh_keybinds" ] && source "$HOME/.config/zsh_keybinds"
 
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
