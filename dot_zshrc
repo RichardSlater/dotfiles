@@ -12,6 +12,8 @@ HISTFILE=~/.cache/.zsh_history
 
 # configure editors
 if command -v nvim &> /dev/null; then
+  alias vi='nvim'
+  alias vim='nvim'
   EDITOR=$(which nvim)
 else
   EDITOR=vi
@@ -68,6 +70,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # set snap path
 [ -d "/snap/bin" ] && PATH="$PATH:/snap/bin"
 
+# foundry
+[ -d "$HOME/.foundry/bin" ] && export PATH="$PATH:$HOME/.foundry/bin"
+
 # Aliases
 [ -f $HOME/.config/zsh_aliases ] && source $HOME/.config/zsh_aliases
 [ -f $HOME/.config/windows_aliases ] && source $HOME/.config/windows_aliases
@@ -76,9 +81,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Fuzzy finder
-if [ -f ~/.config/.fzf.zsh ]; then
-  source ~/.config/.fzf.zsh
-fi
+[ -f ~/.config/.fzf.zsh ] && source ~/.config/.fzf.zsh
 
 # chezmoi
 if [ -f ~/.local/chezmoi ]; then
@@ -87,9 +90,7 @@ if [ -f ~/.local/chezmoi ]; then
 fi
 
 # keybinds
-if [ -f ~/.config/zsh_keybinds ]; then
-  source ~/.config/zsh_keybinds
-fi
+[ -f ~/.config/zsh_keybinds ] && source ~/.config/zsh_keybinds
 
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
@@ -100,9 +101,10 @@ if command -v oh-my-posh &> /dev/null; then
   fi
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -f "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -120,15 +122,17 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# pnpm
-export PNPM_HOME="/home/richardslater/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+# pnpm start
+if [ -f "$HOME/.local/shar/pnpm" ]; then
+  export PNPM_HOME="/home/richardslater/.local/share/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
 # pnpm end
 
-# taskctl
+# taskctl start
 if command -v taskctl &> /dev/null; then
   . <(taskctl completion zsh)
 fi
