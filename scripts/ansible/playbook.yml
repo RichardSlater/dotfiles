@@ -28,6 +28,7 @@
     - pwsh
     - hurricanehrndz.rustup
     - tmux
+    - oh-my-posh
 
 - name: Run roles for user
   hosts: localhost
