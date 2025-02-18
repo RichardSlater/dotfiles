@@ -20,7 +20,7 @@
 - name: Change default shell to Zsh for all interactive users (excluding 'nobody')
   user:
     name: "{{ item }}"
-    shell: /bin/zsh
+    shell: /usr/bin/zsh
   loop: "{{ interactive_users.stdout_lines }}"
   when: interactive_users.stdout_lines | length > 0
 
