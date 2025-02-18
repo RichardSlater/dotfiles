@@ -18,6 +18,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply RichardSlater
 
 ```sh
 chezmoi cd
+git remote set-url --no-push origin https://github.com/richardslater/dotfiles.git
 git remote set-url --push origin git@github.com:RichardSlater/dotfiles.git
 ```
 
