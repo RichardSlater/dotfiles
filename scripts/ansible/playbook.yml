@@ -19,16 +19,21 @@
 - name: Run roles for system setup
   hosts: localhost
   become: true
+  vars:
+    packages:
+      - dig
+      - btop
   roles:
-    - zsh
-    - neovim
     - bat
     - fzf
     - geerlingguy.go
-    - pwsh
     - hurricanehrndz.rustup
-    - tmux
+    - neovim
     - oh-my-posh
+    - packages
+    - pwsh
+    - tmux
+    - zsh
 
 - name: Run roles for user
   hosts: localhost

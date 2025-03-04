@@ -1,0 +1,7 @@
+---
+- name: Install required packages
+  package:
+    name: "{{ packages }}"
+    state: present
+  become: yes
+  when: packages is defined
