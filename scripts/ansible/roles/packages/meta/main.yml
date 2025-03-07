@@ -1,5 +1,4 @@
 ---
-dependency: []
 galaxy_info:
   author: Richard Slater
   description: Ansible role to install a list of packages
