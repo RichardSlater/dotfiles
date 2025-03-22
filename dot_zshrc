@@ -141,4 +141,10 @@ if command -v taskctl &> /dev/null; then
 fi
 # taskctl end
 
+# cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+# cargo end
+
+# dotnet
+export DOTNET_ROOT=$(dirname $(readlink -f $(which dotnet)))
+# dotnet end
