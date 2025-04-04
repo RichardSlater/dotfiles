@@ -39,4 +39,5 @@
   hosts: localhost
   roles:
     - foundry
+  when: "'ensono.com' not in setup_output.ansible_facts.ansible_dns.search"
     

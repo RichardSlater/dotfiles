@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GO_VER="go1.23.1.linux-amd64.tar.gz"
+GO_VER="go1.24.2.linux-amd64.tar.gz"
 TEMP_DIR="/tmp/go_$(
   tr -dc a-z0-9 </dev/urandom | head -c 6
   echo
