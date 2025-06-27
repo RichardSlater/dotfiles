@@ -101,6 +101,7 @@
             {
                 "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
                 "hidden": false,
+                "icon": "C:\\Users\\rslater\\Pictures\\icons\\ubuntu.png",
                 "name": "Ubuntu 24.04.1 LTS",
                 "source": "CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc",
                 "startingDirectory": "~"
