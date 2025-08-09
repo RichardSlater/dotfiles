@@ -2,3 +2,4 @@
 roles:
   - name: geerlingguy.go
   - name: hurricanehrndz.rustup
+  - name: alvistack.podman

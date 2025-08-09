@@ -34,10 +34,10 @@
     - pwsh
     - tmux
     - zsh
+    - alvistack.podman
 
 - name: Run roles for user
   hosts: localhost
   roles:
     - role: foundry
       when: "'ensono.com' not in ansible_dns.search"
-
