@@ -3,18 +3,38 @@
   hosts: localhost
   become: true
   tasks:
-    - name: Update apt package index
-      apt:
-        update_cache: yes
+    - name: Update and upgrade system with recovery
+      block:
+        - name: Update apt package index
+          apt:
+            update_cache: yes
 
-    - name: Upgrade all packages
-      apt:
-        upgrade: full
+        - name: Upgrade all packages
+          apt:
+            upgrade: full
 
-    - name: Remove unnecessary packages
-      apt:
-        autoremove: yes
-        autoclean: yes
+        - name: Remove unnecessary packages
+          apt:
+            autoremove: yes
+            autoclean: yes
+      rescue:
+        - name: Fix broken apt installs
+          ansible.builtin.command: apt-get install --fix-broken -y
+          register: fix_broken_result
+          ignore_errors: true
+
+        - name: Retry update apt package index
+          apt:
+            update_cache: yes
+
+        - name: Retry upgrade all packages
+          apt:
+            upgrade: full
+
+        - name: Retry remove unnecessary packages
+          apt:
+            autoremove: yes
+            autoclean: yes
 
 - name: Run roles for system setup
   hosts: localhost
@@ -23,6 +43,7 @@
     packages:
       - dnsutils
       - btop
+      - python3-debian
   roles:
     - bat
     - fzf
