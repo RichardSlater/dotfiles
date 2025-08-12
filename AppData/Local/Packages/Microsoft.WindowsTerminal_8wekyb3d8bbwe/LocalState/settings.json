@@ -101,8 +101,8 @@
             {
                 "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
                 "hidden": false,
-                "icon": "C:\\Users\\rslater\\Pictures\\icons\\ubuntu.png",
-                "name": "Ubuntu 24.04.1 LTS",
+                "icon": "C:\\Users\\mcp\\Pictures\\icons\\ubuntu.png",
+                "name": "Ubuntu 24.04",
                 "source": "CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc",
                 "startingDirectory": "~"
             },
@@ -154,6 +154,18 @@
                 "guid": "{74b64c43-6fb3-5596-8414-d01c005f1a19}",
                 "hidden": false,
                 "name": "Ubuntu-24.04",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{b4252075-05aa-51e2-bde5-ed9ab3af30e3}",
+                "hidden": false,
+                "name": "NixOS",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{4dcbf11b-1458-575b-82c8-ac790de059d3}",
+                "hidden": false,
+                "name": "NixOS",
                 "source": "Microsoft.WSL"
             }
         ]
