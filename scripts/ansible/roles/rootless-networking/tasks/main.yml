@@ -1,0 +1,33 @@
+---
+- name: Ensure required dependencies are installed (Debian/Ubuntu)
+  apt:
+    name:
+      - passt
+      - slirp4netns
+      - dbus-user-session
+    state: present
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Ensure required dependencies are installed (CentOS)
+  yum:
+    name:
+      - passt
+      - slirp4netns
+    state: present
+  when: ansible_os_family == 'RedHat'
+  become: true
+
+- name: Set fact for the real user
+  set_fact:
+    real_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}"
+
+- name: Check if lingering is enabled for {{ real_user }}
+  stat:
+    path: /var/lib/systemd/linger/{{ real_user }}
+  register: linger_file
+
+- name: Enable SystemD lingering for {{ real_user }}
+  command: loginctl enable-linger {{ real_user }}
+  become: true
+  when: not linger_file.stat.exists
