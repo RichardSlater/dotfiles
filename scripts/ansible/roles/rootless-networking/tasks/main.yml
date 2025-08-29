@@ -18,9 +18,10 @@
   when: ansible_os_family == 'RedHat'
   become: true
 
-- name: Set fact for the real user
+- name: Set facts for the real user and UID
   set_fact:
     real_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}"
+    real_user_uid: "{{ lookup('ansible.builtin.pipe', 'id -u ' + (ansible_env.SUDO_USER | default(ansible_env.USER))) }}"
 
 - name: Check if lingering is enabled for {{ real_user }}
   stat:
@@ -31,3 +32,22 @@
   command: loginctl enable-linger {{ real_user }}
   become: true
   when: not linger_file.stat.exists
+
+- name: Enable and start podman.socket for {{ real_user }}
+  ansible.builtin.systemd:
+    name: podman.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Check podman socket responds with OK
+  ansible.builtin.command:
+    cmd: >
+      curl --unix-socket /var/run/user/{{ real_user_uid }}/podman/podman.sock -H 'content-type: application/json' -sf http://localhost/_ping
+  register: podman_ping
+  changed_when: false
+
+- name: Fail if podman socket does not respond with OK
+  ansible.builtin.fail:
+    msg: "Podman socket did not respond with OK: {{ podman_ping.stdout }}"
+  when: podman_ping.stdout != 'OK'
