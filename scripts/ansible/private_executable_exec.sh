@@ -29,12 +29,14 @@ install_ansible() {
       fi
 
       sudo apt update
-      sudo apt install -y --fix-broken python3-debian ansible
+      sudo apt install -y --fix-broken wget curl git python3-debian ansible
       ;;
     fedora)
-      sudo dnf install -y ansible
+      sudo dnf install -y wget curl git ansible
       ;;
     centos | rhel)
+      sudo yum install -y wget
+      sudo yum install -y curl
       sudo yum install -y epel-release
       sudo yum install -y ansible
       ;;

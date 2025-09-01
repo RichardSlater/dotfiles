@@ -1,4 +1,17 @@
 ---
+- name: Debugging
+  hosts: localhost
+  tasks:
+    - name: Operating System Family
+      ansible.builtin.debug:
+        var: ansible_facts['os_family'] 
+    - name: Operating System Version
+      ansible.builtin.debug:
+        var: ansible_facts['distribution_version']
+    - name: Debian is > 13
+      ansible.builtin.debug:
+        var: ansible_facts['distribution_version'] is version('13.0', '>=') 
+
 - name: Update Ubuntu/Debian system
   hosts: localhost
   become: true
@@ -24,6 +37,9 @@
             state: present
           loop:
             - python3-debian
+            - git
+            - wget
+            - curl
 
       rescue:
         - name: Fix broken apt installs
@@ -52,13 +68,13 @@
       - dnsutils
       - btop
   roles:
+    - packages
     - bat
     - fzf
     - geerlingguy.go
     - hurricanehrndz.rustup
     - neovim
     - oh-my-posh
-    - packages
     - pwsh
     - tmux
     - zsh
