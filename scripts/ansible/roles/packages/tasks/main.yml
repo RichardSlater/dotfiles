@@ -1,7 +1,14 @@
 ---
-- name: Install required packages
+- name: Install specified packages
   package:
     name: "{{ packages }}"
     state: present
-  become: yes
   when: packages is defined
+
+- name: Install '{{ item.Name }}' (Debian)
+  package:
+    deb: "{{ item.source }}"
+  when: 
+    - unlisted_packages is defined
+    - ansible_facts['os_family'] == "Debian"
+  loop: "{{ unlisted_packages }}"
