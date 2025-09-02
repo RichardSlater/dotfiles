@@ -22,6 +22,14 @@
   set_fact:
     real_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}"
     real_user_uid: "{{ lookup('ansible.builtin.pipe', 'id -u ' + (ansible_env.SUDO_USER | default(ansible_env.USER))) }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ real_user_uid }}"
+
+- name: Write Debug Variables
+  debug:
+    msg:
+      - "Real User: {{ real_user }}"
+      - "Real User UID: {{ real_user_uid }}"
+      - "XDG Runtime Dir: {{ XDG_RUNTIME_DIR }}"
 
 - name: Enable and start podman.socket for {{ real_user }}
   ansible.builtin.systemd:
@@ -29,11 +37,13 @@
     enabled: true
     state: started
     scope: user
+  environment:
+    XDG_RUNTIME_DIR: "{{ XDG_RUNTIME_DIR }}"
 
 - name: Check podman socket responds with OK
   ansible.builtin.command:
     cmd: >
-      curl --unix-socket /var/run/user/{{ real_user_uid }}/podman/podman.sock -H 'content-type: application/json' -sf http://localhost/_ping
+      curl --unix-socket /run/user/{{ real_user_uid }}/podman/podman.sock -H 'content-type: application/json' -sf http://localhost/_ping
   register: podman_ping
   changed_when: false
 
