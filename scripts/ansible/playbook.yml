@@ -78,8 +78,12 @@
     - pwsh
     - tmux
     - zsh
-    - rootless-networking
     - alvistack.podman
+
+- name: Run roles for user setup
+  hosts: localhost
+  roles:
+    - rootless-networking
 
 - name: Run roles for user
   hosts: localhost

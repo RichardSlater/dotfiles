@@ -22,6 +22,9 @@
   set_fact:
     real_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}"
     real_user_uid: "{{ lookup('ansible.builtin.pipe', 'id -u ' + (ansible_env.SUDO_USER | default(ansible_env.USER))) }}"
+
+- name: Set the SystemD Runtime Dir
+  set_fact:
     XDG_RUNTIME_DIR: "/run/user/{{ real_user_uid }}"
 
 - name: Write Debug Variables
@@ -30,6 +33,16 @@
       - "Real User: {{ real_user }}"
       - "Real User UID: {{ real_user_uid }}"
       - "XDG Runtime Dir: {{ XDG_RUNTIME_DIR }}"
+
+- name: Check if lingering is enabled for {{ real_user }}
+  stat:
+    path: /var/lib/systemd/linger/{{ real_user }}
+  register: linger_file
+
+- name: Enable SystemD lingering for {{ real_user }}
+  command: loginctl enable-linger {{ real_user }}
+  become: true
+  when: not linger_file.stat.exists
 
 - name: Enable and start podman.socket for {{ real_user }}
   ansible.builtin.systemd:

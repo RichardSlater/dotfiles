@@ -10,7 +10,7 @@ chezmoi init --apply --verbose RichardSlater
 ## Linux Install
 
 ```sh
-sudo apt update && sudo apt install --yes curl git software-properties-common
+sudo apt update && sudo apt install --yes curl git
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply RichardSlater
 ```
 
