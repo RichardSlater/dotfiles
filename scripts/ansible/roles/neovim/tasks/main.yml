@@ -20,29 +20,14 @@
 
 - name: Install Yarn via apt
   block:
-    - name: Download Yarn GPG key
-      ansible.builtin.command:
-        cmd: curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg -o /usr/share/keyrings/yarnkey.gpg
-      args:
-        creates: /usr/share/keyrings/yarnkey.gpg
-
-    - name: Add Yarn deb822 repository
-      ansible.builtin.deb822_repository:
-        name: yarn
-        types: deb
-        uris: https://dl.yarnpkg.com/debian/
-        suites: stable
-        components: main
-        signed_by: /usr/share/keyrings/yarnkey.gpg
-        state: present
-
+    
     - name: Update apt cache
       apt:
         update_cache: yes
 
     - name: Install Yarn
       apt:
-        name: yarn
+        name: yarnpkg
         state: present
 
 - name: Clone Neovim repository
