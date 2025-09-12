@@ -92,6 +92,7 @@
   hosts: localhost
   roles:
     - rootless-networking
+    - nvm
 
 - name: Run roles for user
   hosts: localhost
