@@ -14,16 +14,16 @@
       "id": "User.paste"
     },
     {
+      "command": "find",
+      "id": "User.find"
+    },
+    {
       "command": {
         "action": "splitPane",
         "split": "auto",
         "splitMode": "duplicate"
       },
       "id": "User.splitPane.A6751878"
-    },
-    {
-      "command": "find",
-      "id": "User.find"
     }
   ],
   "centerOnLaunch": true,
@@ -36,12 +36,12 @@
       "keys": "ctrl+c"
     },
     {
-      "id": "User.find",
-      "keys": "ctrl+shift+f"
-    },
-    {
       "id": "User.paste",
       "keys": "ctrl+v"
+    },
+    {
+      "id": "User.find",
+      "keys": "ctrl+shift+f"
     },
     {
       "id": "User.splitPane.A6751878",
@@ -57,12 +57,7 @@
     },
     {
       "icon": null,
-      "profile": "{50611b6d-318f-5c24-bbbb-873e5e062e7f}",
-      "type": "profile"
-    },
-    {
-      "icon": null,
-      "profile": "{891be537-83db-5b20-9f99-bfc339b7e897}",
+      "profile": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
       "type": "profile"
     },
     {
@@ -95,42 +90,20 @@
         "source": "Windows.Terminal.PowershellCore"
       },
       {
+        "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Debian --shell-type login --cd ~",
+        "guid": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
+        "hidden": false,
+        "icon": "C:\\Users\\mcp\\Pictures\\icons\\debian.png",
+        "name": "Debian",
+        "startingDirectory": "~"
+      },
+      {
         "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Ubuntu-24.04 --shell-type login --cd ~",
         "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
         "hidden": false,
-        "name": "Ubuntu 24.04",
+        "icon": "C:\\Users\\mcp\\Pictures\\icons\\ubuntu.png",
+        "name": "Ubuntu",
         "startingDirectory": "~"
-      },
-      {
-        "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Debian --shell-type login --cd ~",
-        "guid": "{50611b6d-318f-5c24-bbbb-873e5e062e7f}",
-        "hidden": false,
-        "icon": "C:\\Users\\rslater\\Pictures\\icons\\debian.png",
-        "name": "Debian",
-        "source": "Microsoft.WSL",
-        "startingDirectory": "~"
-      },
-      {
-        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-        "hidden": true,
-        "name": "Windows PowerShell"
-      },
-      {
-        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-        "hidden": false,
-        "name": "Command Prompt"
-      },
-      {
-        "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-        "hidden": false,
-        "name": "Azure Cloud Shell",
-        "source": "Windows.Terminal.Azure"
-      },
-      {
-        "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-        "hidden": false,
-        "name": "Git Bash",
-        "source": "Git"
       }
     ]
   },
