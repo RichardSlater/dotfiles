@@ -4,7 +4,7 @@ if (Test-Path "~/.config/oh-my-posh/cloud-native-tokyo-night.omp.json") {
     oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/RichardSlater/dotfiles/master/dot_config/oh-my-posh/cloud-native-tokyo-night.omp.json' | Invoke-Expression
 }
 
-if ((get-command hugo | Measure).Count > 0) {
+if ((get-command hugo | Measure).Count -gt 0) {
   hugo completion powershell | Out-String | Invoke-Expression
 }
 
