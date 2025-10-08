@@ -79,7 +79,6 @@
     - bat
     - fzf
     - geerlingguy.go
-    - hurricanehrndz.rustup
     - neovim
     - oh-my-posh
     - pwsh
@@ -90,9 +89,12 @@
 
 - name: Run roles for user setup
   hosts: localhost
+  vars:
+    rustup_user: "{{ ansible_user_id }}"
   roles:
     - rootless-networking
     - nvm
+    - hurricanehrndz.rustup
 
 - name: Run roles for user
   hosts: localhost
