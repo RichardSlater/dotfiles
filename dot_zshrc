@@ -166,3 +166,6 @@ fi
 # dotnet
 export DOTNET_ROOT=$(dirname $(readlink -f $(which dotnet)))
 # dotnet end
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
