@@ -1,137 +1,148 @@
 {
-  "$help": "https://aka.ms/terminal-documentation",
-  "$schema": "https://aka.ms/terminal-profiles-schema",
-  "actions": [
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.A6751878"
+        }
+    ],
+    "centerOnLaunch": true,
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings": 
+    [
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
+        }
+    ],
+    "launchMode": "default",
+    "newTabMenu": 
+    [
+        {
+            "icon": null,
+            "profile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+            "type": "profile"
+        },
+        {
+            "icon": null,
+            "profile": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
+            "type": "profile"
+        },
+        {
+            "icon": null,
+            "profile": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
+            "type": "profile"
+        },
+        {
+            "icon": null,
+            "profile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+            "type": "profile"
+        }
+    ],
+    "profiles": 
     {
-      "command": {
-        "action": "copy",
-        "singleLine": false
-      },
-      "id": "User.copy.644BA8F2"
+        "defaults": 
+        {
+            "adjustIndistinguishableColors": "indexed",
+            "colorScheme": "Tokyo Night",
+            "font": 
+            {
+                "face": "FiraCode Nerd Font",
+                "size": 8
+            },
+            "startingDirectory": "C:\\source"
+        },
+        "list": 
+        [
+            {
+                "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -nologo",
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Debian --shell-type login --cd ~",
+                "guid": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Pictures\\icons\\debian.png",
+                "name": "Debian",
+                "startingDirectory": "~"
+            },
+            {
+                "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Ubuntu-24.04 --shell-type login --cd ~",
+                "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Pictures\\icons\\ubuntu.png",
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc",
+                "startingDirectory": "~"
+            }
+        ]
     },
-    {
-      "command": "paste",
-      "id": "User.paste"
-    },
-    {
-      "command": "find",
-      "id": "User.find"
-    },
-    {
-      "command": {
-        "action": "splitPane",
-        "split": "auto",
-        "splitMode": "duplicate"
-      },
-      "id": "User.splitPane.A6751878"
-    }
-  ],
-  "centerOnLaunch": true,
-  "copyFormatting": "none",
-  "copyOnSelect": false,
-  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-  "keybindings": [
-    {
-      "id": "User.copy.644BA8F2",
-      "keys": "ctrl+c"
-    },
-    {
-      "id": "User.paste",
-      "keys": "ctrl+v"
-    },
-    {
-      "id": "User.find",
-      "keys": "ctrl+shift+f"
-    },
-    {
-      "id": "User.splitPane.A6751878",
-      "keys": "alt+shift+d"
-    }
-  ],
-  "launchMode": "default",
-  "newTabMenu": [
-    {
-      "icon": null,
-      "profile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-      "type": "profile"
-    },
-    {
-      "icon": null,
-      "profile": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
-      "type": "profile"
-    },
-    {
-      "icon": null,
-      "profile": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
-      "type": "profile"
-    },
-    {
-      "icon": null,
-      "profile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-      "type": "profile"
-    }
-  ],
-  "profiles": {
-    "defaults": {
-      "adjustIndistinguishableColors": "indexed",
-      "colorScheme": "Tokyo Night",
-      "font": {
-        "face": "FiraCode Nerd Font",
-        "size": 8
-      },
-      "startingDirectory": "C:\\source"
-    },
-    "list": [
-      {
-        "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -nologo",
-        "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-        "hidden": false,
-        "name": "PowerShell",
-        "source": "Windows.Terminal.PowershellCore"
-      },
-      {
-        "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Debian --shell-type login --cd ~",
-        "guid": "{b68e817b-6dee-4397-a4c4-3b1a2664b018}",
-        "hidden": false,
-        "icon": "C:\\Users\\mcp\\Pictures\\icons\\debian.png",
-        "name": "Debian",
-        "startingDirectory": "~"
-      },
-      {
-        "commandline": "C:\\WINDOWS\\system32\\wsl.exe --distribution Ubuntu-24.04 --shell-type login --cd ~",
-        "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
-        "hidden": false,
-        "icon": "C:\\Users\\mcp\\Pictures\\icons\\ubuntu.png",
-        "name": "Ubuntu",
-        "startingDirectory": "~"
-      }
-    ]
-  },
-  "schemes": [
-    {
-      "background": "#1A1B26",
-      "black": "#414868",
-      "blue": "#7AA2F7",
-      "brightBlack": "#414868",
-      "brightBlue": "#7AA2F7",
-      "brightCyan": "#7DCFFF",
-      "brightGreen": "#73DACA",
-      "brightPurple": "#BB9AF7",
-      "brightRed": "#F7768E",
-      "brightWhite": "#C0CAF5",
-      "brightYellow": "#E0AF68",
-      "cursorColor": "#C0CAF5",
-      "cyan": "#7DCFFF",
-      "foreground": "#A9B1DC",
-      "green": "#73DACA",
-      "name": "Tokyo Night",
-      "purple": "#BB9AF7",
-      "red": "#F7768E",
-      "selectionBackground": "#28344A",
-      "white": "#C0CAF5",
-      "yellow": "#E0AF68"
-    }
-  ],
-  "themes": [],
-  "windowingBehavior": "useAnyExisting"
+    "schemes": 
+    [
+        {
+            "background": "#1A1B26",
+            "black": "#414868",
+            "blue": "#7AA2F7",
+            "brightBlack": "#414868",
+            "brightBlue": "#7AA2F7",
+            "brightCyan": "#7DCFFF",
+            "brightGreen": "#73DACA",
+            "brightPurple": "#BB9AF7",
+            "brightRed": "#F7768E",
+            "brightWhite": "#C0CAF5",
+            "brightYellow": "#E0AF68",
+            "cursorColor": "#C0CAF5",
+            "cyan": "#7DCFFF",
+            "foreground": "#A9B1DC",
+            "green": "#73DACA",
+            "name": "Tokyo Night",
+            "purple": "#BB9AF7",
+            "red": "#F7768E",
+            "selectionBackground": "#28344A",
+            "white": "#C0CAF5",
+            "yellow": "#E0AF68"
+        }
+    ],
+    "themes": [],
+    "windowingBehavior": "useAnyExisting"
 }
