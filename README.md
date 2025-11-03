@@ -10,7 +10,8 @@ chezmoi init --apply --verbose RichardSlater
 ## Linux Install
 
 ```sh
-sudo apt update && sudo apt install --yes curl git
+sudo apt update && sudo apt install --yes curl git unzip
+curl -s https://ohmyposh.dev/install.sh | bash -s
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply RichardSlater
 ```
 
