@@ -90,7 +90,7 @@
 - name: Run roles for user setup
   hosts: localhost
   vars:
-    rustup_user: "{{ ansible_user_id }}"
+    rustup_user: "{{ ansible_facts['user_id'] }}"
   roles:
     - rootless-networking
     - nvm
@@ -100,4 +100,4 @@
   hosts: localhost
   roles:
     - role: foundry
-      when: "'ensono.com' not in ansible_dns.search"
+      when: "'ensono.com' not in ansible_facts['dns'].search"

@@ -5,7 +5,7 @@
     state: present
   when: packages is defined
 
-- name: Install '{{ item.Name }}' (Debian)
+- name: Install unlisted packages from .deb files (Debian)
   package:
     deb: "{{ item.source }}"
   when: 
