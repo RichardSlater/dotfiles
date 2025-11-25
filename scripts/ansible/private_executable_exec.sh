@@ -75,7 +75,7 @@ run_playbook() {
   fi
 
   echo "Running Ansible playbook: $PLAYBOOK"
-  ansible-playbook "$PLAYBOOK" -i ./inventory/hosts.yml --ask-become-pass
+  ansible-playbook "$PLAYBOOK" -i ./inventory/hosts.yml --ask-become-pass -e @./scripts/ansible/vars/alvistack_key_overide.yml
 }
 
 # Main Execution
