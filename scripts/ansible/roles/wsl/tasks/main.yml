@@ -5,31 +5,38 @@
   changed_when: false
   failed_when: false
 
-- name: Ensure /etc/wsl.conf ends with a newline
-  become: true
-  lineinfile:
-    path: /etc/wsl.conf
-    line: ''
-    state: present
-    insertafter: EOF
+- name: WSL configuration block
   when: wsl_check.rc == 0
+  block:
+    - name: Ensure /etc/wsl.conf exists
+      become: true
+      file:
+        path: /etc/wsl.conf
+        state: touch
+        mode: '0644'
 
-- name: Ensure [interop] section exists in /etc/wsl.conf
-  become: true
-  lineinfile:
-    path: /etc/wsl.conf
-    line: '[interop]'
-    state: present
-    insertafter: EOF
-    regexp: '^\[interop\]$'
-  when: wsl_check.rc == 0
+    - name: Ensure /etc/wsl.conf ends with a newline
+      become: true
+      lineinfile:
+        path: /etc/wsl.conf
+        line: ''
+        state: present
+        insertafter: EOF
 
-- name: Ensure appendWindowsPath = false is set under [interop] in /etc/wsl.conf
-  become: true
-  lineinfile:
-    path: /etc/wsl.conf
-    line: 'appendWindowsPath = false'
-    state: present
-    insertafter: '^\[interop\]$'
-    regexp: '^appendWindowsPath\s*='
-  when: wsl_check.rc == 0
+    - name: Ensure [interop] section exists in /etc/wsl.conf
+      become: true
+      lineinfile:
+        path: /etc/wsl.conf
+        line: '[interop]'
+        state: present
+        insertafter: EOF
+        regexp: '^\[interop\]$'
+
+    - name: Ensure appendWindowsPath = false is set under [interop] in /etc/wsl.conf
+      become: true
+      lineinfile:
+        path: /etc/wsl.conf
+        line: 'appendWindowsPath = false'
+        state: present
+        insertafter: '^\[interop\]$'
+        regexp: '^appendWindowsPath\s*='

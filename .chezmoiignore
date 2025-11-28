@@ -13,6 +13,7 @@ LICENSE
 {{- end }}
 
 {{- if not ( and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") ) }}
+/.local/bin/gpg
 /.local/bin/ssh
 /.local/bin/ssh-add
 /.local/bin/scp

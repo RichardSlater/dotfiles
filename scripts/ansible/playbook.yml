@@ -74,6 +74,10 @@
     unlisted_packages:
       - name: Dive
         source: https://github.com/wagoodman/dive/releases/download/v0.13.1/dive_0.13.1_linux_amd64.deb
+    # geerlingguy.go role variables - Go 1.25.4 (latest stable as of Nov 2025)
+    go_version: "1.25.4"
+    go_install_clean: true
+    go_checksum: "9fa5ffeda4170de60f67f3aa0f824e426421ba724c21e133c1e35d6159ca1bec"
   roles:
     - packages
     - bat
@@ -84,8 +88,10 @@
     - pwsh
     - tmux
     - zsh
-    - alvistack.podman
     - wsl
+  # Note: alvistack.podman requires Ansible 2.15+ (deb822_repository module)
+  # Skip on Debian bookworm (ships with Ansible 2.14)
+  # To install podman manually: apt install podman
 
 - name: Run roles for user setup
   hosts: localhost

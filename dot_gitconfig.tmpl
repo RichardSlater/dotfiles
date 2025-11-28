@@ -43,6 +43,12 @@ default = simple
 [pull]
 rebase = true
 
+[fetch]
+prune = true
+
+[rebase]
+autoStash = true
+
 [commit]
 gpgsign = true
 {{ if eq .chezmoi.os "windows" -}}
@@ -62,4 +68,3 @@ program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
 {{ end }}
 [init]
 defaultBranch = main
-

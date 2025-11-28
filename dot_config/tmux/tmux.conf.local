@@ -246,7 +246,7 @@ tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized} | #{lo
 # status left style
 tmux_conf_theme_status_left_fg="$col_ebonyclay,$col_ebonyclay,$col_ebonyclay"
 tmux_conf_theme_status_left_bg="$col_macaroniandcheese,$col_atomictangerine,$col_yellowgreen"
-tmux_conf_theme_status_left_attr="bold,none,none"kjj
+tmux_conf_theme_status_left_attr="bold,none,none"
 
 # status right style
 tmux_conf_theme_status_right_fg="$col_perano,$col_perano,$col_perano,$col_ebonyclay,$col_ebonyclay,$col_ebonyclay"

@@ -104,15 +104,8 @@ if [ -f "$HOME/.bash_aliases" ]; then
   . "$HOME/.bash_aliases"
 fi
 
-# configure editors
-if command -v nvim &> /dev/null; then
-  alias vi='nvim'
-  alias vim='nvim'
-  EDITOR=$(which nvim)
-else
-  EDITOR=vi
-fi
-VISUAL=$EDITOR
+# Source shared shell configuration (editor, PATH, cargo, pnpm, SDKMAN, etc.)
+[ -f "$HOME/.config/shell_common" ] && source "$HOME/.config/shell_common"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -131,9 +124,6 @@ if [ -f "$HOME/.nvm" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 fi
 
-# foundry
-[ -d "$HOME/.foundry/bin" ] && export PATH="$PATH:$HOME/.foundry/bin"
-
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
   if [ -f "$HOME/.config/oh-my-posh/cloud-native-tokyo-night.omp.json" ]; then
@@ -146,9 +136,3 @@ fi
 if command -v fzf &> /dev/null; then
   source "$HOME/.config/.fzf.bash"
 fi
-
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-

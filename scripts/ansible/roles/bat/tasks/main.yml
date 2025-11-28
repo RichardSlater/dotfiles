@@ -9,8 +9,10 @@
       when: ansible_facts['os_family'] == "Debian"
 
 - name: Create symlink for bat as 'batcat' on Debian-based distros
+  become: true
   file:
     src: "/usr/bin/batcat"
     dest: "/usr/local/bin/bat"
     state: link
+    force: true
   when: ansible_facts['os_family'] == "Debian"

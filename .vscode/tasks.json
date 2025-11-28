@@ -1,0 +1,71 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Test Dotfiles in Docker (Debian)",
+      "type": "shell",
+      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com debian:bookworm bash -c 'apt-get update && apt-get install -y curl git && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec bash'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test Dotfiles in Docker (Ubuntu)",
+      "type": "shell",
+      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com ubuntu:24.04 bash -c 'apt-get update && apt-get install -y curl git && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec bash'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test Dotfiles - Dry Run (Docker)",
+      "type": "shell",
+      "command": "docker run --rm -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com debian:bookworm bash /dotfiles/.vscode/test-dotfiles.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test Ansible Playbook - Syntax Check (Docker)",
+      "type": "shell",
+      "command": "docker run --rm -v \"${workspaceFolder}:/dotfiles:ro\" debian:bookworm bash -c 'apt-get update -qq && apt-get install -y -qq ansible > /dev/null && cd /dotfiles/scripts/ansible && ansible-galaxy install -r requirements.yml && ansible-playbook playbook.yml --syntax-check'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Test Ansible Playbook - Full Apply (Docker)",
+      "type": "shell",
+      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" debian:bookworm bash -c 'apt-get update && apt-get install -y ansible python3-apt sudo && cd /dotfiles/scripts/ansible && ansible-galaxy install -r requirements.yml && ansible-playbook playbook.yml -c local; exec bash'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Shell Lint (shellcheck)",
+      "type": "shell",
+      "command": "docker run --rm -v \"${workspaceFolder}:/dotfiles:ro\" koalaman/shellcheck:stable /dotfiles/dot_bashrc /dotfiles/dot_profile /dotfiles/dot_config/shell_common",
+      "problemMatcher": "$shellcheck",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    }
+  ]
+}
