@@ -4,7 +4,7 @@
     {
       "label": "Test Dotfiles in Docker (Debian)",
       "type": "shell",
-      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com debian:bookworm bash -c 'apt-get update && apt-get install -y curl git && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec bash'",
+      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com -e TERM=xterm-256color debian:bookworm bash -c 'apt-get update && apt-get install -y curl git zsh lsb-release && mkdir -p /root/.local/bin && curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o /root/.local/bin/oh-my-posh && chmod +x /root/.local/bin/oh-my-posh && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec zsh'",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -15,7 +15,7 @@
     {
       "label": "Test Dotfiles in Docker (Ubuntu)",
       "type": "shell",
-      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com ubuntu:24.04 bash -c 'apt-get update && apt-get install -y curl git && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec bash'",
+      "command": "docker run --rm -it -v \"${workspaceFolder}:/dotfiles:ro\" -e CHEZMOI_EMAIL=test@example.com -e TERM=xterm-256color ubuntu:24.04 bash -c 'apt-get update && apt-get install -y curl git zsh lsb-release && mkdir -p /root/.local/bin && curl -fsSL https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -o /root/.local/bin/oh-my-posh && chmod +x /root/.local/bin/oh-my-posh && sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles; exec zsh'",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

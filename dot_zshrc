@@ -10,6 +10,9 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="$HOME/.cache/.zsh_history"
 
+# Ensure ~/.local/bin is in PATH early (for oh-my-posh and other local tools)
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+
 # Source shared shell configuration (editor, PATH, cargo, pnpm, SDKMAN, etc.)
 [ -f "$HOME/.config/shell_common" ] && source "$HOME/.config/shell_common"
 
