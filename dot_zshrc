@@ -167,5 +167,14 @@ fi
 export DOTNET_ROOT=$(dirname $(readlink -f $(which dotnet)))
 # dotnet end
 
+# go
+[ -f "/usr/local/go/bin/go" ] && export PATH="$PATH:/usr/local/go/bin"
+# go end
+
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
