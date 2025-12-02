@@ -49,8 +49,24 @@
   command:
     cmd: "make CMAKE_BUILD_TYPE=Release"
     chdir: "{{ nvim_dest }}"
-  args:
-    creates: "{{ nvim_dest }}/build/bin/nvim"
+  register: neovim_build
+  ignore_errors: true
+
+- name: Clean and retry build if failed (stale cache)
+  block:
+    - name: Clean stale build directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ nvim_dest }}/.deps"
+        - "{{ nvim_dest }}/build"
+
+    - name: Retry Neovim build
+      command:
+        cmd: "make CMAKE_BUILD_TYPE=Release"
+        chdir: "{{ nvim_dest }}"
+  when: neovim_build.failed
 
 - name: Install Neovim
   command:
