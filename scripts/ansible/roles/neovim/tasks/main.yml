@@ -36,6 +36,14 @@
     dest: "{{ nvim_dest }}"
     depth: 1
     update: yes
+  register: neovim_git
+
+- name: Clean Neovim build directory if source changed
+  command:
+    cmd: "make distclean"
+    chdir: "{{ nvim_dest }}"
+  when: neovim_git.changed
+  ignore_errors: true
 
 - name: Build Neovim
   command:
