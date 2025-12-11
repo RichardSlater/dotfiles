@@ -114,6 +114,12 @@ if command -v taskctl &> /dev/null; then
 fi
 # taskctl end
 
+# eirctl start
+if command -v eirctl &> /dev/null; then
+  . <(eirctl completion zsh)
+fi
+# eirctl end
+
 # VS Code shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 

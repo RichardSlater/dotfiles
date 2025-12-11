@@ -14,13 +14,6 @@ fi
 export VISUAL=$EDITOR
 
 # =============================================================================
-# Podman
-# =============================================================================
-if command -v podman &> /dev/null; then
-  export DOCKER_HOST="unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-fi
-
-# =============================================================================
 # PATH Additions
 # =============================================================================
 # User's private bin directories
@@ -70,3 +63,9 @@ fi
 # =============================================================================
 export SDKMAN_DIR="$HOME/.sdkman"
 [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+# =============================================================================
+# Podman
+# =============================================================================
+[ -f "/usr/bin/podman" ] && export DOCKER_HOST="unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
+
