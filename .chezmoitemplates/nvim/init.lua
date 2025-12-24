@@ -127,6 +127,7 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, { range = true })
 
 -- configure status line
+local has_noice, noice = pcall(require, "noice")
 require("lualine").setup({
 	options = {
 		icons_enabled = true,
@@ -152,8 +153,19 @@ require("lualine").setup({
 		lualine_c = { { "filename", separator = { right = "" }, color = { bg = "#292e42" } } },
 		lualine_x = {
 			{
-				noice.api.status.mode.get,
-				cond = noice.api.status.mode.has,
+				function()
+					if has_noice and noice.api and noice.api.status and noice.api.status.mode then
+						return noice.api.status.mode.get()
+					end
+					return ""
+				end,
+				cond = function()
+					return has_noice
+						and noice.api
+						and noice.api.status
+						and noice.api.status.mode
+						and noice.api.status.mode.has()
+				end,
 				separator = { left = "" },
 				color = { bg = "#7dcfff", fg = "#1f2335" },
 			},
