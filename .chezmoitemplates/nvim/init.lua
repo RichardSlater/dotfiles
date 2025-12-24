@@ -40,6 +40,39 @@ require("lazy").setup({
 	spec = {
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
 		{ "folke/noice.nvim", event = "VeryLazy", opts = { }, dependencies = { } },
+			{ "neovim/nvim-lspconfig" },
+			{
+				"seblyng/roslyn.nvim",
+				ft = { "cs", "csproj", "sln" },
+				opts = {
+					-- Prefer the `roslyn` wrapper if installed.
+					exe = function()
+						if vim.fn.executable("roslyn") == 1 then
+							return { "roslyn" }
+						end
+						if vim.fn.executable("Microsoft.CodeAnalysis.LanguageServer") == 1 then
+							return { "Microsoft.CodeAnalysis.LanguageServer" }
+						end
+						return nil
+					end,
+				},
+				config = function(_, opts)
+					local ok, roslyn = pcall(require, "roslyn")
+					if not ok then
+						return
+					end
+					local exe = opts.exe and opts.exe() or nil
+					if not exe then
+						vim.schedule(function()
+							vim.notify("roslyn.nvim: no Roslyn LSP executable found (install `roslyn` or Roslyn Language Server)", vim.log.levels.WARN)
+						end)
+						return
+					end
+					roslyn.setup({
+						exe = exe,
+					})
+				end,
+			},
 		{ "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ":TSUpdate" },
 		{
 			"nvim-lualine/lualine.nvim",

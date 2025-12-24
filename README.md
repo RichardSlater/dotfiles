@@ -30,3 +30,18 @@ This is used only for transient environments like containers:
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --one-shot RichardSlater
 ```
+
+## Neovim: C# (Roslyn)
+
+This repo enables `seblyng/roslyn.nvim` for C# buffers.
+
+- Install a Roslyn Language Server executable on your `PATH` (config prefers `roslyn`, but will also use `Microsoft.CodeAnalysis.LanguageServer` if found).
+- Ensure a recent .NET SDK is installed.
+
+Verify prerequisites on Windows:
+
+```powershell
+dotnet --info
+Get-Command roslyn -ErrorAction SilentlyContinue
+Get-Command Microsoft.CodeAnalysis.LanguageServer -ErrorAction SilentlyContinue
+```
