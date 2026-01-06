@@ -1,0 +1,34 @@
+---
+- name: Check for Docker
+  command: which docker
+  register: docker_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Check for Podman
+  command: which podman
+  register: podman_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Prune Docker system
+  command: docker system prune --all --volumes --force
+  when: docker_check.rc == 0
+  register: docker_prune_result
+  changed_when: "'Total reclaimed space' in docker_prune_result.stdout"
+
+- name: Prune Podman system
+  command: podman system prune --all --volumes --force
+  when: podman_check.rc == 0
+  register: podman_prune_result
+  changed_when: podman_prune_result.stdout != ""
+
+- name: Show Docker cleanup results
+  debug:
+    msg: "{{ docker_prune_result.stdout_lines }}"
+  when: docker_check.rc == 0 and docker_prune_result.stdout != ""
+
+- name: Show Podman cleanup results
+  debug:
+    msg: "{{ podman_prune_result.stdout_lines }}"
+  when: podman_check.rc == 0 and podman_prune_result.stdout != ""

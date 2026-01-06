@@ -1,0 +1,38 @@
+---
+- name: Check if uv is already installed
+  command: uv --version
+  register: uv_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install uv using the official standalone installer
+  shell: "curl -fsSL {{ uv_install_script_url }} | sh"
+  register: uv_install_result
+  when: uv_check.rc != 0
+  environment:
+    UV_INSTALL_DIR: "{{ ansible_env.HOME }}/.local/bin"
+  args:
+    executable: /bin/bash
+
+- name: Add uv shell completion for zsh
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    line: 'eval "$(uv generate-shell-completion zsh)"'
+    create: true
+  when: uv_check.rc == 0 or uv_install_result.changed
+
+- name: Add uv shell completion for bash
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'eval "$(uv generate-shell-completion bash)"'
+    create: true
+  when: uv_check.rc == 0 or uv_install_result.changed
+
+- name: Verify uv installation
+  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  register: uv_verify
+  changed_when: false
+
+- name: Show uv version
+  debug:
+    msg: "uv installed: {{ uv_verify.stdout }}"

@@ -1,0 +1,4 @@
+---
+cargo_packages:
+  - name: tree-sitter-cli
+    binary: tree-sitter

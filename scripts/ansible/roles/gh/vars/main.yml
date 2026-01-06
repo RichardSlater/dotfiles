@@ -1,0 +1,4 @@
+---
+gh_version: "v2.64.0"
+gh_git_repo: "https://github.com/cli/cli.git"
+gh_build_dir: "/tmp/gh_build"

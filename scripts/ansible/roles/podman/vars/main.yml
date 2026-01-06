@@ -1,0 +1,19 @@
+---
+podman_version: "v5.3.1"
+podman_git_repo: "https://github.com/containers/podman.git"
+podman_build_dir: "/tmp/podman_build"
+podman_network_handler: "pasta"  # Options: pasta, slirp4netns
+podman_runtime: "crun"         # Options: crun, runc
+
+# Package mapping for network handlers and runtimes
+podman_package_map:
+  pasta: "passt"
+  slirp4netns: "slirp4netns"
+  crun: "crun"
+  runc: "runc"
+
+# Build tags as recommended by documentation
+podman_build_tags: "seccomp apparmor"
+
+# User for rootless configuration
+podman_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"

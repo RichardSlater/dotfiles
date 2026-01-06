@@ -1,0 +1,25 @@
+---
+- name: Check if specify-cli is already installed
+  shell: "uv tool list | grep -q '^{{ speckit_package }} '"
+  register: speckit_check
+  ignore_errors: true
+  changed_when: false
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+
+- name: Install SpecKit (Specify CLI) using uv
+  command: "uv tool install {{ speckit_package }} --from {{ speckit_repo_url }}"
+  when: speckit_check.rc != 0
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+
+- name: Verify Specify CLI installation
+  command: "specify --help"
+  register: speckit_verify
+  changed_when: false
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+
+- name: Show Specify CLI help
+  debug:
+    msg: "Specify CLI (SpecKit) is installed and responding."

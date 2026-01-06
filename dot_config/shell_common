@@ -68,4 +68,3 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # Podman
 # =============================================================================
 [ -f "/usr/bin/podman" ] && export DOCKER_HOST="unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-

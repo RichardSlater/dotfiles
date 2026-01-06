@@ -1,0 +1,28 @@
+---
+- name: Install Cargo packages
+  shell: |
+    . "$HOME/.cargo/env"
+    cargo install {{ item.name }}
+  args:
+    executable: /bin/bash
+  loop: "{{ cargo_packages }}"
+  register: cargo_install_result
+  changed_when: "'Installed package' in cargo_install_result.stdout or 'Replaced package' in cargo_install_result.stdout"
+  failed_when:
+    - cargo_install_result.rc != 0
+    - "'already exists' not in cargo_install_result.stderr"
+
+- name: Verify Cargo package installation
+  shell: |
+    . "$HOME/.cargo/env"
+    {{ item.binary | default(item.name) }} --version
+  args:
+    executable: /bin/bash
+  loop: "{{ cargo_packages }}"
+  register: cargo_verify
+  changed_when: false
+
+- name: Show installed Cargo packages
+  debug:
+    msg: "Installed {{ item.item.name }}: {{ item.stdout_lines[0] | default('installed') }}"
+  loop: "{{ cargo_verify.results }}"

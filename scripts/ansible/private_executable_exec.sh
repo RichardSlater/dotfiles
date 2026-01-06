@@ -23,7 +23,7 @@ install_ansible() {
         wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour --yes -o /usr/share/keyrings/ansible-archive-keyring.gpg
         echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
       fi
-      
+
       if [[ ("$ID" == "ubuntu" && "$VERSION_ID" == "24.04") || ("$ID" == "debian" && "$VERSION" == *"trixie"*) ]]; then
         echo "running on $ID $VERSION_ID, using not using deadsnakes or PPA as recent versions of python and ansible available in the os repository."
       fi
@@ -75,7 +75,7 @@ run_playbook() {
   fi
 
   echo "Running Ansible playbook: $PLAYBOOK"
-  ansible-playbook "$PLAYBOOK" -i ./inventory/hosts.yml --ask-become-pass -e @./scripts/ansible/vars/alvistack_key_overide.yml
+  ansible-playbook "$PLAYBOOK" -i ./inventory/hosts.yml --ask-become-pass
 }
 
 # Main Execution

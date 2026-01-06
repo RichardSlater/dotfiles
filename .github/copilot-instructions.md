@@ -17,9 +17,14 @@ This repository is a personal chezmoi-managed dotfiles collection for Windows (P
 
 ### Project-specific conventions and patterns
 
-- chezmoi source naming: files start with `dot_` instead of a leading `.`. Respect that mapping.
-- `.tmpl` files contain template variables used by chezmoi. When changing behavior, prefer editing `.tmpl` and add/update variables via chezmoi configuration if needed.
-- Windows vs Linux branches: many items are arranged so Windows-specific artifacts live under `AppData/` and `dot_config/powershell` while POSIX artifacts live at top-level `dot_*` and under `dot_config/`.
+- **chezmoi source naming**: files start with `dot_` instead of a leading `.`. Respect that mapping.
+- **`.tmpl` files**: contain template variables used by chezmoi. When changing behavior, prefer editing `.tmpl` and add/update variables via chezmoi configuration if needed.
+- **Build from Source Pattern**: To ensure the latest versions on stable distros (like Debian/Ubuntu), many roles (Neovim, Podman, GH CLI) download source code and build locally rather than using `apt`.
+- **Tool-specific Package Managers**:
+    - **UV**: Used for Python-based tools and applications (see `roles/uv` and `roles/speckit`). Use `uv tool install` for CLI tools.
+    - **Cargo**: Used for Rust-based utilities. Managed via standard `cargo install` after ensuring Rust is present.
+- **Ansible Role Structure**: Roles are modular. System-level roles (requiring `become: true`) live in the system setup block of `playbook.yml`, while user-specific configuration (nvm, cargo, uv tools) live in the user setup block.
+- **Windows vs Linux branches**: many items are arranged so Windows-specific artifacts live under `AppData/` and `dot_config/powershell` while POSIX artifacts live at top-level `dot_*` and under `dot_config/`.
 - The repo intentionally keeps some read-only reference copies under `readonly_*` — these are not the source-of-truth for chezmoi but kept for reference.
 
 ### Workflows and commands (concrete)
@@ -67,7 +72,7 @@ ansible-playbook scripts/ansible/playbook.yml -c local
 ### Integration points / external dependencies
 
 - Uses `chezmoi` (required) and on Windows `winget` for installing the chezmoi client (see `README.md`).
-- Ansible roles may rely on external role collections (e.g. `geerlingguy.go`, `alvistack.podman`). Check `scripts/ansible/requirements.yml` for pinned role sources.
+- Ansible roles may rely on external role collections (e.g. `geerlingguy.go`). Check `scripts/ansible/requirements.yml` for pinned role sources.
 - Fonts and binaries are included locally; packaging scripts (Ansible/roles) expect these to be present in `dot_local/` and `dot_local/share`.
 
 ### Quick examples to reference in PRs

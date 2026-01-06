@@ -3,4 +3,3 @@ bindkey "^[OF" end-of-line
 bindkey "^[[3~" delete-char
 bindkey "^[^?" backward-delete-word
 bindkey "^[^[[3~" delete-word
-

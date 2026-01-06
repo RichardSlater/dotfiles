@@ -71,6 +71,12 @@
     packages:
       - dnsutils
       - btop
+      - yamllint
+      - jq
+      - ripgrep
+      - shellcheck
+      - pre-commit
+      - libclang-dev
     unlisted_packages:
       - name: Dive
         source: https://github.com/wagoodman/dive/releases/download/v0.13.1/dive_0.13.1_linux_amd64.deb
@@ -83,16 +89,14 @@
     - bat
     - fzf
     - geerlingguy.go
+    - gh
     - neovim
     - oh-my-posh
     - pwsh
     - tmux
     - zsh
     - wsl
-
-# Note: alvistack.podman requires Ansible 2.15+ (deb822_repository module)
-# Skip on Debian bookworm (ships with Ansible 2.14)
-# To install podman manually: apt install podman
+    - podman
 
 - name: Run roles for user setup
   hosts: localhost
@@ -102,9 +106,29 @@
     - rootless-networking
     - nvm
     - hurricanehrndz.rustup
+    - cargo
+    - uv
+    - speckit
+
+- name: Update Neovim Plugins (LazyVim)
+  hosts: localhost
+  tasks:
+    - name: Check if nvim is installed
+      command: which nvim
+      register: nvim_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Run LazyVim sync
+      command: nvim --headless "+Lazy! sync" +qa
+      when: nvim_check.rc == 0
+      register: lazy_sync
+      changed_when: "'No updates' not in lazy_sync.stdout"
+      ignore_errors: true
 
 - name: Run roles for user
   hosts: localhost
   roles:
     - role: foundry
       when: "'ensono.com' not in ansible_facts['dns'].search"
+    - container-cleanup

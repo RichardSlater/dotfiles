@@ -15,6 +15,7 @@
       - g++
       - libncurses5-dev
       - libncursesw5-dev
+      - libclang-dev
     state: present
     update_cache: true
 
