@@ -1,3 +1,4 @@
+#!/bin/bash
 BACKUP_FILE="/tmp/${USERNAME}_wsl_backup.tar.gz"
 
 tar -cvzf "${BACKUP_FILE}" \

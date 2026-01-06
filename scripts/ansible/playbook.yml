@@ -4,13 +4,13 @@
   tasks:
     - name: Operating System Family
       ansible.builtin.debug:
-        var: ansible_facts['os_family'] 
+        var: ansible_facts['os_family']
     - name: Operating System Version
       ansible.builtin.debug:
         var: ansible_facts['distribution_version']
     - name: Debian is > 13
       ansible.builtin.debug:
-        var: ansible_facts['distribution_version'] is version('13.0', '>=') 
+        var: ansible_facts['distribution_version'] is version('13.0', '>=')
 
 - name: Update Ubuntu/Debian system
   hosts: localhost
@@ -20,7 +20,7 @@
       block:
         - name: Update apt package index
           apt:
-            update_cache: yes
+            update_cache: true
 
         - name: Upgrade all packages
           apt:
@@ -28,8 +28,8 @@
 
         - name: Remove unnecessary packages
           apt:
-            autoremove: yes
-            autoclean: yes
+            autoremove: true
+            autoclean: true
 
         - name: Install dependant packages
           apt:
@@ -53,7 +53,7 @@
 
         - name: Retry update apt package index
           apt:
-            update_cache: yes
+            update_cache: true
 
         - name: Retry upgrade all packages
           apt:
@@ -61,8 +61,8 @@
 
         - name: Retry remove unnecessary packages
           apt:
-            autoremove: yes
-            autoclean: yes
+            autoremove: true
+            autoclean: true
 
 - name: Run roles for system setup
   hosts: localhost
@@ -89,9 +89,10 @@
     - tmux
     - zsh
     - wsl
-  # Note: alvistack.podman requires Ansible 2.15+ (deb822_repository module)
-  # Skip on Debian bookworm (ships with Ansible 2.14)
-  # To install podman manually: apt install podman
+
+# Note: alvistack.podman requires Ansible 2.15+ (deb822_repository module)
+# Skip on Debian bookworm (ships with Ansible 2.14)
+# To install podman manually: apt install podman
 
 - name: Run roles for user setup
   hosts: localhost

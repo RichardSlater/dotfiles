@@ -7,10 +7,10 @@ TEMP_DIR="/tmp/tmux_$(tr -dc a-z0-9 </dev/urandom | head -c 6; echo)"
 
 echo "Creating directory ${TEMP_DIR}"
 mkdir -p "$TEMP_DIR"
-cd "$TEMP_DIR"
-git clone https://github.com/tmux/tmux.git $TEMP_DIR
+cd "$TEMP_DIR" || exit
+git clone https://github.com/tmux/tmux.git "$TEMP_DIR"
 sh ./autogen.sh
 ./configure
 make && sudo make install
-cd -
+cd - || exit
 rm -rf "$TEMP_DIR"

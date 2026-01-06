@@ -1,3 +1,4 @@
+#!/bin/bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -127,7 +128,7 @@ fi
 # oh my posh
 if command -v oh-my-posh &> /dev/null; then
   if [ -f "$HOME/.config/oh-my-posh/cloud-native-tokyo-night.omp.json" ]; then
-    eval "$(oh-my-posh init bash --config $HOME/.config/oh-my-posh/cloud-native-tokyo-night.omp.json)"
+    eval "$(oh-my-posh init bash --config "$HOME"/.config/oh-my-posh/cloud-native-tokyo-night.omp.json)"
   else
     eval "$(oh-my-posh init bash --config 'https://raw.githubusercontent.com/RichardSlater/dotfiles/master/dot_config/oh-my-posh/cloud-native-tokyo-night.omp.json')"
   fi

@@ -8,7 +8,7 @@ TEMP_DIR="/tmp/go_$(
 
 echo "Creating directory ${TEMP_DIR}"
 mkdir -p "$TEMP_DIR"
-cd "$TEMP_DIR"
+cd "$TEMP_DIR" || exit
 wget "https://go.dev/dl/${GO_VER}" -P "$TEMP_DIR"
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "${TEMP_DIR}/${GO_VER}"
 rm -rf "$TEMP_DIR"

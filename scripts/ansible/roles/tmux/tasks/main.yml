@@ -20,7 +20,7 @@
 - name: Get latest tmux release info
   uri:
     url: "https://api.github.com/repos/tmux/tmux/releases/latest"
-    return_content: yes
+    return_content: true
   register: github_response
 
 - name: Extract latest tarball URL
@@ -47,7 +47,7 @@
   ansible.builtin.unarchive:
     src: "{{ tmux_src_dir }}/tmux.tar.gz"
     dest: "{{ tmux_src_dir }}"
-    remote_src: yes
+    remote_src: true
     extra_opts: [--strip-components=1]
 
 - name: Ensure correct permissions for source directory
@@ -55,7 +55,7 @@
     path: "{{ tmux_src_dir }}"
     state: directory
     mode: "0755"
-    recurse: yes
+    recurse: true
 
 - name: Run autogen.sh to prepare the build system
   command:

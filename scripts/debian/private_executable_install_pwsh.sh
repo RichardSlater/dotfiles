@@ -13,7 +13,7 @@ TEMP_DIR="/tmp/pwsh_$(
 
 echo "Creating directory ${TEMP_DIR}"
 mkdir -p "$TEMP_DIR"
-cd "$TEMP_DIR"
+cd "$TEMP_DIR" || exit
 
 wget "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell_${PWSH_VERSION}-1.deb_amd64.deb"
 sudo dpkg -i "powershell_${PWSH_VERSION}-1.deb_amd64.deb"

@@ -16,14 +16,13 @@
       - libncurses5-dev
       - libncursesw5-dev
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Install Yarn via apt
   block:
-    
     - name: Update apt cache
       apt:
-        update_cache: yes
+        update_cache: true
 
     - name: Install Yarn
       apt:
@@ -35,7 +34,7 @@
     repo: "{{ nvim_repo }}"
     dest: "{{ nvim_dest }}"
     depth: 1
-    update: yes
+    update: true
   register: neovim_git
 
 - name: Clean Neovim build directory if source changed

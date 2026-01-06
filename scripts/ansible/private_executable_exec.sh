@@ -63,7 +63,7 @@ install_roles() {
   fi
 
   echo "Installing requirements"
-  ansible-galaxy install -r $REQUIREMENTS
+  ansible-galaxy install -r "$REQUIREMENTS"
 }
 
 # Function to run the playbook

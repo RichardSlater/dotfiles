@@ -10,8 +10,8 @@ TEMP_DIR="/tmp/nvim_$(
 
 echo "Creating directory ${TEMP_DIR}"
 mkdir -p "$TEMP_DIR"
-cd "$TEMP_DIR"
-git clone https://github.com/neovim/neovim $TEMP_DIR
+cd "$TEMP_DIR" || exit
+git clone https://github.com/neovim/neovim "$TEMP_DIR"
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 sudo rm -rf "$TEMP_DIR"

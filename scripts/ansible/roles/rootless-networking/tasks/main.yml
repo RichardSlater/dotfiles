@@ -21,7 +21,7 @@
       - slirp4netns
       - dbus-user-session
     state: present
-  when: 
+  when:
     - systemd_available
     - ansible_facts['os_family'] == 'Debian'
   become: true
@@ -41,15 +41,17 @@
   command: whoami
   register: whoami_result
   changed_when: false
-  when: 
+  when:
     - systemd_available
     - ansible_facts['env'].USER is not defined and ansible_facts['env'].SUDO_USER is not defined
 
 - name: Set facts for the real user and UID
   set_fact:
-    real_user: "{{ ansible_facts['env'].SUDO_USER | default(ansible_facts['env'].USER) | default(whoami_result.stdout | default('root')) }}"
+    real_user: >-
+      {{ ansible_facts['env'].SUDO_USER | default(ansible_facts['env'].USER) |
+      default(whoami_result.stdout | default('root')) }}
   when: systemd_available
-    
+
 - name: Get real user UID
   command: "id -u {{ real_user }}"
   register: user_uid_result
@@ -87,7 +89,8 @@
 - name: Check podman socket responds with OK
   ansible.builtin.command:
     cmd: >
-      curl --unix-socket /run/user/{{ real_user_uid }}/podman/podman.sock -H 'content-type: application/json' -sf http://localhost/_ping
+      curl --unix-socket /run/user/{{ real_user_uid }}/podman/podman.sock
+      -H 'content-type: application/json' -sf http://localhost/_ping
   register: podman_ping
   changed_when: false
   when: systemd_available
@@ -95,6 +98,6 @@
 - name: Fail if podman socket does not respond with OK
   ansible.builtin.fail:
     msg: "Podman socket did not respond with OK: {{ podman_ping.stdout }}"
-  when: 
+  when:
     - systemd_available
     - podman_ping.stdout != 'OK'

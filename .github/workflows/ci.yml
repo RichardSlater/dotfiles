@@ -1,6 +1,7 @@
+---
 name: CI
 
-on:
+"on":
   push:
     branches: [main]
   pull_request:
@@ -38,14 +39,7 @@ jobs:
       - name: Run yamllint
         uses: ibiqlik/action-yamllint@v3
         with:
-          file_or_dir: 'scripts/ansible'
-          config_data: |
-            extends: relaxed
-            rules:
-              line-length:
-                max: 120
-              truthy:
-                check-keys: false
+          file_or_dir: '.'
 
   ansible-lint:
     name: Ansible Lint
@@ -82,13 +76,13 @@ jobs:
         run: sh -c "$(curl -fsLS get.chezmoi.io)"
 
       - name: Initialize chezmoi with source
-        run: ~/bin/chezmoi init --source="${{ github.workspace }}"
+        run: ./bin/chezmoi init --source="${{ github.workspace }}"
         env:
           # Provide minimal config for template rendering
           CHEZMOI_EMAIL: "ci@example.com"
 
       - name: Validate templates (dry-run)
-        run: ~/bin/chezmoi diff --dry-run || true
+        run: ./bin/chezmoi diff --dry-run || true
 
       - name: Run chezmoi doctor
-        run: ~/bin/chezmoi doctor || true
+        run: ./bin/chezmoi doctor || true

@@ -32,7 +32,7 @@
         insertafter: EOF
         regexp: '^\[interop\]$'
 
-    - name: Ensure appendWindowsPath = false is set under [interop] in /etc/wsl.conf
+    - name: Set appendWindowsPath = false in /etc/wsl.conf
       become: true
       lineinfile:
         path: /etc/wsl.conf
