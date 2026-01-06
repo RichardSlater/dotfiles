@@ -20,15 +20,8 @@ jobs:
         with:
           scandir: '.'
           additional_files: 'dot_bashrc dot_profile'
-          # Exclude zsh-only files (shellcheck doesn't support zsh)
-          ignore_paths: >-
-            dot_zshrc
-            dot_zshenv
-            dot_config/dot_fzf.zsh
-            dot_config/zsh_aliases
-            dot_config/zsh_keybinds
-            scripts/ansible
-
+          # Exclude zsh-only files and ansible scripts
+          ignore_paths: 'dot_zshrc dot_zshenv dot_config/dot_fzf.zsh dot_config/zsh_aliases dot_config/zsh_keybinds scripts/ansible'
   yaml-lint:
     name: YAML Lint
     runs-on: ubuntu-latest

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# shellcheck disable=SC1091
 set -e # Exit immediately if a command exits with a non-zero status
 
 # Function to check and install Ansible
