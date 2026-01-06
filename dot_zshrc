@@ -60,6 +60,11 @@ if command -v fzf &> /dev/null; then
   source "$HOME/.config/.fzf.zsh"
 fi
 
+# zoxide
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
+
 # chezmoi
 if [ -f "$HOME/.local/chezmoi" ]; then
   chezmoi update

@@ -2,3 +2,12 @@
 cargo_packages:
   - name: tree-sitter-cli
     binary: tree-sitter
+  - name: ripgrep
+    binary: rg
+  - name: fd-find
+    binary: fd
+  - name: zoxide
+  - name: du-dust
+    binary: dust
+  - name: procs
+  - name: gping

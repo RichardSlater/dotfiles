@@ -5,20 +5,22 @@
 This repository manages a full developer environment across Windows and Linux.
 
 ### Ansible Roles (Linux/WSL)
-| Role | Description | Source |
-| :--- | :--- | :--- |
-| [packages](scripts/ansible/roles/packages) | Common system utilities (jq, ripgrep, btop, etc.) | [scripts/ansible/playbook.yml](scripts/ansible/playbook.yml) |
-| [podman](scripts/ansible/roles/podman) | Rootless container engine (built from source) | [scripts/ansible/roles/podman/tasks/main.yml](scripts/ansible/roles/podman/tasks/main.yml) |
-| [neovim](scripts/ansible/roles/neovim) | Modern editor built from source with C# support | [scripts/ansible/roles/neovim/tasks/main.yml](scripts/ansible/roles/neovim/tasks/main.yml) |
-| [gh](scripts/ansible/roles/gh) | GitHub CLI (built from source) | [scripts/ansible/roles/gh/tasks/main.yml](scripts/ansible/roles/gh/tasks/main.yml) |
-| [uv](scripts/ansible/roles/uv) | Astral's fast Python package manager | [scripts/ansible/roles/uv/tasks/main.yml](scripts/ansible/roles/uv/tasks/main.yml) |
-| [cargo](scripts/ansible/roles/cargo) | Rust toolchain & tools (e.g. tree-sitter) | [scripts/ansible/roles/cargo/tasks/main.yml](scripts/ansible/roles/cargo/tasks/main.yml) |
-| [zsh](scripts/ansible/roles/zsh) | Shell configuration with Oh-My-Zsh | [scripts/ansible/roles/zsh/tasks/main.yml](scripts/ansible/roles/zsh/tasks/main.yml) |
-| [tmux](scripts/ansible/roles/tmux) | Terminal multiplexer with custom config | [scripts/ansible/roles/tmux/tasks/main.yml](scripts/ansible/roles/tmux/tasks/main.yml) |
-| [oh-my-posh](scripts/ansible/roles/oh-my-posh) | Cross-shell prompt theme engine | [scripts/ansible/roles/oh-my-posh/tasks/main.yml](scripts/ansible/roles/oh-my-posh/tasks/main.yml) |
-| [fzf](scripts/ansible/roles/fzf) | Command-line fuzzy finder | [scripts/ansible/roles/fzf/tasks/main.yml](scripts/ansible/roles/fzf/tasks/main.yml) |
+
+| Role                                           | Description                                       | Source                                                                                             |
+|:-----------------------------------------------|:--------------------------------------------------|:---------------------------------------------------------------------------------------------------|
+| [packages](scripts/ansible/roles/packages)     | Common system utilities (jq, ripgrep, btop, etc.) | [scripts/ansible/playbook.yml](scripts/ansible/playbook.yml)                                       |
+| [podman](scripts/ansible/roles/podman)         | Rootless container engine (built from source)     | [scripts/ansible/roles/podman/tasks/main.yml](scripts/ansible/roles/podman/tasks/main.yml)         |
+| [neovim](scripts/ansible/roles/neovim)         | Modern editor built from source with C# support   | [scripts/ansible/roles/neovim/tasks/main.yml](scripts/ansible/roles/neovim/tasks/main.yml)         |
+| [gh](scripts/ansible/roles/gh)                 | GitHub CLI (built from source)                    | [scripts/ansible/roles/gh/tasks/main.yml](scripts/ansible/roles/gh/tasks/main.yml)                 |
+| [uv](scripts/ansible/roles/uv)                 | Astral's fast Python package manager              | [scripts/ansible/roles/uv/tasks/main.yml](scripts/ansible/roles/uv/tasks/main.yml)                 |
+| [cargo](scripts/ansible/roles/cargo)           | Rust toolchain & tools (e.g. tree-sitter)         | [scripts/ansible/roles/cargo/tasks/main.yml](scripts/ansible/roles/cargo/tasks/main.yml)           |
+| [zsh](scripts/ansible/roles/zsh)               | Shell configuration with Oh-My-Zsh                | [scripts/ansible/roles/zsh/tasks/main.yml](scripts/ansible/roles/zsh/tasks/main.yml)               |
+| [tmux](scripts/ansible/roles/tmux)             | Terminal multiplexer with custom config           | [scripts/ansible/roles/tmux/tasks/main.yml](scripts/ansible/roles/tmux/tasks/main.yml)             |
+| [oh-my-posh](scripts/ansible/roles/oh-my-posh) | Cross-shell prompt theme engine                   | [scripts/ansible/roles/oh-my-posh/tasks/main.yml](scripts/ansible/roles/oh-my-posh/tasks/main.yml) |
+| [fzf](scripts/ansible/roles/fzf)               | Command-line fuzzy finder                         | [scripts/ansible/roles/fzf/tasks/main.yml](scripts/ansible/roles/fzf/tasks/main.yml)               |
 
 ### Key Features
+
 - **Neovim**: C# (Roslyn) support via [roslyn.nvim](https://github.com/seblyng/roslyn.nvim), LazyVim integration.
 - **Rootless Podman**: Fully configured rootless containerization on Debian/Ubuntu.
 - **Cross-Platform Prompt**: Unified look via [dot_config/oh-my-posh](dot_config/oh-my-posh).

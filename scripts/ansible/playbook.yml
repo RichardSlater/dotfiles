@@ -73,7 +73,7 @@
       - btop
       - yamllint
       - jq
-      - ripgrep
+      - yq
       - shellcheck
       - pre-commit
       - libclang-dev

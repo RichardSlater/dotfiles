@@ -15,9 +15,14 @@ fi
 alias k="kubectl"
 alias g="git"
 alias gp="git pull"
-alias gpu="git push origin head"
-alias bat="batcat"
+alias gpu="git push origin HEAD"
+alias gca="git add . && git commit && git push origin HEAD"
 
-[ -f /usr/bin/bat ] && alias cat=/usr/bin/bat --paging=never
+if command -v batcat &> /dev/null; then
+  alias cat="batcat --paging=never"
+  alias bat="batcat"
+elif command -v bat &> /dev/null; then
+  alias cat="bat --paging=never"
+fi
 
 [ -f "$HOME/.config/windows_aliases" ] && source $HOME/.config/windows_aliases
