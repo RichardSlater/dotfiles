@@ -29,6 +29,11 @@ export VISUAL=$EDITOR
 # Snap packages
 [ -d "/snap/bin" ] && export PATH="/snap/bin:$PATH"
 
+# .NET Core SDK
+[ -d "$HOME/.dotnet" ] && export PATH="$HOME/.dotnet:$PATH"
+[ -d "$HOME/.dotnet" ] && export DOTNET_ROOT="$HOME/.dotnet"
+
+
 # Foundry (Ethereum development)
 [ -d "$HOME/.foundry/bin" ] && export PATH="$PATH:$HOME/.foundry/bin"
 

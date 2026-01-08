@@ -110,6 +110,7 @@
     - cargo
     - uv
     - speckit
+    - dotnet
 
 - name: Update Neovim Plugins (LazyVim)
   hosts: localhost
