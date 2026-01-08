@@ -17,6 +17,10 @@ alias g="git"
 alias gp="git pull"
 alias gpu="git push origin HEAD"
 alias gca="git add . && git commit && git push origin HEAD"
+alias dup="docker compose up -d"
+alias dlogs="docker compose logs -f"
+alias ddown="docker compose down"
+alias upd="chezmoi update && chezmoi apply && ~/scripts/ansible/exec.sh"
 
 if command -v batcat &> /dev/null; then
   alias cat="batcat --paging=never"

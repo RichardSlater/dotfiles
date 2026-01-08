@@ -116,7 +116,7 @@
           "type": "status",
           "style": "diamond",
           "foreground_templates": [
-            "{{ if gt .Code 0 }}p:white{{ end }}"
+            "{{ if gt .Code 0 }}p:black{{ end }}"
           ],
           "background_templates": [
             "{{ if gt .Code 0 }}p:red{{ end }}"
@@ -153,6 +153,30 @@
           "type": "az",
           "style": "diamond",
           "min_width": 120
+        },
+        {
+          "type": "rust",
+          "style": "diamond",
+          "foreground": "p:black",
+          "background": "p:orange",
+          "leading_diamond": "\ue0b2",
+          "template": "  {{ .Full }} "
+        },
+        {
+          "type": "node",
+          "style": "diamond",
+          "foreground": "p:black",
+          "background": "p:green",
+          "leading_diamond": "\ue0b2",
+          "template": "  {{ .Full }} "
+        },
+        {
+          "type": "dotnet",
+          "style": "diamond",
+          "leading_diamond": "\ue0b2",
+          "foreground": "p:black",
+          "background": "p:blue",
+          "template": "  {{ .Full }} "
         },
         {
           "options": {

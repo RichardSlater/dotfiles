@@ -75,7 +75,6 @@
       - jq
       - yq
       - shellcheck
-      - pre-commit
       - libclang-dev
     unlisted_packages:
       - name: Dive
@@ -102,6 +101,8 @@
   hosts: localhost
   vars:
     rustup_user: "{{ ansible_facts['user_id'] }}"
+    uv_tools:
+      - pre-commit
   roles:
     - rootless-networking
     - nvm

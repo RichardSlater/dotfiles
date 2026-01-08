@@ -55,3 +55,16 @@
 - name: Show uv version
   debug:
     msg: "uv installed: {{ uv_verify.stdout }}"
+
+- name: Get installed uv tools
+  command: "{{ uv_install_dir }}/uv tool list"
+  register: installed_uv_tools
+  changed_when: false
+  failed_when: false
+
+- name: Install uv tools
+  command: "{{ uv_install_dir }}/uv tool install {{ item }} --force"
+  loop: "{{ uv_tools | default([]) }}"
+  when:
+    - uv_tools is defined
+    - item not in installed_uv_tools.stdout
