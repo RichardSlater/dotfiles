@@ -142,7 +142,8 @@
           "background": "p:selection",
           "leading_diamond": "\ue0b2",
           "type": "kubectl",
-          "style": "diamond"
+          "style": "diamond",
+          "min_width": 120
         },
         {
           "template": " \uebd8 {{ .Name }} ({{ if .EnvironmentName | contains \"AzureCloud\" }}{{ \"Global\" }}{{ else }}{{ .EnvironmentName }}{{ end }}) ",
@@ -150,7 +151,8 @@
           "background": "p:teal",
           "leading_diamond": "\ue0b2",
           "type": "az",
-          "style": "diamond"
+          "style": "diamond",
+          "min_width": 120
         },
         {
           "options": {
