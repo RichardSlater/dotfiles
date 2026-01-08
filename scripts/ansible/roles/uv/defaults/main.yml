@@ -1,0 +1,6 @@
+---
+uv_version: "0.9.22"
+uv_platform: "x86_64-unknown-linux-gnu"
+uv_download_url: "https://github.com/astral-sh/uv/releases/download/{{ uv_version }}/uv-{{ uv_platform }}.tar.gz"
+uv_checksum: "sha256:e170aed70ac0225feee612e855d3a57ae73c61ffb22c7e52c3fd33b87c286508"
+uv_install_dir: "{{ ansible_env.HOME }}/.local/bin"

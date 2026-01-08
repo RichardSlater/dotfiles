@@ -17,31 +17,17 @@
     state: present
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Get latest tmux release info
-  uri:
-    url: "https://api.github.com/repos/tmux/tmux/releases/latest"
-    return_content: true
-  register: github_response
-
-- name: Extract latest tarball URL
-  set_fact:
-    tmux_tarball_url: "{{ github_response.json.tarball_url }}"
-    tmux_version: "{{ github_response.json.tag_name }}"
-
-- name: Debug - Show latest tmux version
-  debug:
-    msg: "Latest tmux version: {{ tmux_version }}"
-
 - name: Create source directory
   file:
     path: "{{ tmux_src_dir }}"
     state: directory
     mode: "0755"
 
-- name: Download latest tmux source code
+- name: Download tmux source code
   get_url:
-    url: "{{ tmux_tarball_url }}"
+    url: "https://github.com/tmux/tmux/releases/download/{{ tmux_version }}/tmux-{{ tmux_version }}.tar.gz"
     dest: "{{ tmux_src_dir }}/tmux.tar.gz"
+    checksum: "{{ tmux_checksum }}"
 
 - name: Extract tmux source
   ansible.builtin.unarchive:

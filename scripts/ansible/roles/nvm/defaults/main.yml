@@ -1,0 +1,4 @@
+---
+nvm_version: "v0.40.3"
+nvm_install_url: "https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh"
+nvm_install_checksum: "sha256:2d8359a64a3cb07c02389ad88ceecd43f2fa469c06104f92f98df5b6f315275f"

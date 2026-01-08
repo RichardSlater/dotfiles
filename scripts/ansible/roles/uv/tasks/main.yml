@@ -5,33 +5,52 @@
   ignore_errors: true
   changed_when: false
 
-- name: Install uv using the official standalone installer
-  shell: "curl -fsSL {{ uv_install_script_url }} | sh"
-  register: uv_install_result
-  when: uv_check.rc != 0
-  environment:
-    UV_INSTALL_DIR: "{{ ansible_env.HOME }}/.local/bin"
-  args:
-    executable: /bin/bash
+- name: Create temporary directory for uv download
+  tempfile:
+    state: directory
+    suffix: uv_download
+  register: uv_temp_dir
+  when: uv_check.rc != 0 or uv_version not in uv_check.stdout
 
-- name: Add uv shell completion for zsh
-  lineinfile:
-    path: "{{ ansible_env.HOME }}/.zshrc"
-    line: 'eval "$(uv generate-shell-completion zsh)"'
-    create: true
-  when: uv_check.rc == 0 or uv_install_result.changed
+- name: Download uv tarball
+  get_url:
+    url: "{{ uv_download_url }}"
+    dest: "{{ uv_temp_dir.path }}/uv.tar.gz"
+    checksum: "{{ uv_checksum }}"
+    mode: '0644'
+  when: uv_check.rc != 0 or uv_version not in uv_check.stdout
 
-- name: Add uv shell completion for bash
-  lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
-    line: 'eval "$(uv generate-shell-completion bash)"'
-    create: true
-  when: uv_check.rc == 0 or uv_install_result.changed
+- name: Extract uv tarball
+  unarchive:
+    src: "{{ uv_temp_dir.path }}/uv.tar.gz"
+    dest: "{{ uv_temp_dir.path }}"
+    remote_src: true
+  when: uv_check.rc != 0 or uv_version not in uv_check.stdout
+
+- name: Install uv binary
+  copy:
+    src: "{{ uv_temp_dir.path }}/uv-{{ uv_platform }}/uv"
+    dest: "{{ uv_install_dir }}/uv"
+    mode: '0755'
+  when: uv_check.rc != 0 or uv_version not in uv_check.stdout
+
+- name: Install uvx binary
+  copy:
+    src: "{{ uv_temp_dir.path }}/uv-{{ uv_platform }}/uvx"
+    dest: "{{ uv_install_dir }}/uvx"
+    mode: '0755'
+  when: uv_check.rc != 0 or uv_version not in uv_check.stdout
 
 - name: Verify uv installation
-  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  command: "{{ uv_install_dir }}/uv --version"
   register: uv_verify
   changed_when: false
+
+- name: Clean up temporary directory
+  file:
+    path: "{{ uv_temp_dir.path }}"
+    state: absent
+  when: uv_temp_dir.path is defined
 
 - name: Show uv version
   debug:

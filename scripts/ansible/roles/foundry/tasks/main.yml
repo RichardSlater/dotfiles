@@ -16,10 +16,23 @@
     path: "{{ ansible_env.HOME }}/.foundry/bin/foundryup"
   register: foundryup_stat
 
-- name: Download and install Foundry
-  shell: "curl -L https://foundry.paradigm.xyz | bash"
+- name: Download Foundry installer
+  get_url:
+    url: "https://foundry.paradigm.xyz"
+    dest: "/tmp/foundry_install.sh"
+    mode: '0755'
+  when: not foundryup_stat.stat.exists
+
+- name: Run Foundry installer
+  command: "/bin/bash /tmp/foundry_install.sh"
   args:
     creates: "{{ ansible_env.HOME }}/.foundry/bin/foundryup"
+  when: not foundryup_stat.stat.exists
+
+- name: Remove Foundry installer
+  file:
+    path: "/tmp/foundry_install.sh"
+    state: absent
   when: not foundryup_stat.stat.exists
 
 - name: Initialize Foundry

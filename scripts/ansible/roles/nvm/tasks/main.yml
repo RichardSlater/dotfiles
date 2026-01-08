@@ -1,6 +1,18 @@
 ---
+- name: Download nvm installer
+  ansible.builtin.get_url:
+    url: "{{ nvm_install_url }}"
+    dest: "/tmp/nvm_install.sh"
+    mode: '0755'
+    checksum: "{{ nvm_install_checksum }}"
+
 - name: Install nvm
   ansible.builtin.shell: >
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    /tmp/nvm_install.sh
   args:
     creates: "{{ ansible_facts['env'].HOME }}/.nvm/nvm.sh"
+
+- name: Remove nvm installer
+  ansible.builtin.file:
+    path: "/tmp/nvm_install.sh"
+    state: absent

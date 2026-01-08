@@ -61,6 +61,7 @@ ansible-playbook scripts/ansible/playbook.yml -c local
 
 - Edit source `dot_*` files and `*.tmpl` templates. Examples: `dot_bashrc`, `dot_config/nvim/init.lua.tmpl`.
 - Avoid editing rendered/user files on remote machines; those are managed by chezmoi and will be overwritten.
+- **Avoid allowing Ansible to modify dotfiles (e.g. via `lineinfile` or `blockinfile`) as these are managed by chezmoi.** If a tool requires configuration in a dotfile, add the logic to the `dot_` source file itself (using templates or conditionals if necessary) rather than having Ansible patch it post-creation.
 - If you change package lists or provisioning logic, update `scripts/ansible/playbook.yml` and corresponding `roles/` implementations.
 - Under no circumstances should unsigned commits be created, if GPG signing fails then defer to the user to resolve.
 

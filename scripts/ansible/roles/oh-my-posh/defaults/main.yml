@@ -7,7 +7,14 @@ oh_my_posh_arch_map:
   aarch64: "arm64"
   riscv64: "riscv64"
 
+oh_my_posh_version: "v29.0.1"
+
+oh_my_posh_checksums:
+  amd64: "sha256:57088003d36ab5089de45c0ff3d6a713fabeff4668c165c7ac50042ed8c9abaf"
+  # Add other architectures' checksums here when needed
+
 oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_architecture] | default('amd64') }}"
+oh_my_posh_checksum: "{{ oh_my_posh_checksums[oh_my_posh_arch] | default(omit) }}"
 oh_my_posh_supported_architectures:
   - x86_64
   - aarch64
