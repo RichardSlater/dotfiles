@@ -12,7 +12,7 @@
       "alignment": "left",
       "segments": [
         {
-          "properties": {
+          "options": {
             "cache_duration": "none"
           },
           "leading_diamond": "\ue0b6",
@@ -25,7 +25,7 @@
           "min_width": 120
         },
         {
-          "properties": {
+          "options": {
             "cache_duration": "none"
           },
           "trailing_diamond": "\ue0b0",
@@ -37,9 +37,6 @@
           "min_width": 120
         },
         {
-          "properties": {
-            "cache_duration": "none"
-          },
           "template": " {{ .Icon }} {{ if .WSL }} {{ .Env.DISTRO_RELEASE }}{{ end }} ",
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
@@ -49,8 +46,7 @@
           "min_width": 120
         },
         {
-          "properties": {
-            "cache_duration": "none",
+          "options": {
             "style": "folder"
           },
           "template": " \uf07b  {{ .Path }} ",
@@ -62,8 +58,7 @@
           "min_width": 120
         },
         {
-          "properties": {
-            "cache_duration": "none",
+          "options": {
             "style": "folder"
           },
           "leading_diamond": "\ue0b6",
@@ -76,9 +71,7 @@
           "max_width": 119
         },
         {
-          "properties": {
-            "cache_duration": "none",
-            "fetch_stash_count": true,
+          "options": {
             "fetch_status": true,
             "fetch_upstream_icon": true
           },
@@ -96,9 +89,8 @@
           ]
         },
         {
-          "properties": {
-            "always_enabled": true,
-            "cache_duration": "none"
+          "options": {
+            "always_enabled": true
           },
           "leading_diamond": "<transparent,background>\ue0b0</>",
           "trailing_diamond": "\ue0b0",
@@ -121,9 +113,6 @@
       "alignment": "right",
       "segments": [
         {
-          "properties": {
-            "cache_duration": "none"
-          },
           "template": "<#7aa2f7,transparent>\ue0b2</> \uf489  {{ .Name }} ",
           "foreground": "#1f2335",
           "background": "#7aa2f7",
@@ -131,8 +120,7 @@
           "style": "diamond"
         },
         {
-          "properties": {
-            "cache_duration": "none",
+          "options": {
             "context_aliases": {
               "podman-kube": "local"
             },
@@ -147,9 +135,16 @@
           "min_width": 120
         },
         {
-          "properties": {
+          "template": "<#9ec3f0,#394b70>\ue0b2</> \uebd8 {{ .Name }} ({{ if .EnvironmentName | contains \"AzureCloud\" }}{{ \"Global\" }}{{ else }}{{ .EnvironmentName }}{{ end }}) ",
+          "foreground": "#000000",
+          "powerline_symbol": "\ue0b0",
+          "background": "#9ec3f0",
+          "type": "az",
+          "style": "diamond"
+        },
+        {
+          "options": {
             "always_enabled": true,
-            "cache_duration": "none",
             "style": "round",
             "threshold": 500
           },
@@ -168,28 +163,13 @@
       "type": "prompt",
       "alignment": "right",
       "segments": [
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": " \uebd8 Subscription {{ .Name }} ({{ if .EnvironmentName | contains \"AzureCloud\" }}{{ \"Global\" }}{{ else }}{{ .EnvironmentName }}{{ end }}) ",
-          "foreground": "#000000",
-          "powerline_symbol": "\ue0b0",
-          "background": "#9ec3f0",
-          "type": "az",
-          "style": "powerline"
-        }
-      ],
-      "newline": true
+      ]
     },
     {
       "type": "prompt",
       "alignment": "left",
       "segments": [
         {
-          "properties": {
-            "cache_duration": "none"
-          },
           "template": " ~ ",
           "foreground": "#ff007c",
           "type": "text",
