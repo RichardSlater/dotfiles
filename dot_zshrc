@@ -143,9 +143,9 @@ if command -v uv &> /dev/null; then
   eval "$(uv generate-shell-completion zsh)"
 fi
 
-if -s "$HOME/.bun/_bun"; then
+if [ -s "$HOME/.bun/_bun" ]; then
   # bun completions
-  source "/home/scetrov/.bun/_bun"
+  source "$HOME/.bun/_bun"
 
   # bun
   export BUN_INSTALL="$HOME/.bun"
