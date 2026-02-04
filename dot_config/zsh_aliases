@@ -12,6 +12,9 @@ if command -v podman &> /dev/null; then
   fi
 fi
 
+[ -f /mnt/c/Users/mcp/AppData/Local/Programs/Antigravity/bin/antigravity ] && alias agy='/mnt/c/Users/mcp/AppData/Local/Programs/Antigravity/bin/antigravity'
+[ -f /mnt/c/Users/rslater/AppData/Local/Programs/Antigravity/bin/antigravity ] && alias agy='/mnt/c/Users/rslater/AppData/Local/Programs/Antigravity/bin/antigravity'
+
 alias k="kubectl"
 alias g="git"
 alias gp="git pull"
