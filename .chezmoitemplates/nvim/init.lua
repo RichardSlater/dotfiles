@@ -39,6 +39,16 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+		{ "github/copilot.vim" },
+		{
+			"CopilotC-Nvim/CopilotChat.nvim",
+			branch = "canary",
+			dependencies = {
+				{ "github/copilot.vim" },
+				{ "nvim-lua/plenary.nvim" },
+			},
+			opts = {},
+		},
 		{ "folke/noice.nvim", event = "VeryLazy", opts = { }, dependencies = { } },
 			{ "neovim/nvim-lspconfig" },
 			{
