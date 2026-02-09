@@ -106,6 +106,7 @@
   roles:
     - rootless-networking
     - nvm
+    - bun
     - hurricanehrndz.rustup
     - cargo
     - uv

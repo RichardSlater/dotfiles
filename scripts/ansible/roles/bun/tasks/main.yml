@@ -1,0 +1,19 @@
+---
+- name: Download bun installer
+  ansible.builtin.get_url:
+    url: "{{ bun_install_url }}"
+    dest: "/tmp/bun_install.sh"
+    mode: '0755'
+
+- name: Install bun
+  ansible.builtin.shell: >
+    /tmp/bun_install.sh
+  args:
+    creates: "{{ ansible_facts['env'].HOME }}/.bun/bin/bun"
+  environment:
+    BUN_INSTALL: "{{ ansible_facts['env'].HOME }}/.bun"
+
+- name: Remove bun installer
+  ansible.builtin.file:
+    path: "/tmp/bun_install.sh"
+    state: absent
