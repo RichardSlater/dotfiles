@@ -1,0 +1,11 @@
+---
+# GitHub Copilot CLI installation script URL
+copilot_cli_install_script_url: "https://gh.io/copilot-install"
+
+# Version to install - defaults to latest if not specified
+# Set to specific version like "v0.0.406" to pin version
+copilot_cli_version: "latest"
+
+# Installation prefix - will be combined with /bin
+# Defaults to $HOME/.local for user installation
+copilot_cli_install_prefix: "{{ ansible_env.HOME }}/.local"

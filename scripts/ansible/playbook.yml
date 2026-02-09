@@ -111,6 +111,7 @@
     - uv
     - speckit
     - dotnet
+    - copilot-cli
 
 - name: Update Neovim Plugins (LazyVim)
   hosts: localhost
