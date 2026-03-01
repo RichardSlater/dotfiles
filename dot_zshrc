@@ -113,6 +113,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# go start
+if command -v go &> /dev/null; then
+  export PATH="$(go env GOPATH)/bin:$PATH"
+fi
+# go end
+
 # taskctl start
 if command -v taskctl &> /dev/null; then
   . <(taskctl completion zsh)
