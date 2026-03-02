@@ -5,6 +5,13 @@
   ignore_errors: true
   changed_when: false
 
+- name: Check docker version (detect Podman alias)
+  command: docker --version
+  register: docker_version
+  when: docker_check.rc == 0
+  ignore_errors: true
+  changed_when: false
+
 - name: Check for Podman
   command: which podman
   register: podman_check
@@ -13,7 +20,7 @@
 
 - name: Prune Docker system
   command: docker system prune --all --volumes --force
-  when: docker_check.rc == 0
+  when: docker_check.rc == 0 and 'Podman' not in (docker_version.stdout | default(''))
   register: docker_prune_result
   changed_when: "'Total reclaimed space' in docker_prune_result.stdout"
 
