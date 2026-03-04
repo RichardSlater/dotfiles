@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: AI Assistant
+  description: "Ansible role to install the Google Gemini CLI via npm."
+  license: "MIT"
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+dependencies: []

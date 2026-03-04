@@ -1,0 +1,63 @@
+---
+- name: Check if gemini-cli is already installed
+  command: gemini --version
+  register: gemini_check
+  ignore_errors: true
+  changed_when: false
+  environment:
+    PATH: "{{ gemini_cli_install_prefix }}/bin:{{ ansible_env.PATH }}"
+
+- name: Display current installed version (if any)
+  debug:
+    msg: "Google Gemini CLI is already installed: {{ gemini_check.stdout }}"
+  when: gemini_check.rc == 0
+
+- name: Check if installed version matches desired version
+  set_fact:
+    gemini_needs_install: >-
+      {{
+        gemini_check.rc != 0 or
+        (gemini_cli_version != "latest" and gemini_cli_version not in gemini_check.stdout)
+      }}
+
+- name: Ensure npm is installed
+  command: npm --version
+  register: npm_check
+  ignore_errors: true
+  changed_when: false
+  when: gemini_needs_install
+
+- name: Fail if npm is not installed
+  fail:
+    msg: "npm is required to install @google/gemini-cli but it was not found."
+  when: gemini_needs_install and npm_check.rc != 0
+
+- name: Install Google Gemini CLI
+  npm:
+    name: "@google/gemini-cli"
+    version: "{{ gemini_cli_version if gemini_cli_version != 'latest' else omit }}"
+    global: yes
+    state: present
+  when: gemini_needs_install
+  environment:
+    NPM_CONFIG_PREFIX: "{{ gemini_cli_install_prefix }}"
+
+- name: Verify Google Gemini CLI installation
+  command: "{{ gemini_cli_install_prefix }}/bin/gemini --version"
+  register: gemini_verify
+  changed_when: false
+
+- name: Display installed version
+  debug:
+    msg: "Google Gemini CLI installed successfully: {{ gemini_verify.stdout }}"
+
+- name: Add installation note
+  debug:
+    msg: |
+      Google Gemini CLI has been installed to {{ gemini_cli_install_prefix }}/bin/gemini
+
+      To use Google Gemini CLI:
+      1. Ensure {{ gemini_cli_install_prefix }}/bin is in your PATH
+      2. Run 'gemini' to launch the CLI
+      3. For setup, see: https://github.com/google-gemini/gemini-cli
+  when: gemini_needs_install

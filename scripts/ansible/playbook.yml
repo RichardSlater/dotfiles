@@ -113,6 +113,7 @@
     - speckit
     - dotnet
     - copilot-cli
+    - gemini-cli
 
 - name: Update Neovim Plugins (LazyVim)
   hosts: localhost
