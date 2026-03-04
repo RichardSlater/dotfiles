@@ -36,7 +36,7 @@
   npm:
     name: "@google/gemini-cli"
     version: "{{ gemini_cli_version if gemini_cli_version != 'latest' else omit }}"
-    global: yes
+    global: true
     state: present
   when: gemini_needs_install
   environment:
