@@ -158,6 +158,16 @@
     group: "{{ podman_user }}"
     mode: '0644'
 
+- name: Ensure Podman uses iptables firewall on WSL
+  become: true
+  become_user: "{{ podman_user }}"
+  ini_file:
+    path: "{{ podman_user_home }}/.config/containers/containers.conf"
+    section: network
+    option: firewall_driver
+    value: '"iptables"'
+  when: ansible_virtualization_type == "wsl"
+
 - name: Verify Podman installation
   command: podman --version
   register: podman_verify
