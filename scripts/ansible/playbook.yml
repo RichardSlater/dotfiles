@@ -80,9 +80,9 @@
       - name: Dive
         source: https://github.com/wagoodman/dive/releases/download/v0.13.1/dive_0.13.1_linux_amd64.deb
     # geerlingguy.go role variables - Go 1.25.4 (latest stable as of Nov 2025)
-    go_version: "1.25.4"
+    go_version: "1.26.1"
     go_install_clean: true
-    go_checksum: "9fa5ffeda4170de60f67f3aa0f824e426421ba724c21e133c1e35d6159ca1bec"
+    go_checksum: "031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
   roles:
     - packages
     - bat
