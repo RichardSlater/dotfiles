@@ -37,8 +37,7 @@
           "foreground": "p:background",
           "background": "p:magenta",
           "type": "session",
-          "style": "diamond",
-          "min_width": 120
+          "style": "diamond"
         },
         {
           "options": {
@@ -143,7 +142,7 @@
           "leading_diamond": "\ue0b2",
           "type": "kubectl",
           "style": "diamond",
-          "min_width": 120
+          "min_width": 150
         },
         {
           "template": " \uebd8 {{ .Name }} ({{ if .EnvironmentName | contains \"AzureCloud\" }}{{ \"Global\" }}{{ else }}{{ .EnvironmentName }}{{ end }}) ",
@@ -152,7 +151,7 @@
           "leading_diamond": "\ue0b2",
           "type": "az",
           "style": "diamond",
-          "min_width": 120
+          "min_width": 150
         },
         {
           "type": "rust",
@@ -160,7 +159,8 @@
           "foreground": "p:black",
           "background": "p:orange",
           "leading_diamond": "\ue0b2",
-          "template": "  {{ .Full }} "
+          "template": "  {{ .Full }} ",
+          "min_width": 150
         },
         {
           "type": "node",
@@ -168,7 +168,8 @@
           "foreground": "p:black",
           "background": "p:green",
           "leading_diamond": "\ue0b2",
-          "template": "  {{ .Full }} "
+          "template": "  {{ .Full }} ",
+          "min_width": 150
         },
         {
           "type": "dotnet",
@@ -176,7 +177,8 @@
           "leading_diamond": "\ue0b2",
           "foreground": "p:black",
           "background": "p:blue",
-          "template": "  {{ .Full }} "
+          "template": "  {{ .Full }} ",
+          "min_width": 150
         },
         {
           "options": {
