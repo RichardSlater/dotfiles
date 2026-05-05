@@ -83,8 +83,16 @@ if command -v oh-my-posh &> /dev/null; then
   fi
 fi
 
+# Load nvm from either $HOME/.nvm or $HOME/.config/nvm
 if [ -f "$HOME/.nvm/nvm.sh" ]; then
   export NVM_DIR="$HOME/.nvm"
+elif [ -f "$HOME/.config/nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.config/nvm"
+else
+  NVM_DIR=""
+fi
+
+if [ -n "$NVM_DIR" ] && [ -f "$NVM_DIR/nvm.sh" ]; then
   chmod +x "$NVM_DIR/nvm.sh"
   source "$NVM_DIR/nvm.sh"  # This loads nvm
 
