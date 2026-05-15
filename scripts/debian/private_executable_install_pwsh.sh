@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PWSH_VERSION="7.4.6"
+PWSH_VERSION="7.6.1"
 
 echo "Installing dependencies"
 sudo apt update

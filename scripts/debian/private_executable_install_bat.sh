@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BAT_VER="0.24.0"
+BAT_VER="0.26.1"
 TEMP_DIR="/tmp/bat_$(
   tr -dc a-z0-9 </dev/urandom | head -c 6
   echo
