@@ -9,6 +9,10 @@
     state: present
     update_cache: true
 
+- name: Refresh system CA certificates
+  command: update-ca-certificates
+  changed_when: false
+
 - name: Check if gh is already installed and matches version
   command: gh --version
   register: gh_current_version
@@ -39,6 +43,11 @@
   args:
     chdir: "{{ gh_build_dir }}"
     executable: /bin/bash
+  environment:
+    SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+    SSL_CERT_DIR: /etc/ssl/certs
+    GIT_SSL_CAINFO: /etc/ssl/certs/ca-certificates.crt
+    GOPROXY: direct
   when: gh_current_version.rc != 0 or gh_version not in gh_current_version.stdout
 
 - name: Verify gh installation
