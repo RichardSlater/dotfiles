@@ -13,6 +13,11 @@
 #   - false (default)
 tmux_conf_preserve_stock_bindings=false
 
+# -- pi coding agent -----------------------------------------------------------
+
+set -g extended-keys on                   # better key support
+set -g extended-keys-format csi-u         # use CSI for Pi Coding Agent
+
 # -- session creation ----------------------------------------------------------
 
 # prompt for session name when creating a new session, possible values are:
