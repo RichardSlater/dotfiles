@@ -5,6 +5,7 @@ This Ansible role installs the GitHub Copilot CLI, bringing AI-powered coding as
 ## Description
 
 The GitHub Copilot CLI is an AI-powered terminal tool that provides:
+
 - Terminal-native development with Copilot coding agent
 - GitHub integration with natural language access to repositories, issues, and PRs
 - Agentic capabilities for building, editing, debugging, and refactoring code
@@ -80,11 +81,13 @@ Install to a custom location:
 After installation:
 
 1. Ensure the installation directory is in your PATH:
+
    ```bash
    export PATH="$HOME/.local/bin:$PATH"
    ```
 
 2. Launch the CLI:
+
    ```bash
    copilot
    ```
@@ -113,7 +116,7 @@ GitHub Copilot CLI supports two authentication methods:
    - Follow on-screen instructions
 
 2. **Personal Access Token (PAT)**:
-   - Create a fine-grained PAT with "Copilot Requests" permission at https://github.com/settings/personal-access-tokens/new
+   - Create a fine-grained PAT with "Copilot Requests" permission at <https://github.com/settings/personal-access-tokens/new>
    - Set environment variable: `export GH_TOKEN=your_token` or `export GITHUB_TOKEN=your_token`
 
 ## Additional Resources
