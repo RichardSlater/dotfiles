@@ -36,6 +36,7 @@
             name: "{{ item }}"
             state: present
           loop:
+            - ca-certificates
             - python3-debian
             - git
             - wget

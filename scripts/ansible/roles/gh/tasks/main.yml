@@ -2,6 +2,7 @@
 - name: Install build dependencies for GitHub CLI
   apt:
     name:
+      - ca-certificates
       - git
       - make
       - build-essential
