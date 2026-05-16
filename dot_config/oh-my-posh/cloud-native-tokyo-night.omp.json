@@ -43,13 +43,12 @@
           "options": {
             "cache_duration": "none"
           },
-          "trailing_diamond": "\ue0b0",
           "template": " {{ .HostName | lower }} ",
           "foreground": "p:background",
           "background": "p:cyan",
           "type": "session",
-          "style": "diamond",
-          "min_width": 120
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0"
         },
         {
           "template": " {{ .Icon }} {{ if .WSL }} {{ .Env.DISTRO_RELEASE }}{{ end }} ",
@@ -61,10 +60,10 @@
           "min_width": 120
         },
         {
-          "options": {
-            "style": "folder"
+          "properties": {
+            "style": "full"
           },
-          "template": " \uf07b  {{ .Path }} ",
+          "template": " \uf07b  {{ if gt (len .Path) 30 }}..{{ .Path | trunc -28 }}{{ else }}{{ .Path }}{{ end }} ",
           "foreground": "p:background",
           "powerline_symbol": "\ue0b0",
           "background": "p:blue",
@@ -73,16 +72,15 @@
           "min_width": 120
         },
         {
-          "options": {
-            "style": "folder"
+          "properties": {
+            "style": "full"
           },
-          "leading_diamond": "\ue0b6",
-          "trailing_diamond": "\ue0b0",
-          "template": " \uf07b  {{ .Path }} ",
+          "template": " \uf07b  {{ if gt (len .Path) 20 }}..{{ .Path | trunc -18 }}{{ else }}{{ .Path }}{{ end }} ",
           "foreground": "p:background",
           "background": "p:blue",
           "type": "path",
-          "style": "diamond",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
           "max_width": 119
         },
         {
@@ -90,7 +88,7 @@
             "fetch_status": true,
             "fetch_upstream_icon": true
           },
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "template": " {{ .UpstreamIcon }}{{ if gt (len .HEAD) 20 }}{{ .HEAD | trunc 20 }}..{{ else }}{{ .HEAD }}{{ end }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
           "foreground": "p:background",
           "powerline_symbol": "\ue0b0",
           "background": "p:yellow",
@@ -107,7 +105,6 @@
           "options": {
             "always_enabled": true
           },
-          "leading_diamond": "<transparent,background>\ue0b0</>",
           "trailing_diamond": "\ue0b0",
           "template": " \ue23a {{ if gt .Code 0 }}\uf00d {{ reason .Code }}{{ else }}\uf42e{{ end }} ",
           "foreground": "p:background",
@@ -133,7 +130,8 @@
           "background": "p:blue",
           "leading_diamond": "\ue0b2",
           "type": "shell",
-          "style": "diamond"
+          "style": "diamond",
+          "min_width": 120
         },
         {
           "template": " \udb84\udcfe {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
