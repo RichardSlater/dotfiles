@@ -1,0 +1,59 @@
+---
+- name: Manage Antigravity CLI
+  block:
+    - name: Check if Antigravity CLI is already installed
+      ansible.builtin.command: "{{ antigravity_cli_binary_name }} --version"
+      register: antigravity_check
+      ignore_errors: true
+      changed_when: false
+      environment:
+        PATH: "{{ antigravity_cli_install_dir }}:{{ ansible_env.PATH }}"
+
+    - name: Remove legacy Gemini CLI binary if present
+      ansible.builtin.file:
+        path: "{{ antigravity_cli_legacy_binary_path }}"
+        state: absent
+
+    - name: Check whether npm is available for legacy cleanup
+      ansible.builtin.command: npm --version
+      register: npm_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Remove legacy Gemini CLI npm package if npm is available
+      ansible.builtin.command: npm uninstall -g @google/gemini-cli
+      when: npm_check.rc == 0
+      environment:
+        NPM_CONFIG_PREFIX: "{{ antigravity_cli_install_prefix }}"
+
+    - name: Install Antigravity CLI
+      ansible.builtin.shell: |
+        set -euo pipefail
+        curl -fsSL {{ antigravity_cli_install_script_url | quote }} | bash -s -- --dir {{ antigravity_cli_install_dir | quote }}
+      args:
+        executable: /bin/bash
+        creates: "{{ antigravity_cli_binary_path }}"
+      when: antigravity_check.rc != 0
+
+    - name: Verify Antigravity CLI installation
+      ansible.builtin.command: "{{ antigravity_cli_binary_path }} --version"
+      register: antigravity_verify
+      changed_when: false
+      environment:
+        PATH: "{{ antigravity_cli_install_dir }}:{{ ansible_env.PATH }}"
+
+    - name: Display installed version
+      ansible.builtin.debug:
+        msg: "Antigravity CLI installed successfully: {{ antigravity_verify.stdout }}"
+
+    - name: Add installation note
+      ansible.builtin.debug:
+        msg: |
+          Antigravity CLI has been installed to {{ antigravity_cli_binary_path }}
+
+          To use Antigravity CLI:
+          1. Ensure {{ antigravity_cli_install_dir }} is in your PATH
+          2. Run 'agy' to launch the CLI
+          3. For setup, see: https://github.com/google-antigravity/antigravity-cli
+      when: antigravity_check.rc != 0
+  when: antigravity_cli_enabled

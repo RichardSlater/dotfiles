@@ -114,7 +114,7 @@
     - speckit
     - dotnet
     - copilot-cli
-    - gemini-cli
+    - antigravity-cli
 
 - name: Update Neovim Plugins (LazyVim)
   hosts: localhost

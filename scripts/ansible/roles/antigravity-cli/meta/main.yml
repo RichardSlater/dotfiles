@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: AI Assistant
-  description: "Ansible role to install the Google Gemini CLI via npm."
+  description: "Ansible role to install the Google Antigravity CLI via the official installer."
   license: "MIT"
   min_ansible_version: "2.9"
   platforms:
