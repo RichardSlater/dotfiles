@@ -1,5 +1,4 @@
-README.md
-LICENSE
+/docs
 
 # ignore if NOT Linux
 {{- if ne .chezmoi.os "linux" }}
