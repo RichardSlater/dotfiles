@@ -32,5 +32,6 @@
     src: "{{ fzf_install_dir }}/bin/fzf"
     dest: "/usr/local/bin/fzf"
     state: link
+    # Replace a stale plain file so /usr/local/bin remains the canonical override path.
     force: true
   when: not ansible_check_mode

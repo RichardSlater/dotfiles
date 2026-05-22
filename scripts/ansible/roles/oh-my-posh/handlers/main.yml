@@ -1,3 +1,0 @@
----
-- name: Restart shell
-  ansible.builtin.shell: exec $SHELL

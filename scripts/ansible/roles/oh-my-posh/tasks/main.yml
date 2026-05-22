@@ -23,7 +23,6 @@
   become: true
 
 - name: Verify Oh My Posh installation
-  ansible.builtin.command: oh-my-posh --version
-  register: oh_my_posh_version
+  ansible.builtin.command: "{{ oh_my_posh_bin_path }} --version"
+  register: oh_my_posh_installed_version
   changed_when: false
-  ignore_errors: true

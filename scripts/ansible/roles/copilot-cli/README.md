@@ -30,6 +30,9 @@ copilot_cli_enabled: true
 # Version to install - "latest" or specific version like "v0.0.406"
 copilot_cli_version: "latest"
 
+# When using the latest channel, reinstall only when this is true
+copilot_cli_update_latest: false
+
 # Installation prefix (binary will be installed to PREFIX/bin/)
 copilot_cli_install_prefix: "{{ ansible_env.HOME }}/.local"
 ```
@@ -98,12 +101,20 @@ After installation:
 
 ## Updating
 
-To update to the latest version, simply run the playbook again with `copilot_cli_version: "latest"` (the default).
+When `copilot_cli_version: "latest"`, the role behaves as install-if-missing by default.
+Set `copilot_cli_update_latest: true` when you want a run to refresh the latest channel explicitly.
 
 To update to a specific version, set the version variable and re-run:
 
 ```yaml
 copilot_cli_version: "v0.0.410"
+```
+
+To force a refresh of the latest channel:
+
+```yaml
+copilot_cli_version: "latest"
+copilot_cli_update_latest: true
 ```
 
 ## Authentication

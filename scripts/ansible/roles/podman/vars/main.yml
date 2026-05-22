@@ -1,9 +1,5 @@
 ---
-podman_version: "v5.8.2"
 podman_git_repo: "https://github.com/containers/podman.git"
-podman_build_dir: "/tmp/podman_build"
-podman_network_handler: "pasta"  # Options: pasta, slirp4netns
-podman_runtime: "crun"         # Options: crun, runc
 
 # Package mapping for network handlers and runtimes
 podman_package_map:

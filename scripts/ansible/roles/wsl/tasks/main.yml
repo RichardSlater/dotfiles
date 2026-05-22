@@ -13,6 +13,8 @@
       file:
         path: /etc/wsl.conf
         state: touch
+        access_time: preserve
+        modification_time: preserve
         mode: '0644'
 
     - name: Ensure /etc/wsl.conf ends with a newline

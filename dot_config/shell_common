@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # shell_common - Shared configuration for bash and zsh
 # This file should be sourced by both .bashrc and .zshrc
 
@@ -7,7 +8,8 @@
 if command -v nvim &> /dev/null; then
   alias vi='nvim'
   alias vim='nvim'
-  export EDITOR=$(which nvim)
+  EDITOR=$(command -v nvim)
+  export EDITOR
 else
   export EDITOR=vi
 fi
@@ -43,6 +45,7 @@ export VISUAL=$EDITOR
 # =============================================================================
 # Cargo (Rust)
 # =============================================================================
+# shellcheck source=/dev/null
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # =============================================================================
@@ -60,16 +63,23 @@ fi
 # .NET
 # =============================================================================
 if command -v dotnet &> /dev/null; then
-  export DOTNET_ROOT=$(dirname $(readlink -f $(which dotnet)))
+  dotnet_path=$(readlink -f "$(command -v dotnet)")
+  DOTNET_ROOT=$(dirname "$dotnet_path")
+  export DOTNET_ROOT
 fi
 
 # =============================================================================
 # SDKMAN (Java/Kotlin/Gradle/etc)
 # =============================================================================
 export SDKMAN_DIR="$HOME/.sdkman"
+# shellcheck source=/dev/null
 [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # =============================================================================
 # Podman
 # =============================================================================
-[ -f "/usr/bin/podman" ] && export DOCKER_HOST="unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
+if [ -f "/usr/bin/podman" ]; then
+  podman_socket_path=$(podman info --format '{{.Host.RemoteSocket.Path}}')
+  DOCKER_HOST="unix://${podman_socket_path}"
+  export DOCKER_HOST
+fi

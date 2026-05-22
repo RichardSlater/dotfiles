@@ -14,5 +14,6 @@
     src: "/usr/bin/batcat"
     dest: "/usr/local/bin/bat"
     state: link
+    # Replace a prior file so the user-facing bat command always points at batcat.
     force: true
   when: ansible_facts['os_family'] == "Debian"

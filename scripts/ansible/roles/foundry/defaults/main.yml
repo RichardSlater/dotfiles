@@ -1,0 +1,5 @@
+---
+foundry_enabled: true
+foundry_install_root: "{{ ansible_env.HOME }}/.foundry"
+foundry_bin_dir: "{{ foundry_install_root }}/bin"
+foundry_update: false

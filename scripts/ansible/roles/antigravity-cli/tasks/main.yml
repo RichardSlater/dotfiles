@@ -4,7 +4,7 @@
     - name: Check if Antigravity CLI is already installed
       ansible.builtin.command: "{{ antigravity_cli_binary_name }} --version"
       register: antigravity_check
-      ignore_errors: true
+      failed_when: false
       changed_when: false
       environment:
         PATH: "{{ antigravity_cli_install_dir }}:{{ ansible_env.PATH }}"
@@ -17,12 +17,21 @@
     - name: Check whether npm is available for legacy cleanup
       ansible.builtin.command: npm --version
       register: npm_check
-      ignore_errors: true
+      failed_when: false
       changed_when: false
+
+    - name: Check whether legacy Gemini CLI npm package is installed
+      ansible.builtin.command: npm list -g @google/gemini-cli --depth=0
+      register: gemini_npm_check
+      failed_when: false
+      changed_when: false
+      when: npm_check.rc == 0
 
     - name: Remove legacy Gemini CLI npm package if npm is available
       ansible.builtin.command: npm uninstall -g @google/gemini-cli
-      when: npm_check.rc == 0
+      when:
+        - npm_check.rc == 0
+        - gemini_npm_check.rc == 0
       environment:
         NPM_CONFIG_PREFIX: "{{ antigravity_cli_install_prefix }}"
 

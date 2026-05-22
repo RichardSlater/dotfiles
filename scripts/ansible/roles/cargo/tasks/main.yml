@@ -1,4 +1,14 @@
 ---
+- name: Get installed Cargo packages
+  shell: |
+    . "$HOME/.cargo/env"
+    cargo install --list
+  args:
+    executable: /bin/bash
+  register: cargo_installed_packages
+  changed_when: false
+  failed_when: false
+
 - name: Install Cargo packages
   shell: |
     . "$HOME/.cargo/env"
@@ -7,10 +17,10 @@
     executable: /bin/bash
   loop: "{{ cargo_packages }}"
   register: cargo_install_result
-  changed_when: "'Installed package' in cargo_install_result.stdout or 'Replaced package' in cargo_install_result.stdout"
-  failed_when:
-    - cargo_install_result.rc != 0
-    - "'already exists' not in cargo_install_result.stderr"
+  when: >-
+    (
+      cargo_installed_packages.stdout_lines | default([])
+    ) | select('match', '^' ~ item.name ~ ' v[^:]+:$') | list | length == 0
 
 - name: Verify Cargo package installation
   shell: |

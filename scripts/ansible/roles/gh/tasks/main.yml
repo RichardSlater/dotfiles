@@ -16,7 +16,7 @@
 - name: Check if gh is already installed and matches version
   command: gh --version
   register: gh_current_version
-  ignore_errors: true
+  failed_when: false
   changed_when: false
 
 - name: Create build directory

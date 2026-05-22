@@ -6,6 +6,9 @@ name: CI
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
 
 jobs:
   shellcheck:
@@ -15,13 +18,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run ShellCheck on bash files
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: '.'
-          additional_files: 'dot_bashrc dot_profile'
-          # Exclude zsh-only files and ansible scripts
-          ignore_paths: 'dot_zshrc dot_zshenv dot_config/dot_fzf.zsh dot_config/zsh_aliases dot_config/zsh_keybinds scripts/ansible'
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck on repository shell files
+        run: >-
+          shellcheck
+          dot_bashrc
+          dot_profile
+          dot_config/shell_common
+          .vscode/test-dotfiles.sh
+          .vscode/test-ansible-idempotence.sh
+          scripts/debian/*.sh
+          scripts/ansible/*.sh
   yaml-lint:
     name: YAML Lint
     runs-on: ubuntu-latest
@@ -33,6 +42,29 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           file_or_dir: '.'
+
+  ansible-syntax:
+    name: Ansible Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install ansible
+        run: pip install ansible
+
+      - name: Install Ansible Galaxy requirements
+        working-directory: scripts/ansible
+        run: ansible-galaxy install -r requirements.yml
+
+      - name: Run Ansible syntax check
+        working-directory: scripts/ansible
+        run: ansible-playbook playbook.yml -i inventory/hosts.yml --syntax-check
 
   ansible-lint:
     name: Ansible Lint
@@ -56,26 +88,74 @@ jobs:
       - name: Run ansible-lint
         working-directory: scripts/ansible
         run: ansible-lint playbook.yml
-        continue-on-error: true  # Allow warnings without failing the build
 
-  chezmoi-validate:
-    name: Chezmoi Template Validation
+  chezmoi-validate-linux:
+    name: Chezmoi Template Validation (Linux)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - username: rslater
+            email: richard.slater@ensono.com
+          - username: scetrov
+            email: git@scetrov.live
+          - username: sandbox
+            email: ci@example.com
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)"
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$RUNNER_TEMP/bin"
 
-      - name: Initialize chezmoi with source
-        run: ./bin/chezmoi init --source="${{ github.workspace }}"
+      - name: Create validation user
+        run: sudo useradd --create-home --shell /bin/bash "${{ matrix.username }}"
+
+      - name: Prepare workspace copy for validation
+        run: |
+          workspace_copy="/tmp/chezmoi-${{ matrix.username }}"
+          rm -rf "$workspace_copy"
+          mkdir -p "$workspace_copy"
+          cp -a "$GITHUB_WORKSPACE"/. "$workspace_copy"
+          sudo chown -R "${{ matrix.username }}:${{ matrix.username }}" "$workspace_copy"
+
+      - name: Validate chezmoi context
         env:
-          # Provide minimal config for template rendering
-          CHEZMOI_EMAIL: "ci@example.com"
+          CHEZMOI_EMAIL: "${{ matrix.email }}"
+        run: |
+          sudo -u "${{ matrix.username }}" env \
+            HOME="/home/${{ matrix.username }}" \
+            PATH="$RUNNER_TEMP/bin:$PATH" \
+            CHEZMOI_EMAIL="$CHEZMOI_EMAIL" \
+            WORKSPACE_COPY="/tmp/chezmoi-${{ matrix.username }}" \
+            bash -lc '
+              set -euo pipefail
+              source_dir="$(mktemp -d)"
+              cp -a "$WORKSPACE_COPY"/. "$source_dir"
 
-      - name: Validate templates (dry-run)
-        run: ./bin/chezmoi diff --dry-run || true
+              set +e
+              chezmoi diff --source="$source_dir"
+              exit_code=$?
+              set -e
+              if [ "$exit_code" -gt 1 ]; then
+                exit "$exit_code"
+              fi
 
-      - name: Run chezmoi doctor
-        run: ./bin/chezmoi doctor || true
+              chezmoi doctor --source="$source_dir"
+              chezmoi managed --source="$source_dir" >/dev/null
+            '
+
+  ansible-idempotence:
+    name: Ansible Idempotence (Scheduled)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Docker idempotence check
+        run: >-
+          docker run --rm
+          -v "$GITHUB_WORKSPACE:/dotfiles:ro"
+          docker.io/library/debian:bookworm
+          bash /dotfiles/.vscode/test-ansible-idempotence.sh

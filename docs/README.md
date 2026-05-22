@@ -1,73 +1,21 @@
-# Dotfiles for Powershell on Windows (pwsh) and Zsh
+# Documentation Index
 
-## Repository Index
+Use the top-level `README.md` for install and quick-start guidance. This directory collects the longer-lived architecture and implementation references.
 
-This repository manages a full developer environment across Windows and Linux.
+## Core docs
 
-### Ansible Roles (Linux/WSL)
+- [../README.md](../README.md) for installation and validation entry points.
+- [ARCHITECTURE.md](ARCHITECTURE.md) for the Chezmoi and Ansible ownership boundary, current inventory, and change guardrails.
+- [CHEZMOI_VARIABLES.md](CHEZMOI_VARIABLES.md) for built-in template facts and repo data keys.
+- [ANSIBLE_ROLE_TEMPLATE.md](ANSIBLE_ROLE_TEMPLATE.md) for the preferred Ansible role structure, idempotence notes, and source-build pattern.
+- [../scripts/ansible/README.md](../scripts/ansible/README.md) for play ordering, role categories, and privilege boundaries.
 
-| Role                                           | Description                                       | Source                                                                                             |
-|:-----------------------------------------------|:--------------------------------------------------|:---------------------------------------------------------------------------------------------------|
-| [packages](scripts/ansible/roles/packages)     | Common system utilities (jq, ripgrep, btop, etc.) | [scripts/ansible/playbook.yml](scripts/ansible/playbook.yml)                                       |
-| [podman](scripts/ansible/roles/podman)         | Rootless container engine (built from source)     | [scripts/ansible/roles/podman/tasks/main.yml](scripts/ansible/roles/podman/tasks/main.yml)         |
-| [neovim](scripts/ansible/roles/neovim)         | Modern editor built from source with C# support   | [scripts/ansible/roles/neovim/tasks/main.yml](scripts/ansible/roles/neovim/tasks/main.yml)         |
-| [gh](scripts/ansible/roles/gh)                 | GitHub CLI (built from source)                    | [scripts/ansible/roles/gh/tasks/main.yml](scripts/ansible/roles/gh/tasks/main.yml)                 |
-| [uv](scripts/ansible/roles/uv)                 | Astral's fast Python package manager              | [scripts/ansible/roles/uv/tasks/main.yml](scripts/ansible/roles/uv/tasks/main.yml)                 |
-| [cargo](scripts/ansible/roles/cargo)           | Rust toolchain & tools (e.g. tree-sitter)         | [scripts/ansible/roles/cargo/tasks/main.yml](scripts/ansible/roles/cargo/tasks/main.yml)           |
-| [zsh](scripts/ansible/roles/zsh)               | Shell configuration with Oh-My-Zsh                | [scripts/ansible/roles/zsh/tasks/main.yml](scripts/ansible/roles/zsh/tasks/main.yml)               |
-| [tmux](scripts/ansible/roles/tmux)             | Terminal multiplexer with custom config           | [scripts/ansible/roles/tmux/tasks/main.yml](scripts/ansible/roles/tmux/tasks/main.yml)             |
-| [oh-my-posh](scripts/ansible/roles/oh-my-posh) | Cross-shell prompt theme engine                   | [scripts/ansible/roles/oh-my-posh/tasks/main.yml](scripts/ansible/roles/oh-my-posh/tasks/main.yml) |
-| [fzf](scripts/ansible/roles/fzf)               | Command-line fuzzy finder                         | [scripts/ansible/roles/fzf/tasks/main.yml](scripts/ansible/roles/fzf/tasks/main.yml)               |
+## Plans
 
-### Key Features
+- `plans/` contains implementation plans and staged follow-up work.
 
-- **Neovim**: C# (Roslyn) support via [roslyn.nvim](https://github.com/seblyng/roslyn.nvim), LazyVim integration.
-- **Rootless Podman**: Fully configured rootless containerization on Debian/Ubuntu.
-- **Cross-Platform Prompt**: Unified look via [dot_config/oh-my-posh](dot_config/oh-my-posh).
-- **Modern CLI Tools**: Up-to-date versions of [scripts/ansible/roles/bat](scripts/ansible/roles/bat), [scripts/ansible/roles/fzf](scripts/ansible/roles/fzf), [scripts/ansible/roles/gh](scripts/ansible/roles/gh), [scripts/ansible/roles/uv](scripts/ansible/roles/uv), and [scripts/ansible/roles/speckit](scripts/ansible/roles/speckit).
+## Current state
 
-## Windows Install
+The architecture hardening pass has documented the current Chezmoi and Ansible split, added a shared Ansible preflight role, and expanded validation with stricter Chezmoi Docker checks, a Docker idempotence script, repo YAML linting, and a documented `ansible-lint` baseline.
 
-```powershell
-winget install twpayne.chezmoi
-chezmoi init --apply --verbose RichardSlater
-```
-
-## Linux Install
-
-```sh
-sudo apt update && sudo apt install --yes curl git unzip
-curl -s https://ohmyposh.dev/install.sh | bash -s
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply RichardSlater
-```
-
-### Configure SSH Push/Pull URL
-
-```sh
-chezmoi cd
-git remote set-url --no-push origin https://github.com/richardslater/dotfiles.git
-git remote set-url --push origin git@github.com:RichardSlater/dotfiles.git
-```
-
-## Transient Install
-
-This is used only for transient environments like containers:
-
-```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --one-shot RichardSlater
-```
-
-## Neovim: C# (Roslyn)
-
-This repo enables [roslyn.nvim](https://github.com/seblyng/roslyn.nvim) for C# buffers.
-
-- Install a Roslyn Language Server executable on your PATH (config prefers roslyn, but will also use Microsoft.CodeAnalysis.LanguageServer if found).
-- Ensure a recent .NET SDK is installed.
-
-Verify prerequisites on Windows:
-
-```powershell
-dotnet --info
-Get-Command roslyn -ErrorAction SilentlyContinue
-Get-Command Microsoft.CodeAnalysis.LanguageServer -ErrorAction SilentlyContinue
-```
+The remaining optional cleanup items are intentionally documented rather than auto-applied where they would change user-facing behavior.

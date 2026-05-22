@@ -17,6 +17,16 @@
     state: present
   when: ansible_facts['os_family'] == "Debian"
 
+- name: Check if tmux is already installed
+  command: "{{ tmux_install_dir }}/bin/tmux -V"
+  register: tmux_check
+  changed_when: false
+  failed_when: false
+
+- name: Decide whether tmux needs installation
+  set_fact:
+    tmux_needs_install: "{{ tmux_check.rc != 0 or tmux_version not in tmux_check.stdout }}"
+
 - name: Create source directory
   file:
     path: "{{ tmux_src_dir }}"
@@ -28,6 +38,7 @@
     url: "https://github.com/tmux/tmux/releases/download/{{ tmux_version }}/tmux-{{ tmux_version }}.tar.gz"
     dest: "{{ tmux_src_dir }}/tmux.tar.gz"
     checksum: "{{ tmux_checksum }}"
+  when: tmux_needs_install
 
 - name: Extract tmux source
   ansible.builtin.unarchive:
@@ -35,6 +46,7 @@
     dest: "{{ tmux_src_dir }}"
     remote_src: true
     extra_opts: [--strip-components=1]
+  when: tmux_needs_install
 
 - name: Ensure correct permissions for source directory
   file:
@@ -42,6 +54,7 @@
     state: directory
     mode: "0755"
     recurse: true
+  when: tmux_needs_install
 
 - name: Run autogen.sh to prepare the build system
   command:
@@ -49,6 +62,7 @@
     chdir: "{{ tmux_src_dir }}"
   args:
     creates: "{{ tmux_src_dir }}/configure"
+  when: tmux_needs_install
 
 - name: Configure tmux build
   command:
@@ -56,6 +70,7 @@
     chdir: "{{ tmux_src_dir }}"
   args:
     creates: "{{ tmux_src_dir }}/Makefile"
+  when: tmux_needs_install
 
 - name: Compile tmux
   command:
@@ -63,12 +78,14 @@
     chdir: "{{ tmux_src_dir }}"
   args:
     creates: "{{ tmux_src_dir }}/tmux"
+  when: tmux_needs_install
 
 - name: Install tmux
   become: true
   command:
     cmd: "make install"
     chdir: "{{ tmux_src_dir }}"
+  when: tmux_needs_install
 
 - name: Verify tmux installation
   command: "{{ tmux_install_dir }}/bin/tmux -V"

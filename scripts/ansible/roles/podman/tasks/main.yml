@@ -59,14 +59,18 @@
 - name: Check if Podman is already installed and matches version
   command: podman --version
   register: podman_current_version
-  ignore_errors: true
+  failed_when: false
   changed_when: false
+
+- name: Normalize expected Podman version for runtime checks
+  set_fact:
+    podman_expected_version: "{{ podman_version | regex_replace('^v', '') }}"
 
 - name: Create build directory
   file:
     path: "{{ podman_build_dir }}"
     state: directory
-  when: podman_current_version.rc != 0 or podman_version not in podman_current_version.stdout
+  when: podman_current_version.rc != 0 or podman_expected_version not in podman_current_version.stdout
 
 - name: Clone Podman repository
   git:
@@ -75,7 +79,7 @@
     version: "{{ podman_version }}"
     depth: 1
     update: true
-  when: podman_current_version.rc != 0 or podman_version not in podman_current_version.stdout
+  when: podman_current_version.rc != 0 or podman_expected_version not in podman_current_version.stdout
 
 - name: Build and Install Podman from source
   become: true
@@ -86,7 +90,7 @@
   args:
     chdir: "{{ podman_build_dir }}"
     executable: /bin/bash
-  when: podman_current_version.rc != 0 or podman_version not in podman_current_version.stdout
+  when: podman_current_version.rc != 0 or podman_expected_version not in podman_current_version.stdout
   register: podman_build_result
 
 - name: Get information for {{ podman_user }}
@@ -101,29 +105,19 @@
 - name: Ensure /etc/subuid and /etc/subgid are configured for {{ podman_user }}
   become: true
   block:
-    - name: Check if user is in /etc/subuid
-      shell: "grep -q '^{{ podman_user }}:' /etc/subuid"
-      register: subuid_check
-      ignore_errors: true
-      changed_when: false
-
     - name: Add user to /etc/subuid
       lineinfile:
         path: /etc/subuid
+        regexp: '^{{ podman_user }}:'
         line: "{{ podman_user }}:100000:65536"
-      when: subuid_check.rc != 0
-
-    - name: Check if user is in /etc/subgid
-      shell: "grep -q '^{{ podman_user }}:' /etc/subgid"
-      register: subgid_check
-      ignore_errors: true
-      changed_when: false
+        create: true
 
     - name: Add user to /etc/subgid
       lineinfile:
         path: /etc/subgid
+        regexp: '^{{ podman_user }}:'
         line: "{{ podman_user }}:100000:65536"
-      when: subgid_check.rc != 0
+        create: true
 
 - name: Check if unprivileged user namespaces sysctl exists
   stat:

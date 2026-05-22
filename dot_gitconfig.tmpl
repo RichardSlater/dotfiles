@@ -3,9 +3,23 @@ editor = nvim
 eol = lf
 autocrlf = input
 
+{{- $email := get . "email" -}}
+{{- if eq $email "" -}}
+{{-   $email = env "CHEZMOI_EMAIL" -}}
+{{- end -}}
+{{- if eq $email "" -}}
+{{-   if eq .chezmoi.username "scetrov" -}}
+{{-     $email = "git@scetrov.live" -}}
+{{-   else if eq .chezmoi.username "rslater" -}}
+{{-     $email = "richard.slater@ensono.com" -}}
+{{-   else -}}
+{{-     $email = "github@richard-slater.co.uk" -}}
+{{-   end -}}
+{{- end }}
+
 [user]
-email = {{ .email | quote }}
-{{- if eq .email "git@scetrov.live" }}
+email = {{ $email | quote }}
+{{- if eq $email "git@scetrov.live" }}
 name = Scetrov
 signingkey = 84753C44C2B0595CDE23A57A5950DDF381361815
 {{ else }}

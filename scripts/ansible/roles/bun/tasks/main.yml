@@ -1,9 +1,16 @@
 ---
+- name: Check if bun is already installed
+  ansible.builtin.command: "{{ ansible_facts['env'].HOME }}/.bun/bin/bun --version"
+  register: bun_check
+  changed_when: false
+  failed_when: false
+
 - name: Download bun installer
   ansible.builtin.get_url:
     url: "{{ bun_install_url }}"
     dest: "/tmp/bun_install.sh"
     mode: '0755'
+  when: bun_check.rc != 0
 
 - name: Install bun
   ansible.builtin.shell: >
@@ -12,8 +19,10 @@
     creates: "{{ ansible_facts['env'].HOME }}/.bun/bin/bun"
   environment:
     BUN_INSTALL: "{{ ansible_facts['env'].HOME }}/.bun"
+  when: bun_check.rc != 0
 
 - name: Remove bun installer
   ansible.builtin.file:
     path: "/tmp/bun_install.sh"
     state: absent
+  when: bun_check.rc != 0

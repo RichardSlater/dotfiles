@@ -12,6 +12,11 @@
       ansible.builtin.debug:
         var: ansible_facts['distribution_version'] is version('13.0', '>=')
 
+- name: Run preflight checks
+  hosts: localhost
+  roles:
+    - preflight
+
 - name: Update Ubuntu/Debian system
   hosts: localhost
   become: true
@@ -68,22 +73,6 @@
 - name: Run roles for system setup
   hosts: localhost
   become: true
-  vars:
-    packages:
-      - dnsutils
-      - btop
-      - yamllint
-      - jq
-      - yq
-      - shellcheck
-      - libclang-dev
-    unlisted_packages:
-      - name: Dive
-        source: https://github.com/wagoodman/dive/releases/download/v0.13.1/dive_0.13.1_linux_amd64.deb
-    # geerlingguy.go role variables - Go 1.26.3 (current stable as of May 2026)
-    go_version: "1.26.3"
-    go_install_clean: true
-    go_checksum: "2b2cfc7148493da5e73981bffbf3353af381d5f93e789c82c79aff64962eb556"
   roles:
     - packages
     - bat
@@ -102,8 +91,6 @@
   hosts: localhost
   vars:
     rustup_user: "{{ ansible_facts['user_id'] }}"
-    uv_tools:
-      - pre-commit
   roles:
     - rootless-networking
     - nvm
@@ -122,15 +109,22 @@
     - name: Check if nvim is installed
       command: which nvim
       register: nvim_check
-      ignore_errors: true
+      failed_when: false
       changed_when: false
+
+    - name: Check if LazyVim config is present
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.config/nvim/lazyvim.json"
+      register: lazyvim_config
 
     - name: Run LazyVim sync
       command: nvim --headless "+Lazy! sync" +qa
-      when: nvim_check.rc == 0
+      when:
+        - nvim_check.rc == 0
+        - lazyvim_config.stat.exists
       register: lazy_sync
       changed_when: "'No updates' not in lazy_sync.stdout"
-      ignore_errors: true
+      failed_when: false
 
 - name: Run roles for user
   hosts: localhost
