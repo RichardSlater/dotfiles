@@ -52,10 +52,9 @@ This plan improves the repository architecture without changing its core operati
 3. Fix `scripts/ansible/roles/uv/tasks/main.yml` so uv tool installation does not use `--force` unnecessarily and only reports changed when a tool is newly installed or intentionally updated.
 4. Fix `scripts/ansible/roles/speckit/tasks/main.yml` to avoid shelling to `grep`; gather `uv tool list` output and use Ansible conditions for detection.
 5. Fix `scripts/ansible/roles/copilot-cli/tasks/main.yml` so `latest` has deterministic behavior. Preferred direction: treat `latest` as install-if-missing unless an explicit update flag is set, and compare exact versions only when a concrete version is configured.
-6. Improve `scripts/ansible/roles/foundry/tasks/main.yml` detection around `forge --version` and `foundryup`, while respecting Foundry's self-updating model.
-7. Review `scripts/ansible/roles/cargo/tasks/main.yml` changed reporting and update strategy; avoid false no-change reports when `cargo install` actually updates a binary.
-8. Replace broad `ignore_errors: true` with `failed_when: false` or explicit rescue handling where the failure is expected, especially check tasks. Keep `ignore_errors` only where documented.
-9. This phase depends on Phase 3 for variable placement where touched roles need variable cleanup.
+6. Review `scripts/ansible/roles/cargo/tasks/main.yml` changed reporting and update strategy; avoid false no-change reports when `cargo install` actually updates a binary.
+7. Replace broad `ignore_errors: true` with `failed_when: false` or explicit rescue handling where the failure is expected, especially check tasks. Keep `ignore_errors` only where documented.
+8. This phase depends on Phase 3 for variable placement where touched roles need variable cleanup.
 
 **Phase 5: Shared Role Patterns And Preflight Checks**
 
@@ -117,7 +116,7 @@ This plan improves the repository architecture without changing its core operati
 
 1. Phase 0 and Phase 1 first; they reduce ambiguity before code movement.
 2. Phase 2 and Phase 3 can proceed in parallel once the architecture docs are in place.
-3. Phase 4 should be split into small role-focused PRs or commits: uv/speckit, copilot/antigravity, foundry/cargo, cleanup/dead code.
+3. Phase 4 should be split into small role-focused PRs or commits: uv/speckit, copilot/antigravity, cargo, cleanup/dead code.
 4. Phase 5 should follow the role fixes so the template reflects proven patterns.
 5. Phase 6 should become the enforcement layer after the repository is close to clean.
 6. Phase 7 should only proceed with explicit user confirmation for behavior-changing cleanup.

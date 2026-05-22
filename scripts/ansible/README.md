@@ -22,7 +22,7 @@ The current playbook runs in a simple sequence:
 4. Run system roles with `become: true`.
 5. Run user roles without privilege escalation.
 6. Sync LazyVim plugins if Neovim is present.
-7. Run final user roles such as Foundry and container cleanup.
+7. Run final user cleanup roles.
 
 ## Role categories
 
@@ -53,7 +53,6 @@ User setup roles:
 - `dotnet`
 - `copilot-cli`
 - `antigravity-cli`
-- `foundry`
 - `container-cleanup`
 
 ## Privilege boundaries

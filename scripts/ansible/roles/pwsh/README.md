@@ -23,7 +23,7 @@ pwsh_arch_map:
   x86_64: "amd64"
   aarch64: "arm64"
 
-pwsh_arch: "{{ pwsh_arch_map[ansible_architecture] | default('amd64') }}"
+pwsh_arch: "{{ pwsh_arch_map[ansible_facts['architecture']] | default('amd64') }}"
 pwsh_supported_architectures:
   - x86_64
   - aarch64
@@ -32,6 +32,7 @@ pwsh_supported_architectures:
 ## Version Strategy
 
 This role installs a pinned PowerShell `.deb` directly from the upstream GitHub release for the configured version.
+If PowerShell is already installed at the same or a newer version, the role leaves it in place.
 
 ## Example Playbook
 
@@ -53,7 +54,6 @@ Install a different pinned version:
 
 ## Notes
 
-- On Debian 13 and newer, the role also installs the `libicu72` package needed by the current PowerShell package path.
 - The role skips installation on unsupported architectures.
 
 ## License

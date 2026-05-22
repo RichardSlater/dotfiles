@@ -129,6 +129,4 @@
 - name: Run roles for user
   hosts: localhost
   roles:
-    - role: foundry
-      when: "'ensono.com' not in ansible_facts['dns'].search"
     - container-cleanup

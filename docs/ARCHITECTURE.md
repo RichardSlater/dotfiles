@@ -69,7 +69,7 @@ The current playbook in `scripts/ansible/playbook.yml` runs in this order:
 4. System roles with `become: true`.
 5. User roles without `become`.
 6. A best-effort LazyVim sync.
-7. Final user roles for Foundry and container cleanup.
+7. Final user cleanup roles.
 
 ### Current role categories
 
@@ -100,7 +100,6 @@ User roles:
 - `dotnet`
 - `copilot-cli`
 - `antigravity-cli`
-- `foundry`
 - `container-cleanup`
 
 ### External dependencies
