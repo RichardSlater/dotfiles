@@ -106,7 +106,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$RUNNER_TEMP/bin"
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$RUNNER_TEMP/bin"
+          sudo install -m 0755 "$RUNNER_TEMP/bin/chezmoi" /usr/local/bin/chezmoi
 
       - name: Create validation user
         run: sudo useradd --create-home --shell /bin/bash "${{ matrix.username }}"
@@ -125,7 +127,7 @@ jobs:
         run: |
           sudo -u "${{ matrix.username }}" env \
             HOME="/home/${{ matrix.username }}" \
-            CHEZMOI="$RUNNER_TEMP/bin/chezmoi" \
+            CHEZMOI="/usr/local/bin/chezmoi" \
             CHEZMOI_EMAIL="$CHEZMOI_EMAIL" \
             WORKSPACE_COPY="/tmp/chezmoi-${{ matrix.username }}" \
             bash -lc '
