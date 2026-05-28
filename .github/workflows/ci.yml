@@ -125,12 +125,14 @@ jobs:
         env:
           CHEZMOI_EMAIL: "${{ matrix.email }}"
         run: |
-          sudo -u "${{ matrix.username }}" env \
+          sudo -H -u "${{ matrix.username }}" env \
             HOME="/home/${{ matrix.username }}" \
+            XDG_CONFIG_HOME="/home/${{ matrix.username }}/.config" \
+            GIT_CONFIG_GLOBAL="/dev/null" \
             CHEZMOI="/usr/local/bin/chezmoi" \
             CHEZMOI_EMAIL="$CHEZMOI_EMAIL" \
             WORKSPACE_COPY="/tmp/chezmoi-${{ matrix.username }}" \
-            bash -lc '
+            bash -c '
               set -euo pipefail
               source_dir="$(mktemp -d)"
               cp -a "$WORKSPACE_COPY"/. "$source_dir"
