@@ -125,7 +125,7 @@ jobs:
         run: |
           sudo -u "${{ matrix.username }}" env \
             HOME="/home/${{ matrix.username }}" \
-            PATH="$RUNNER_TEMP/bin:$PATH" \
+            CHEZMOI="$RUNNER_TEMP/bin/chezmoi" \
             CHEZMOI_EMAIL="$CHEZMOI_EMAIL" \
             WORKSPACE_COPY="/tmp/chezmoi-${{ matrix.username }}" \
             bash -lc '
@@ -134,15 +134,15 @@ jobs:
               cp -a "$WORKSPACE_COPY"/. "$source_dir"
 
               set +e
-              chezmoi diff --source="$source_dir"
+              "$CHEZMOI" diff --source="$source_dir"
               exit_code=$?
               set -e
               if [ "$exit_code" -gt 1 ]; then
                 exit "$exit_code"
               fi
 
-              chezmoi doctor --source="$source_dir"
-              chezmoi managed --source="$source_dir" >/dev/null
+              "$CHEZMOI" doctor --source="$source_dir"
+              "$CHEZMOI" managed --source="$source_dir" >/dev/null
             '
 
   ansible-idempotence:
