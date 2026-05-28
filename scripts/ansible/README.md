@@ -45,6 +45,7 @@ User setup roles:
 
 - `rootless-networking`
 - `nvm`
+- `pnpm`
 - `bun`
 - `hurricanehrndz.rustup`
 - `cargo`

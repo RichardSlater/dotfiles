@@ -23,6 +23,7 @@ The roles below are the current priority set because they carry versions, instal
 | `podman`          | `defaults/main.yml`, `vars/main.yml`, `README.md` | Pinned source build from Git tag                                        |
 | `tmux`            | `defaults/main.yml`, `vars/main.yml`, `README.md` | Pinned source release with checksum                                     |
 | `nvm`             | `defaults/main.yml`, `README.md`                  | Pinned installer script with checksum                                   |
+| `pnpm`            | `defaults/main.yml`, `README.md`                  | Pinned official installer script without checksum                       |
 | `dotnet`          | `defaults/main.yml`, `README.md`                  | Channel-based installer script without checksum                         |
 | `cargo`           | `defaults/main.yml`, `vars/main.yml`, `README.md` | Latest from crates.io via `cargo install`                               |
 
@@ -144,6 +145,17 @@ The roles below are the current priority set because they carry versions, instal
   - `nvm_install_checksum`: `sha256:4b7412c4166905d13ea272117f5c6bf6c674c0074fc4c78d82784f8750b9585d`
 - Strategy: pinned installer script with checksum validation.
 - Current gap: shell integration still lives outside the role in the Chezmoi-managed shell config.
+
+### `pnpm`
+
+- Files: `defaults/main.yml`, `README.md`
+- User-overridable variables:
+  - `pnpm_version`: `11.4.0`
+  - `pnpm_install_url`: `https://get.pnpm.io/install.sh`
+  - `pnpm_home`: `{{ ansible_facts['env'].HOME }}/.local/share/pnpm`
+  - `pnpm_global_packages`: package/version specs installed with `pnpm install --global`, default `[]`
+- Strategy: pinned official installer script using the current `pnpm@latest` version at the time this role was added; optional global packages from configured package/version specs.
+- Current gap: installer script is not checksum-validated.
 
 ### `dotnet`
 
