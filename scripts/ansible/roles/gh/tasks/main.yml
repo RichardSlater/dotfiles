@@ -47,7 +47,12 @@
     SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
     SSL_CERT_DIR: /etc/ssl/certs
     GIT_SSL_CAINFO: /etc/ssl/certs/ca-certificates.crt
-    GOPROXY: direct
+    # Prefer the public Go module proxy/checksum database for reproducible
+    # module zips. Using GOPROXY=direct can expose source archive drift and
+    # a poisoned root module cache as checksum mismatches.
+    GOPROXY: "https://proxy.golang.org,direct"
+    GOMODCACHE: "{{ gh_build_dir }}/.gomodcache"
+    GOCACHE: "{{ gh_build_dir }}/.gocache"
   when: gh_current_version.rc != 0 or gh_version not in gh_current_version.stdout
 
 - name: Verify gh installation
