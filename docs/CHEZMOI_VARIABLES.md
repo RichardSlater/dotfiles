@@ -23,7 +23,6 @@ This repository uses both Chezmoi built-in facts and repo-defined data keys.
 Current logic:
 
 - Username `scetrov` resolves to personal role and `git@scetrov.live`.
-- Username `rslater` resolves to work role and `richard.slater@ensono.com`.
 - Any other username resolves to personal role and `github@richard-slater.co.uk`.
 
 ## Guidance for future template work

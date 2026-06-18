@@ -11,5 +11,5 @@
 {{ end }}
 
 [data]
-    email = "{{- if eq .chezmoi.username "scetrov" -}}git@scetrov.live{{- else if eq .chezmoi.username "rslater" -}}richard.slater@ensono.com{{- else -}}github@richard-slater.co.uk{{- end -}}"
-    role = "{{- if eq .chezmoi.username "scetrov" -}}personal{{- else if eq .chezmoi.username "rslater" -}}work{{- else -}}personal{{- end -}}"
+    email = "{{- if eq .chezmoi.username "scetrov" -}}git@scetrov.live{{- else -}}github@richard-slater.co.uk{{- end -}}"
+    role = personal

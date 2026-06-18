@@ -10,8 +10,6 @@ autocrlf = input
 {{- if eq $email "" -}}
 {{-   if eq .chezmoi.username "scetrov" -}}
 {{-     $email = "git@scetrov.live" -}}
-{{-   else if eq .chezmoi.username "rslater" -}}
-{{-     $email = "richard.slater@ensono.com" -}}
 {{-   else -}}
 {{-     $email = "github@richard-slater.co.uk" -}}
 {{-   end -}}

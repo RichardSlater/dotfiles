@@ -95,8 +95,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - username: rslater
-            email: richard.slater@ensono.com
+          - username: mcp
+            email: github@richard-slater.co.uk
           - username: scetrov
             email: git@scetrov.live
           - username: sandbox
