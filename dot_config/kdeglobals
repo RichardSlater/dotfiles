@@ -138,6 +138,8 @@ fixed=FiraCode Nerd Font Ret,10,-1,5,450,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 [KDE]
 LookAndFeelPackage=org.kde.breezedark.desktop
+contrast=4
+frameContrast=0.2
 
 [KFileDialog Settings]
 Allow Expansion=false
@@ -155,10 +157,6 @@ Sort hidden files last=false
 Sort reversed=true
 Speedbar Width=140
 View Style=DetailTree
-
-[KScreen]
-ScaleFactor=1.5
-ScreenScaleFactors=rdp0=1.5;
 
 [Sounds]
 Enable=false

@@ -75,7 +75,9 @@
           "properties": {
             "style": "full"
           },
-          "template": " \uf07b  {{ if gt (len .Path) 20 }}..{{ .Path | trunc -18 }}{{ else }}{{ .Path }}{{ end }} ",
+          "leading_diamond": "<transparent,background>\ue0b0</>",
+          "trailing_diamond": "\ue0b0",
+          "template": " \uf07b  {{ .Path }} ",
           "foreground": "p:background",
           "background": "p:blue",
           "type": "path",
