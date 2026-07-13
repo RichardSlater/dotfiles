@@ -33,11 +33,23 @@
     container_cleanup_skip_podman_prune: >-
       {{ docker_env_marker.stat.exists or podman_env_marker.stat.exists }}
 
+- name: Detect whether Docker CLI resolves to Podman
+  set_fact:
+    container_cleanup_docker_is_podman: >-
+      {{
+        'podman' in (
+          (docker_version.stdout | default('')) ~ ' ' ~ (docker_version.stderr | default(''))
+        ) | lower
+      }}
+
 - name: Prune Docker system
   command: docker system prune --all --volumes --force
-  when: docker_check.rc == 0 and 'Podman' not in (docker_version.stdout | default(''))
+  when:
+    - docker_check.rc == 0
+    - not container_cleanup_docker_is_podman | default(false)
   register: docker_prune_result
-  changed_when: "'Total reclaimed space' in docker_prune_result.stdout"
+  failed_when: false
+  changed_when: false
 
 - name: Prune Podman system
   command: podman system prune --all --volumes --force
@@ -45,7 +57,8 @@
     - podman_check.rc == 0
     - not container_cleanup_skip_podman_prune
   register: podman_prune_result
-  changed_when: podman_prune_result.stdout != ""
+  failed_when: false
+  changed_when: false
 
 - name: Explain skipped Podman cleanup in nested containers
   debug:
@@ -54,15 +67,34 @@
     - podman_check.rc == 0
     - container_cleanup_skip_podman_prune
 
-- name: Show Docker cleanup results
+- name: Explain Docker prune failure
   debug:
-    msg: "{{ docker_prune_result.stdout_lines }}"
-  when: docker_check.rc == 0 and docker_prune_result.stdout != ""
+    msg: "Docker prune did not complete successfully. This may be due to a Podman alias or a container storage permission issue."
+  when:
+    - docker_check.rc == 0
+    - not container_cleanup_docker_is_podman | default(false)
+    - docker_prune_result.rc | default(0) != 0
 
-- name: Show Podman cleanup results
+- name: Explain Podman prune failure
   debug:
-    msg: "{{ podman_prune_result.stdout_lines }}"
+    msg: "Podman prune did not complete successfully."
   when:
     - podman_check.rc == 0
     - not container_cleanup_skip_podman_prune
-    - podman_prune_result.stdout != ""
+    - podman_prune_result.rc | default(0) != 0
+
+- name: Show Docker cleanup results
+  debug:
+    msg: "{{ docker_prune_result.stdout_lines + docker_prune_result.stderr_lines }}"
+  when:
+    - docker_check.rc == 0
+    - not container_cleanup_docker_is_podman | default(false)
+    - (docker_prune_result.stdout != "" or docker_prune_result.stderr != "")
+
+- name: Show Podman cleanup results
+  debug:
+    msg: "{{ podman_prune_result.stdout_lines + podman_prune_result.stderr_lines }}"
+  when:
+    - podman_check.rc == 0
+    - not container_cleanup_skip_podman_prune
+    - (podman_prune_result.stdout != "" or podman_prune_result.stderr != "")
