@@ -1,4 +1,5 @@
 In_wsl = os.getenv("WSL_DISTRO_NAME") ~= nil
+local is_vscode = vim.g.vscode ~= nil
 
 if In_wsl then
 	vim.g.clipboard = {
@@ -34,6 +35,42 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+
+-- Ensure files end with a final newline when written.
+vim.opt.fixendofline = true
+vim.opt.endofline = true
+
+-- Use Neovim's built-in spell checker for prose-like filetypes.
+vim.opt.spelllang = { "en" }
+local spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+local spellfile_compiled = spellfile .. ".spl"
+vim.opt.spellfile = spellfile
+vim.fn.mkdir(vim.fn.fnamemodify(spellfile, ":h"), "p")
+if vim.fn.filereadable(spellfile) == 1 then
+	local add_mtime = vim.fn.getftime(spellfile)
+	local spl_mtime = vim.fn.getftime(spellfile_compiled)
+	if spl_mtime < add_mtime then
+		vim.cmd("silent! mkspell! " .. vim.fn.fnameescape(spellfile))
+	end
+end
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "gitcommit", "markdown", "rst", "text" },
+	callback = function()
+		vim.opt_local.spell = true
+	end,
+})
+
+local function configure_spell_highlights()
+	vim.cmd("highlight SpellBad gui=undercurl guisp=#f7768e cterm=underline")
+	vim.cmd("highlight SpellCap gui=undercurl guisp=#e0af68 cterm=underline")
+	vim.cmd("highlight SpellRare gui=undercurl guisp=#bb9af7 cterm=underline")
+	vim.cmd("highlight SpellLocal gui=undercurl guisp=#7dcfff cterm=underline")
+end
+vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
+	pattern = "*",
+	callback = configure_spell_highlights,
+})
+configure_spell_highlights()
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -126,6 +163,7 @@ require("lazy").setup({
 	checker = { enabled = true },
 })
 
+if not is_vscode then
 local custom_tokyonight = require("lualine.themes.tokyonight")
 custom_tokyonight.normal.c.bg = "#1a1b26"
 
@@ -152,7 +190,11 @@ require("noice").setup({
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
+		require("conform").format({ bufnr = args.buf, async = false })
+		vim.bo[args.buf].binary = false
+		vim.bo[args.buf].endofline = true
+		vim.bo[args.buf].fixendofline = true
+		vim.bo[args.buf].fileformat = "unix"
 	end,
 })
 
@@ -248,6 +290,7 @@ require("tokyonight").setup({
 })
 
 vim.cmd([[colorscheme tokyonight]])
+end
 
 -- Disable Mousevim.opt.mousescroll = "ver:0,hor:0"
 vim.keymap.set("", "<up>", "<nop>", { noremap = true })

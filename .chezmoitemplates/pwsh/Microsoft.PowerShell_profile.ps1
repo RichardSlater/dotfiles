@@ -8,6 +8,12 @@ if ((get-command hugo | Measure-Object).Count -gt 0) {
   hugo completion powershell | Out-String | Invoke-Expression
 }
 
+if ((Get-Command gpg-agent | Measure-Object).Count -gt 0) {
+  if ((Get-Process -ProcessName gpg-agent -ErrorAction SilentlyContinue | Measure-Object).Count -eq 0) {
+    & gpg-connect-agent /bye
+  }
+}
+
 if ((get-command podman -ErrorAction SilentlyContinue | Measure-Object).Count -gt 0) {
     Set-Alias -Name docker -Value podman
     podman completion powershell | Out-String | Invoke-Expression
