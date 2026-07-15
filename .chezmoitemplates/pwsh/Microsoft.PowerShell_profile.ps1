@@ -32,5 +32,19 @@ if (Test-Path $openSshExecutable) {
     $env:GIT_SSH=$openSshExecutable;
 }
 
+$isWindows = [System.Environment]::OSVersion.Platform -eq [System.PlatformID]::Win32NT
+$isAdministrator = $false
+if ($isWindows) {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = [Security.Principal.WindowsPrincipal]::new($identity)
+    $isAdministrator = $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if ($isWindows -and -not $isAdministrator -and -not (Get-Process -Name gpg-agent -ErrorAction SilentlyContinue)) {
+    if (Get-Command -Name gpgconf -ErrorAction SilentlyContinue) {
+        gpgconf --launch gpg-agent
+    }
+}
+
 Set-PSReadlineKeyHandler -Key ctrl+d -Function DeleteCharOrExit
 Set-PSReadlineKeyHandler -Key ctrl+l -Function ClearScreen
