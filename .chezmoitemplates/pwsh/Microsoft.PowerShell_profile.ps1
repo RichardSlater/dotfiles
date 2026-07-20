@@ -32,7 +32,7 @@ if (Test-Path $openSshExecutable) {
     $env:GIT_SSH=$openSshExecutable;
 }
 
-$isWindows = [System.Environment]::OSVersion.Platform -eq [System.PlatformID]::Win32NT
+$isWindowsPlatform = [System.Environment]::OSVersion.Platform -eq [System.PlatformID]::Win32NT
 $isAdministrator = $false
 if ($isWindows) {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -40,7 +40,7 @@ if ($isWindows) {
     $isAdministrator = $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-if ($isWindows -and -not $isAdministrator -and -not (Get-Process -Name gpg-agent -ErrorAction SilentlyContinue)) {
+if ($isWindowsPlatform -and -not $isAdministrator -and -not (Get-Process -Name gpg-agent -ErrorAction SilentlyContinue)) {
     if (Get-Command -Name gpgconf -ErrorAction SilentlyContinue) {
         gpgconf --launch gpg-agent
     }
