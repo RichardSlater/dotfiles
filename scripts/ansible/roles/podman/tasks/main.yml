@@ -1,4 +1,13 @@
 ---
+- name: Remove distribution Podman packages
+  become: true
+  apt:
+    name:
+      - podman
+      - podman-docker
+    state: absent
+    purge: true
+
 - name: Install system and build dependencies for Podman
   apt:
     name:
@@ -92,6 +101,15 @@
     executable: /bin/bash
   when: podman_current_version.rc != 0 or podman_expected_version not in podman_current_version.stdout
   register: podman_build_result
+
+- name: Install Docker-compatible Podman wrapper
+  become: true
+  copy:
+    dest: /usr/local/bin/docker
+    mode: '0755'
+    content: |
+      #!/bin/sh
+      exec /usr/local/bin/podman "$@"
 
 - name: Get information for {{ podman_user }}
   getent:

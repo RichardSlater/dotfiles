@@ -76,6 +76,34 @@
       - "XDG Runtime Dir: {{ XDG_RUNTIME_DIR }}"
   when: systemd_available
 
+- name: Ensure user containers config directory exists
+  ansible.builtin.file:
+    path: "/home/{{ real_user }}/.config/containers"
+    state: directory
+    owner: "{{ real_user }}"
+    mode: "0755"
+  when: systemd_available
+
+- name: Write podman storage.conf with rootless-compatible runroot
+  ansible.builtin.copy:
+    dest: "/home/{{ real_user }}/.config/containers/storage.conf"
+    owner: "{{ real_user }}"
+    mode: "0644"
+    content: |
+      [storage]
+      driver = "overlay"
+      runroot = "/run/user/{{ real_user_uid }}/containers"
+      graphroot = "/home/{{ real_user }}/.local/share/containers/storage"
+  when: systemd_available
+
+- name: Reload systemd user units after config changes
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "{{ XDG_RUNTIME_DIR }}"
+  when: systemd_available
+
 - name: Enable and start podman.socket for {{ real_user }}
   ansible.builtin.systemd:
     name: podman.socket

@@ -80,7 +80,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # =============================================================================
 # Podman
 # =============================================================================
-if [ -f "/usr/bin/podman" ]; then
+if command -v podman >/dev/null 2>&1; then
   podman_socket_path=$(podman info --format '{{.Host.RemoteSocket.Path}}')
   DOCKER_HOST="unix://${podman_socket_path}"
   export DOCKER_HOST

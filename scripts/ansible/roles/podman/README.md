@@ -14,7 +14,7 @@ Ansible role to build and install Podman from source and configure rootless oper
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-podman_version: "v5.8.2"
+podman_version: "v6.0.2"
 podman_build_dir: "/tmp/podman_build"
 podman_network_handler: "pasta"
 podman_runtime: "crun"
@@ -37,7 +37,7 @@ podman_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
 
 ## Version Strategy
 
-This role uses a pinned Git tag and builds Podman from source, then configures rootless networking and user-level container settings.
+This role uses a pinned Git tag and builds Podman from source, then configures rootless networking and user-level container settings. It removes the distribution `podman` and `podman-docker` packages so `/usr/local/bin/podman` is the only installation, and installs `/usr/local/bin/docker` as a Docker-compatible wrapper for it.
 
 ## Example Playbook
 
@@ -54,7 +54,7 @@ Override the pinned version or runtime choices:
 - hosts: localhost
   become: true
   vars:
-    podman_version: "v5.8.1"
+    podman_version: "v6.0.2"
     podman_network_handler: "slirp4netns"
     podman_runtime: "runc"
   roles:
