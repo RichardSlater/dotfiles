@@ -1,5 +1,10 @@
 # Constitution
 
+## Process
+
+1. Before the final commit and PR, ensure that the OpenSpec spec is archived.
+2. Prefer conventional commits.
+
 ## Truthfulness
 
 1. Strive for maximal truthfulness at all times, it is okay to say: "I don't know".
@@ -31,6 +36,10 @@ Source: [OWASP Top 10:2025](https://owasp.org/Top10/2025/). The 2025 edition int
 
 1. All dependencies should be pinned with a cryptographic hash and not rely solely on a tag or version.
 2. Validate that the latest applicable released version of a dependency has been used, don't trust your own corpus of knowledge as to which version is "Latest".
+
+### Signing
+
+All commits must be signed, if signing fails it's normally due to the developer not being present and noticing the signing request in time. When this happens **NEVER** disable signing, simply stop and offer to try again when the user is back.
 
 ## Tackling failures and errors
 
