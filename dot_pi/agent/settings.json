@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.82.0",
-  "defaultProvider": "openrouter",
-  "defaultModel": "qwen/qwen3.7-plus",
-  "defaultThinkingLevel": "high",
+  "lastChangelogVersion": "0.81.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-terra",
+  "defaultThinkingLevel": "low",
   "packages": [
     "npm:context-mode",
     "npm:pi-web-access",
@@ -10,18 +10,17 @@
     "npm:@juicesharp/rpiv-todo",
     "npm:pi-subagents",
     "npm:pi-simplify",
-    "git:RichardSlater/pi-openspec-status",
-    "npm:@narumitw/pi-usage"
+    "git:github.com/RichardSlater/pi-openspec-status.git"
   ],
   "enabledModels": [
     "openai-codex/gpt-5.6-sol",
     "openai-codex/gpt-5.6-terra",
-    "openai-codex/gpt-5.6-luna",
-    "openrouter/qwen/qwen3.7-plus"
+    "openrouter/qwen/qwen3.7-plus",
+    "openai-codex/gpt-5.5"
   ],
   "hideThinkingBlock": false,
   "theme": "dark",
   "subagents": {
-    "defaultModel": "openai-codex/gpt-5.6-luna"
+    "defaultModel": "openai-codex/gpt-5.6-terra"
   }
 }
