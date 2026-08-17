@@ -1,0 +1,55 @@
+---
+# Run with:
+# ansible-playbook -i inventory/hosts.yml tests/dotnet-failure-path.yml
+- name: Validate .NET role failure paths
+  hosts: localhost
+  gather_facts: true
+  vars:
+    dotnet_test_root: "{{ lookup('ansible.builtin.env', 'TMPDIR') | default('/tmp', true) }}/chezmoi-dotnet-role-test"
+  tasks:
+    - name: Reject an unsupported architecture before download
+      block:
+        - ansible.builtin.include_role:
+            name: ../roles/dotnet
+          vars:
+            dotnet_install_dir: "{{ dotnet_test_root }}/unsupported"
+            dotnet_artifacts: {}
+      rescue:
+        - ansible.builtin.set_fact:
+            unsupported_architecture_rejected: true
+
+    - name: Confirm unsupported architecture rejection
+      ansible.builtin.assert:
+        that: unsupported_architecture_rejected | default(false)
+
+    - name: Create a local invalid archive for checksum validation
+      ansible.builtin.copy:
+        dest: "{{ dotnet_test_root }}-invalid.tar.gz"
+        content: not a .NET SDK archive
+        mode: '0600'
+
+    - name: Reject an archive with a mismatched publisher checksum
+      block:
+        - ansible.builtin.include_role:
+            name: ../roles/dotnet
+          vars:
+            dotnet_install_dir: "{{ dotnet_test_root }}/checksum"
+            dotnet_artifacts:
+              x86_64:
+                url: "file://{{ dotnet_test_root }}-invalid.tar.gz"
+                checksum: "sha512:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      rescue:
+        - ansible.builtin.set_fact:
+            checksum_mismatch_rejected: true
+
+    - name: Confirm checksum mismatch rejection
+      ansible.builtin.assert:
+        that: checksum_mismatch_rejected | default(false)
+
+    - name: Remove .NET role failure-path fixtures
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ dotnet_test_root }}"
+        - "{{ dotnet_test_root }}-invalid.tar.gz"

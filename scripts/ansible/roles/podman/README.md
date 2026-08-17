@@ -18,6 +18,7 @@ podman_version: "v6.0.2"
 podman_build_dir: "/tmp/podman_build"
 podman_network_handler: "pasta"
 podman_runtime: "crun"
+podman_container_image_commit: "08ce6b4207e7b151ea1c2830cdb1d4473cfd12aa"
 ```
 
 Internal variables from `vars/main.yml`:
@@ -63,7 +64,8 @@ Override the pinned version or runtime choices:
 
 ## Notes
 
-- The role configures `/etc/containers/policy.json` and `/etc/containers/registries.conf` from upstream defaults.
+- The role configures `/etc/containers/policy.json` and `/etc/containers/registries.conf` from `containers/image` at the reviewed immutable `podman_container_image_commit`. The project does not publish individual file checksums, so the full commit identity and TLS are the documented integrity boundary; see [`docs/PROVISIONING_INPUTS.md`](../../../../docs/PROVISIONING_INPUTS.md).
+- Configuration is downloaded and validated in a staging directory. Existing managed configuration is backed up and restored if download, validation, or replacement fails.
 - Rootless configuration includes `subuid` and `subgid` entries, user container config, and the unprivileged user namespace sysctl when available.
 - On WSL, the role forces the Podman firewall driver to `iptables`.
 

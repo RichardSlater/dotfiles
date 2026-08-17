@@ -126,7 +126,8 @@
   shell: |
     set -euo pipefail
     infocmp -x tmux-256color > {{ tmux_src_dir | quote }}/tmux-256color-styled.src
-    printf '\tSmulx=\\E[4:%%p1%%dm, Setulc=\\E[58:2:%%p1%%{65536}%%/%%d:%%p1%%{256}%%/%%{255}%%&%%d:%%p1%%{255}%%&%%d%%;m,\n' >> {{ tmux_src_dir | quote }}/tmux-256color-styled.src
+    terminfo_patch='\tSmulx=\\E[4:%%p1%%dm, Setulc=\\E[58:2:%%p1%%{65536}%%/%%d:%%p1%%{256}%%/%%{255}%%&%%d:%%p1%%{255}%%&%%d%%;m,'
+    printf '%s\n' "$terminfo_patch" >> {{ tmux_src_dir | quote }}/tmux-256color-styled.src
     tic -x {{ tmux_src_dir | quote }}/tmux-256color-styled.src
   args:
     executable: /bin/bash

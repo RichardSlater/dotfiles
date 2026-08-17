@@ -1,0 +1,187 @@
+---
+- name: Manage GitHub Copilot CLI installation
+  when: copilot_cli_enabled | bool
+  block:
+    - name: Check nvm-managed npm runtime
+      ansible.builtin.command: "{{ nvm_npm_executable }} --version"
+      environment:
+        PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env'].PATH }}"
+      register: copilot_cli_npm_check
+      changed_when: false
+      failed_when: false
+
+    - name: Assert nvm-managed npm runtime is available for Copilot CLI
+      ansible.builtin.assert:
+        that:
+          - copilot_cli_npm_check.rc == 0
+        fail_msg: >-
+          Copilot CLI requires the nvm-managed npm executable at {{ nvm_npm_executable }},
+          but it is unavailable. Ensure the nvm role installed Node.js {{ nvm_node_version }}
+          before running copilot_cli; do not fall back to a bare or OS-provided npm.
+
+    - name: Check if copilot is already installed
+      ansible.builtin.command: "{{ copilot_cli_install_prefix }}/bin/copilot --version"
+      register: copilot_cli_check
+      failed_when: false
+      changed_when: false
+
+    - name: Decide whether GitHub Copilot CLI should be installed
+      ansible.builtin.set_fact:
+        copilot_cli_needs_install: >-
+          {{ copilot_cli_check.rc != 0 or copilot_cli_version not in copilot_cli_check.stdout }}
+
+    - name: Ensure installation directory exists
+      ansible.builtin.file:
+        path: "{{ copilot_cli_install_prefix }}"
+        state: directory
+        mode: "0755"
+      when: copilot_cli_needs_install
+
+    - name: Inspect existing Copilot CLI entry point
+      ansible.builtin.stat:
+        path: "{{ copilot_cli_install_prefix }}/bin/copilot"
+        follow: false
+      register: copilot_cli_existing_entrypoint
+      when: copilot_cli_needs_install
+
+    - name: Inspect existing Copilot CLI package payload
+      ansible.builtin.stat:
+        path: "{{ copilot_cli_package_dir }}"
+        follow: false
+      register: copilot_cli_existing_package
+      when: copilot_cli_needs_install
+
+    - name: Ensure existing Copilot CLI files can be migrated
+      ansible.builtin.assert:
+        that:
+          - not copilot_cli_existing_entrypoint.stat.exists or copilot_cli_existing_entrypoint.stat.isreg or copilot_cli_existing_entrypoint.stat.islnk
+          - not copilot_cli_existing_package.stat.exists or copilot_cli_existing_package.stat.isdir
+        fail_msg: >-
+          Refusing to replace the existing Copilot CLI because its entry point
+          or npm package payload has an unexpected file type.
+      when: copilot_cli_needs_install
+
+    - name: Install the exact GitHub Copilot CLI npm package
+      when: copilot_cli_needs_install
+      block:
+        - name: Create temporary Copilot CLI download and recovery directory
+          ansible.builtin.tempfile:
+            state: directory
+            suffix: copilot_cli
+          register: copilot_cli_temp_dir
+
+        - name: Download the exact Copilot CLI package
+          ansible.builtin.get_url:
+            url: "{{ copilot_cli_tarball_url }}"
+            dest: "{{ copilot_cli_temp_dir.path }}/copilot.tgz"
+            checksum: "{{ copilot_cli_tarball_checksum }}"
+            mode: "0600"
+
+        - name: Preserve existing Copilot CLI entry point
+          ansible.builtin.command:
+            argv:
+              - mv
+              - "{{ copilot_cli_install_prefix }}/bin/copilot"
+              - "{{ copilot_cli_temp_dir.path }}/copilot-entrypoint-backup"
+          register: copilot_cli_preserve_entrypoint
+          when: copilot_cli_existing_entrypoint.stat.exists
+          changed_when: true
+
+        - name: Preserve existing Copilot CLI package payload
+          ansible.builtin.command:
+            argv:
+              - mv
+              - "{{ copilot_cli_package_dir }}"
+              - "{{ copilot_cli_temp_dir.path }}/copilot-package-backup"
+          register: copilot_cli_preserve_package
+          when: copilot_cli_existing_package.stat.exists
+          changed_when: true
+
+        - name: Install exact GitHub Copilot CLI npm package
+          ansible.builtin.command:
+            argv:
+              - "{{ nvm_npm_executable }}"
+              - install
+              - --global
+              - --prefix
+              - "{{ copilot_cli_install_prefix }}"
+              - "{{ copilot_cli_temp_dir.path }}/copilot.tgz"
+          environment:
+            NPM_CONFIG_UPDATE_NOTIFIER: "false"
+            PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env'].PATH }}"
+          register: copilot_cli_install_result
+          changed_when: copilot_cli_install_result.rc == 0
+
+        - name: Verify GitHub Copilot CLI installation
+          ansible.builtin.command: "{{ copilot_cli_install_prefix }}/bin/copilot --version"
+          register: copilot_cli_verify
+          changed_when: false
+          failed_when: >-
+            copilot_cli_verify.rc != 0
+            or copilot_cli_version not in copilot_cli_verify.stdout
+
+        - name: Remove temporary Copilot CLI recovery directory
+          ansible.builtin.file:
+            path: "{{ copilot_cli_temp_dir.path }}"
+            state: absent
+
+      rescue:
+        - name: Remove failed Copilot CLI entry point
+          ansible.builtin.file:
+            path: "{{ copilot_cli_install_prefix }}/bin/copilot"
+            state: absent
+          when: copilot_cli_install_result is defined
+
+        - name: Remove failed Copilot CLI package payload
+          ansible.builtin.file:
+            path: "{{ copilot_cli_package_dir }}"
+            state: absent
+          when: copilot_cli_install_result is defined
+
+        - name: Ensure Copilot CLI recovery parent directories exist
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: "0755"
+          loop:
+            - "{{ copilot_cli_install_prefix }}/bin"
+            - "{{ copilot_cli_package_dir | dirname }}"
+
+        - name: Restore preserved Copilot CLI package payload
+          ansible.builtin.command:
+            argv:
+              - mv
+              - "{{ copilot_cli_temp_dir.path }}/copilot-package-backup"
+              - "{{ copilot_cli_package_dir }}"
+          when:
+            - copilot_cli_preserve_package is defined
+            - copilot_cli_preserve_package.rc == 0
+          changed_when: true
+
+        - name: Restore preserved Copilot CLI entry point
+          ansible.builtin.command:
+            argv:
+              - mv
+              - "{{ copilot_cli_temp_dir.path }}/copilot-entrypoint-backup"
+              - "{{ copilot_cli_install_prefix }}/bin/copilot"
+          when:
+            - copilot_cli_preserve_entrypoint is defined
+            - copilot_cli_preserve_entrypoint.rc == 0
+          changed_when: true
+
+        - name: Remove failed Copilot CLI download directory
+          ansible.builtin.file:
+            path: "{{ copilot_cli_temp_dir.path }}"
+            state: absent
+          when: copilot_cli_temp_dir.path is defined
+
+        - name: Report Copilot CLI installation failure
+          ansible.builtin.fail:
+            msg: >-
+              Installing {{ copilot_cli_package }}@{{ copilot_cli_version }} failed.
+              Previous entry-point and package files were restored when present.
+
+    - name: Display installed version
+      ansible.builtin.debug:
+        msg: "GitHub Copilot CLI installed successfully: {{ copilot_cli_verify.stdout }}"
+      when: copilot_cli_needs_install

@@ -98,7 +98,7 @@ User roles:
 - `uv`
 - `speckit`
 - `dotnet`
-- `copilot-cli`
+- `copilot_cli`
 - `antigravity-cli`
 - `container-cleanup`
 
@@ -110,6 +110,12 @@ The repository currently relies on these Galaxy roles and collections:
 - Role `hurricanehrndz.rustup`
 - Collection `ansible.posix`
 - Collection `community.general`
+
+Exact collection versions and all reviewed direct provisioning inputs are
+recorded in [PROVISIONING_INPUTS.md](PROVISIONING_INPUTS.md). .NET uses
+architecture-specific, SHA-512-verified publisher archives; Podman defaults use
+a reviewed immutable `containers/image` commit with a documented no-checksum
+exception; and Neovim plugin declarations are reconciled with `lazy-lock.json`.
 
 ## Validation gates
 

@@ -16,19 +16,23 @@ if In_wsl then
 	}
 end
 
--- Bootstrap lazy.nvim
+-- Bootstrap lazy.nvim from a reviewed immutable commit.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+local lazycommit = "85c7ff3711b730b4030d03144f6db6375044ae82"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	local lazystage = lazypath .. ".bootstrap-" .. vim.fn.getpid()
+	vim.fn.delete(lazystage, "rf")
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", lazyrepo, lazystage })
+	if vim.v.shell_error == 0 then
+		out = vim.fn.system({ "git", "-C", lazystage, "checkout", "--detach", lazycommit })
+	end
+	if vim.v.shell_error == 0 then
+		out = vim.fn.system({ "mv", lazystage, lazypath })
+	end
 	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
+		vim.fn.delete(lazystage, "rf")
+		error("Failed to bootstrap lazy.nvim at " .. lazycommit .. ":\n" .. out)
 	end
 end
 
@@ -79,7 +83,7 @@ require("lazy").setup({
 		{ "github/copilot.vim" },
 		{
 			"CopilotC-Nvim/CopilotChat.nvim",
-			branch = "canary",
+			commit = "451d365928a994cda3505a84905303f790e28df8",
 			dependencies = {
 				{ "github/copilot.vim" },
 				{ "nvim-lua/plenary.nvim" },
@@ -120,15 +124,15 @@ require("lazy").setup({
 					})
 				end,
 			},
-		{ "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ":TSUpdate" },
+		{ "nvim-treesitter/nvim-treesitter", commit = "074aa4422bf029908338e855d0c0f71470a971bb", lazy = false, build = ":TSUpdate" },
 		{
 			"nvim-lualine/lualine.nvim",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 		},
-		{ "nvim-telescope/telescope.nvim", tag = "0.1.8" },
+		{ "nvim-telescope/telescope.nvim", commit = "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
 		{
 			"nvim-neo-tree/neo-tree.nvim",
-			branch = "v3.x",
+			commit = "ebd66767191714e008ce73b769518a763ff31bdc",
 			dependencies = {
 				"nvim-lua/plenary.nvim",
 				"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended

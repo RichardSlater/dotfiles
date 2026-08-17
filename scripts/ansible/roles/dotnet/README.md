@@ -1,26 +1,41 @@
 # dotnet
 
-Ansible role to install the .NET SDK with the official `dotnet-install.sh` script.
+Installs a reviewed exact .NET SDK archive into the invoking user's local
+`~/.dotnet` directory.
 
 ## Requirements
 
 - Ansible 2.9 or newer
-- Internet access to download the installer script
+- Linux `x86_64` or `aarch64`
+- Internet access to Microsoft's SDK archive host
 
 ## Role Variables
 
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-dotnet_version: "10.0"
-dotnet_sdk_version: "10.0"
-dotnet_install_dir: "/usr/share/dotnet"
-dotnet_install_script_url: "https://dot.net/v1/dotnet-install.sh"
+dotnet_sdk_version: "10.0.400"
+dotnet_install_dir: "{{ ansible_env.HOME }}/.dotnet"
+dotnet_artifacts:
+  x86_64:
+    url: "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.400/dotnet-sdk-10.0.400-linux-x64.tar.gz"
+    checksum: "sha512:<publisher-sha-512>"
 ```
 
-## Version Strategy
+`dotnet_artifacts` contains the reviewed Linux x64 and arm64 assets and their
+publisher SHA-512 checksums. Unsupported architectures fail before any download
+or change to an existing installation.
 
-This role uses the official installer script with a configured release channel, so it effectively installs the latest SDK available in that channel.
+## Installation and recovery behavior
+
+The role downloads with Ansible checksum verification, extracts into a staging
+directory, and atomically activates the staged SDK. If activation or the exact
+version check fails, it restores the previous user-local installation. An
+existing `.ansible-backup` recovery path causes a safe failure rather than being
+overwritten.
+
+The selected assets, checksums, and their Microsoft release-metadata source are
+recorded in [`docs/PROVISIONING_INPUTS.md`](../../../../docs/PROVISIONING_INPUTS.md).
 
 ## Example Playbook
 
@@ -30,21 +45,12 @@ This role uses the official installer script with a configured release channel, 
     - dotnet
 ```
 
-Install from a different release channel:
+## Validation
 
-```yaml
-- hosts: localhost
-  vars:
-    dotnet_version: "9.0"
-    dotnet_sdk_version: "9.0"
-  roles:
-    - dotnet
+```sh
+cd scripts/ansible
+ansible-playbook -i inventory/hosts.yml tests/dotnet-failure-path.yml
 ```
-
-## Notes
-
-- The installer script is downloaded to a temporary directory and removed after the run.
-- The role currently verifies the SDK through `~/.dotnet/dotnet --version` even though `dotnet_install_dir` is still documented as `/usr/share/dotnet`; that mismatch remains a Phase 3 cleanup item.
 
 ## License
 

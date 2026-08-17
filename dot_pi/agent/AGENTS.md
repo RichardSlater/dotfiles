@@ -4,6 +4,7 @@
 
 1. Before the final commit and PR, ensure that the OpenSpec spec is archived.
 2. Prefer conventional commits.
+3. If `pre-commit` is configured in a repository, run it before committing even when it is not installed as a hook. Prompt the user to install it with `pre-commit install` when necessary.
 
 ## Truthfulness
 
@@ -52,4 +53,3 @@ Never attempt to shotgun changes into a code base, if there is a reported failur
 5. If your change does not fix it, revisit your assumptions with new knowledge in mind and try again.
 
 In short: Don't assume fixes will work, attempt to reproduce and fix the issue locally using the tools available before submitting a change.
-

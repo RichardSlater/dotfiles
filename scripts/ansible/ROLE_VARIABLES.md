@@ -15,7 +15,7 @@ The roles below are the current priority set because they carry versions, instal
 | Role              | Files                                             | Current strategy                                                        |
 |:------------------|:--------------------------------------------------|:------------------------------------------------------------------------|
 | `uv`              | `defaults/main.yml`, `vars/main.yml`, `README.md` | Pinned release tarball with checksum                                    |
-| `copilot-cli`     | `defaults/main.yml`, `vars/main.yml`, `README.md` | Official installer script, `latest` by default, optional pinned version |
+| `copilot_cli`     | `defaults/main.yml`, `vars/main.yml`, `README.md` | Pinned npm tarball with SHA-512 verification                            |
 | `antigravity-cli` | `defaults/main.yml`, `README.md`                  | Official installer script, latest only                                  |
 | `oh-my-posh`      | `defaults/main.yml`                               | Pinned binary download with partial checksum coverage                   |
 | `pwsh`            | `defaults/main.yml`, `vars/main.yml`, `README.md` | Pinned GitHub `.deb` download without checksum                          |
@@ -45,17 +45,19 @@ The roles below are the current priority set because they carry versions, instal
 - Strategy: pinned binary release with checksum validation.
 - Current gap: tool-install/update behavior is still only lightly documented and remains a later idempotence-hardening target.
 
-### `copilot-cli`
+### `copilot_cli`
 
 - Files: `defaults/main.yml`, `vars/main.yml`, `README.md`
 - User-overridable variables:
   - `copilot_cli_enabled`: `true`
-  - `copilot_cli_version`: `latest`
-  - `copilot_cli_install_prefix`: `{{ ansible_env.HOME }}/.local`
-- Internal variables:
-  - `copilot_cli_install_script_url`: `https://gh.io/copilot-install`
-- Strategy: official installer script, latest by default, supports explicit version override.
-- Current gap: no checksum validation for the installer script.
+  - `copilot_cli_package`: `@github/copilot`
+  - `copilot_cli_version`: `1.0.80`
+  - `copilot_cli_tarball_url`: exact npm registry tarball URL
+  - `copilot_cli_tarball_checksum`: pinned SHA-512 digest
+  - `copilot_cli_install_prefix`: `{{ ansible_facts['env'].HOME }}/.local`
+  - `copilot_cli_package_dir`: derived npm package payload path
+- Strategy: checksum-verified npm tarball installed with the pinned nvm-managed npm runtime.
+- Migration behavior: preserves and restores a legacy entry point if installation fails.
 
 ### `antigravity-cli`
 
@@ -140,10 +142,13 @@ The roles below are the current priority set because they carry versions, instal
 
 - Files: `defaults/main.yml`, `README.md`
 - User-overridable variables:
-  - `nvm_version`: `v0.40.4`
+  - `nvm_version`: `v0.40.6`
   - `nvm_install_url`: installer URL template
-  - `nvm_install_checksum`: `sha256:4b7412c4166905d13ea272117f5c6bf6c674c0074fc4c78d82784f8750b9585d`
-- Strategy: pinned installer script with checksum validation.
+  - `nvm_install_checksum`: `sha256:2ef7e8d4373c1ffd70daa55f919f629e98a619543ffc0a8d892d77a5247e50e4`
+  - `nvm_ref`: `b6cf55f6adf3b953d0e5e00a4049444e300e3af8`
+  - `nvm_node_version`: `v24.19.0`
+  - derived Node.js and npm executable paths under `nvm_dir`
+- Strategy: checksum-pinned installer, verified nvm Git commit, and exact nvm-managed Node.js LTS runtime.
 - Current gap: shell integration still lives outside the role in the Chezmoi-managed shell config.
 
 ### `pnpm`
@@ -161,12 +166,11 @@ The roles below are the current priority set because they carry versions, instal
 
 - Files: `defaults/main.yml`, `README.md`
 - User-overridable variables:
-  - `dotnet_version`: `10.0`
-  - `dotnet_sdk_version`: `10.0`
-  - `dotnet_install_dir`: `/usr/share/dotnet`
-  - `dotnet_install_script_url`: `https://dot.net/v1/dotnet-install.sh`
-- Strategy: channel-based installer script, effectively latest within the configured channel.
-- Current gap: `dotnet_install_dir` does not match the current user-local installation behavior, and the installer script is not checksum-validated.
+  - `dotnet_sdk_version`: `10.0.400`
+  - `dotnet_install_dir`: `{{ ansible_env.HOME }}/.dotnet`
+  - `dotnet_artifacts`: reviewed Linux `x86_64` and `aarch64` archive URLs and publisher SHA-512 checksums
+- Strategy: exact, architecture-specific Microsoft SDK archive; checksum verification before staged extraction and activation.
+- Recovery: unsupported architectures fail before download; failed activation restores the prior user-local SDK.
 
 ### `cargo`
 

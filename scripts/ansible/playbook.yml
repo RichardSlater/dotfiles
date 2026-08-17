@@ -101,7 +101,7 @@
     - uv
     - speckit
     - dotnet
-    - copilot-cli
+    - copilot_cli
     - antigravity-cli
 
 - name: Update Neovim Plugins (LazyVim)

@@ -52,7 +52,7 @@ User setup roles:
 - `uv`
 - `speckit`
 - `dotnet`
-- `copilot-cli`
+- `copilot_cli`
 - `antigravity-cli`
 - `container-cleanup`
 
@@ -68,8 +68,12 @@ Pinned Galaxy roles and collections currently include:
 
 - `geerlingguy.go`
 - `hurricanehrndz.rustup`
-- `ansible.posix`
-- `community.general`
+- `ansible.posix 2.2.2`
+- `community.general 13.3.0`
+
+The reviewed versions, artifact checksums, immutable source commits, supported
+architectures, and integrity exceptions for direct provisioning inputs are in
+[`../../docs/PROVISIONING_INPUTS.md`](../../docs/PROVISIONING_INPUTS.md).
 
 ## Variable guidance
 
