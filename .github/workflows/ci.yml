@@ -66,6 +66,12 @@ jobs:
         working-directory: scripts/ansible
         run: ansible-playbook playbook.yml -i inventory/hosts.yml --syntax-check
 
+      - name: Run focused Podman provisioning checks
+        working-directory: scripts/ansible
+        run: |
+          python3 tests/validate_podman_sources.py
+          python3 tests/validate_podman_network_helpers.py
+
   ansible-lint:
     name: Ansible Lint
     runs-on: ubuntu-latest

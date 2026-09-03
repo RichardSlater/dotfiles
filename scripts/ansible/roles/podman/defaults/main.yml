@@ -7,3 +7,21 @@ podman_runtime: "crun"
 podman_container_image_commit: "08ce6b4207e7b151ea1c2830cdb1d4473cfd12aa"
 podman_policy_source_url: "https://raw.githubusercontent.com/containers/image/{{ podman_container_image_commit }}/default-policy.json"
 podman_registries_source_url: "https://raw.githubusercontent.com/containers/image/{{ podman_container_image_commit }}/registries.conf"
+
+# Netavark v2.0.0 is required by Podman 6.0; keep these helpers in sync.
+podman_network_helper_directory: "/usr/local/libexec/podman"
+podman_helper_binaries_dirs:
+  - "{{ podman_network_helper_directory }}"
+  - "/usr/local/lib/podman"
+  - "/usr/libexec/podman"
+  - "/usr/lib/podman"
+podman_network_helper_architectures:
+  x86_64:
+    netavark:
+      version: "2.0.0"
+      url: "https://github.com/containers/netavark/releases/download/v2.0.0/netavark.gz"
+      checksum: "sha256:d8bc342c38382029e7e12256120ac0f7676dcc063aa1e7259189bb69cc869563"
+    aardvark-dns:
+      version: "2.0.0"
+      url: "https://github.com/containers/aardvark-dns/releases/download/v2.0.0/aardvark-dns.gz"
+      checksum: "sha256:fdaa3665ce58337fe597e0822e24de97528529d1a39fa6b655aa656c8ad33086"
