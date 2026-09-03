@@ -2,7 +2,7 @@
 
 This directory provisions the Linux and WSL environment. It does not own dotfiles.
 
-If a change belongs in `.bashrc`, `.zshrc`, Neovim config, or PowerShell profile content, make that change in the Chezmoi source tree instead of patching the rendered file from Ansible.
+If a change belongs in `.bashrc`, `.zshrc`, Neovim config, or PowerShell profile content, make that change in the Chezmoi source tree instead of patching the rendered file from Ansible. In particular, the `mise` role installs the verified user-local binary only; Chezmoi-managed `dot_bashrc` and `dot_zshrc` run `mise activate` so new supported shell sessions receive the mise shims path.
 
 ## Entry points
 
@@ -50,6 +50,7 @@ User setup roles:
 - `hurricanehrndz.rustup`
 - `cargo`
 - `uv`
+- `mise` (pinned user-local toolchain manager; shell activation is Chezmoi-managed)
 - `speckit`
 - `dotnet`
 - `copilot_cli`

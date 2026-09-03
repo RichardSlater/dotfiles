@@ -1,0 +1,67 @@
+---
+- name: Reject unsupported mise architecture
+  ansible.builtin.assert:
+    that:
+      - ansible_architecture in mise_artifacts
+    fail_msg: >-
+      mise is unsupported on architecture {{ ansible_architecture }}. Reviewed
+      architectures: {{ mise_artifacts.keys() | join(', ') }}.
+
+- name: Select mise artifact for host architecture
+  ansible.builtin.set_fact:
+    mise_artifact: "{{ mise_artifacts[ansible_architecture] }}"
+
+- name: Check installed mise version
+  ansible.builtin.command: "{{ mise_binary_path }} --version"
+  register: mise_check
+  changed_when: false
+  failed_when: false
+
+- name: Determine whether mise installation is needed
+  ansible.builtin.set_fact:
+    mise_install_needed: >-
+      {{ mise_check.rc != 0 or not ((mise_check.stdout | trim) is match(
+        '^' ~ (mise_version | regex_escape) ~ '(\\s|$)')) }}
+
+- name: Install verified mise binary
+  when: mise_install_needed
+  block:
+    - name: Ensure mise installation directory exists
+      ansible.builtin.file:
+        path: "{{ mise_install_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Create temporary directory for mise download
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: mise_download
+      register: mise_temp_dir
+
+    - name: Download verified mise artifact
+      ansible.builtin.get_url:
+        url: "{{ mise_artifact.url }}"
+        dest: "{{ mise_temp_dir.path }}/{{ mise_binary_name }}"
+        checksum: "{{ mise_artifact.checksum }}"
+        mode: '0755'
+
+    - name: Install mise binary
+      ansible.builtin.copy:
+        src: "{{ mise_temp_dir.path }}/{{ mise_binary_name }}"
+        dest: "{{ mise_binary_path }}"
+        remote_src: true
+        mode: '0755'
+
+    - name: Verify installed mise version
+      ansible.builtin.command: "{{ mise_binary_path }} --version"
+      register: mise_verify
+      changed_when: false
+      failed_when: >-
+        mise_verify.rc != 0 or not ((mise_verify.stdout | trim) is match(
+        '^' ~ (mise_version | regex_escape) ~ '(\\s|$)'))
+  always:
+    - name: Remove temporary mise download directory
+      ansible.builtin.file:
+        path: "{{ mise_temp_dir.path }}"
+        state: absent
+      when: mise_temp_dir.path is defined

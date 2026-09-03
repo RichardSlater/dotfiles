@@ -99,6 +99,7 @@
     - hurricanehrndz.rustup
     - cargo
     - uv
+    - mise
     - speckit
     - dotnet
     - copilot_cli

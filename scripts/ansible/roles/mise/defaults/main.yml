@@ -1,0 +1,3 @@
+---
+mise_binary_name: mise
+mise_binary_path: "{{ mise_install_dir }}/{{ mise_binary_name }}"

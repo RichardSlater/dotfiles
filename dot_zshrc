@@ -164,6 +164,10 @@ if command -v uv &> /dev/null; then
   eval "$(uv generate-shell-completion zsh)"
 fi
 
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
 if [ -s "$HOME/.bun/_bun" ]; then
   # bun completions
   source "$HOME/.bun/_bun"

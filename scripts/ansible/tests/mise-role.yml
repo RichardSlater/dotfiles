@@ -1,0 +1,147 @@
+---
+- name: Test the mise role's safety and idempotence paths
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    mise_test_version: "2026.9.1"
+    mise_test_checksum: "sha256:d02a257f1d867ae4ea582757a4013a09764a57fa53dedee85bccdcbd9ffd5853"
+  tasks:
+    - name: Create mise role test fixture directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: mise_role_test
+      register: mise_test_root
+
+    - name: Create a version-reporting mise fixture
+      ansible.builtin.copy:
+        dest: "{{ mise_test_root.path }}/mise"
+        mode: '0755'
+        content: |
+          #!/bin/sh
+          if [ "$1" = "--version" ]; then
+            echo "2026.9.1"
+          fi
+
+    - name: Install mise from a supported architecture fixture
+      ansible.builtin.include_role:
+        name: mise
+      vars:
+        mise_version: "{{ mise_test_version }}"
+        mise_install_dir: "{{ mise_test_root.path }}/install"
+        mise_artifacts:
+          x86_64:
+            url: "file://{{ mise_test_root.path }}/mise"
+            checksum: "{{ mise_test_checksum }}"
+          aarch64:
+            url: "file://{{ mise_test_root.path }}/mise"
+            checksum: "{{ mise_test_checksum }}"
+
+    - name: Verify fixture mise installation
+      ansible.builtin.command: "{{ mise_test_root.path }}/install/mise --version"
+      register: mise_test_installed
+      changed_when: false
+
+    - name: Assert the installed fixture reports the pinned version
+      ansible.builtin.assert:
+        that:
+          - mise_test_installed.stdout == mise_test_version
+
+    - name: Verify existing matching mise skips its download URL
+      ansible.builtin.include_role:
+        name: mise
+      vars:
+        mise_version: "{{ mise_test_version }}"
+        mise_install_dir: "{{ mise_test_root.path }}/install"
+        mise_artifacts:
+          x86_64:
+            url: "file:///this-must-not-be-downloaded"
+            checksum: "{{ mise_test_checksum }}"
+          aarch64:
+            url: "file:///this-must-not-be-downloaded"
+            checksum: "{{ mise_test_checksum }}"
+
+    - name: Replace fixture with a prefix-matching but incorrect version
+      ansible.builtin.copy:
+        dest: "{{ mise_test_root.path }}/install/mise"
+        mode: '0755'
+        content: |
+          #!/bin/sh
+          if [ "$1" = "--version" ]; then
+            echo "2026.9.10"
+          fi
+
+    - name: Replace prefix-matching mise version
+      ansible.builtin.include_role:
+        name: mise
+      vars:
+        mise_version: "{{ mise_test_version }}"
+        mise_install_dir: "{{ mise_test_root.path }}/install"
+        mise_artifacts:
+          x86_64:
+            url: "file://{{ mise_test_root.path }}/mise"
+            checksum: "{{ mise_test_checksum }}"
+          aarch64:
+            url: "file://{{ mise_test_root.path }}/mise"
+            checksum: "{{ mise_test_checksum }}"
+
+    - name: Assert prefix-matching mise version was replaced
+      ansible.builtin.command: "{{ mise_test_root.path }}/install/mise --version"
+      register: mise_replaced_version
+      changed_when: false
+      failed_when: mise_replaced_version.stdout != mise_test_version
+
+    - name: Check unsupported architecture fails before installation
+      block:
+        - ansible.builtin.include_role:
+            name: mise
+          vars:
+            mise_install_dir: "{{ mise_test_root.path }}/unsupported"
+            mise_artifacts: {}
+      rescue:
+        - ansible.builtin.set_fact:
+            mise_unsupported_architecture_rejected: true
+
+    - name: Assert unsupported architecture was rejected
+      ansible.builtin.assert:
+        that: mise_unsupported_architecture_rejected | default(false)
+
+    - name: Check checksum mismatch prevents installation
+      block:
+        - ansible.builtin.include_role:
+            name: mise
+          vars:
+            mise_version: "{{ mise_test_version }}"
+            mise_install_dir: "{{ mise_test_root.path }}/checksum-mismatch"
+            mise_artifacts:
+              x86_64:
+                url: "file://{{ mise_test_root.path }}/mise"
+                checksum: "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+              aarch64:
+                url: "file://{{ mise_test_root.path }}/mise"
+                checksum: "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      rescue:
+        - ansible.builtin.set_fact:
+            mise_checksum_mismatch_rejected: true
+
+    - name: Check checksum mismatch did not install mise
+      ansible.builtin.stat:
+        path: "{{ mise_test_root.path }}/checksum-mismatch/mise"
+      register: mise_mismatch_binary
+
+    - name: Check failed download temporary directory was removed
+      ansible.builtin.stat:
+        path: "{{ mise_temp_dir.path }}"
+      register: mise_mismatch_temp_dir
+
+    - name: Assert checksum mismatch safety
+      ansible.builtin.assert:
+        that:
+          - mise_checksum_mismatch_rejected | default(false)
+          - not mise_mismatch_binary.stat.exists
+          - not mise_mismatch_temp_dir.stat.exists
+
+    - name: Remove mise role test fixture directory
+      ansible.builtin.file:
+        path: "{{ mise_test_root.path }}"
+        state: absent
