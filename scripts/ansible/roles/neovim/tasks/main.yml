@@ -43,6 +43,8 @@
     depth: 1
     version: "{{ neovim_version }}"
     update: true
+    # Ensure a stale local tag cannot block this immutable commit checkout.
+    force: true
   register: neovim_git
 
 - name: Read checked-out Neovim commit

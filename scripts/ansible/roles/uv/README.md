@@ -12,10 +12,10 @@ Ansible role to install the `uv` Python package manager and optional `uv tool` p
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-uv_version: "0.11.14"
+uv_version: "0.12.9"
 uv_platform: "x86_64-unknown-linux-gnu"
 uv_download_url: "https://github.com/astral-sh/uv/releases/download/{{ uv_version }}/uv-{{ uv_platform }}.tar.gz"
-uv_checksum: "sha256:f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296"
+uv_checksum: "sha256:ec7a99cd05e0cd7f80243f135ce1361c76835cb0ee60055d14d20eba8eba1460"
 uv_install_dir: "{{ ansible_env.HOME }}/.local/bin"
 ```
 

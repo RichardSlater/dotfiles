@@ -13,8 +13,8 @@ Ansible role to build and install tmux from a pinned source release.
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-tmux_version: "3.6a"
-tmux_checksum: "sha256:b6d8d9c76585db8ef5fa00d4931902fa4b8cbe8166f528f44fc403961a3f3759"
+tmux_version: "3.7c"
+tmux_checksum: "sha256:7c60cae9a0e25288e2e24750aafc9e8800fc7fd4555e447e1b29ee4201cfb3bf"
 ```
 
 Internal variables from `vars/main.yml`:

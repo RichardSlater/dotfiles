@@ -33,10 +33,10 @@ The roles below are the current priority set because they carry versions, instal
 
 - Files: `defaults/main.yml`, `vars/main.yml`, `README.md`
 - User-overridable variables:
-  - `uv_version`: `0.11.14`
+  - `uv_version`: `0.12.9`
   - `uv_platform`: `x86_64-unknown-linux-gnu`
   - `uv_download_url`: GitHub release URL template
-  - `uv_checksum`: `sha256:f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296`
+  - `uv_checksum`: `sha256:ec7a99cd05e0cd7f80243f135ce1361c76835cb0ee60055d14d20eba8eba1460`
   - `uv_install_dir`: `{{ ansible_env.HOME }}/.local/bin`
 - Internal variables:
   - `uv_install_script_url`: `https://astral.sh/uv/install.sh`
@@ -51,7 +51,7 @@ The roles below are the current priority set because they carry versions, instal
 - User-overridable variables:
   - `copilot_cli_enabled`: `true`
   - `copilot_cli_package`: `@github/copilot`
-  - `copilot_cli_version`: `1.0.80`
+  - `copilot_cli_version`: `1.0.82`
   - `copilot_cli_tarball_url`: exact npm registry tarball URL
   - `copilot_cli_tarball_checksum`: pinned SHA-512 digest
   - `copilot_cli_install_prefix`: `{{ ansible_facts['env'].HOME }}/.local`
@@ -79,13 +79,12 @@ The roles below are the current priority set because they carry versions, instal
 - User-overridable variables:
   - `oh_my_posh_bin_path`: `/usr/local/bin/oh-my-posh`
   - `oh_my_posh_arch_map`: architecture mapping for downloads
-  - `oh_my_posh_version`: `v29.13.1`
+  - `oh_my_posh_version`: `v31.1.2`
   - `oh_my_posh_checksums`: architecture-keyed checksum map
   - `oh_my_posh_arch`: derived from `ansible_architecture`
   - `oh_my_posh_checksum`: derived from the checksum map
-  - `oh_my_posh_supported_architectures`: `x86_64`, `aarch64`, `riscv64`
-- Strategy: pinned binary download with checksum support.
-- Current gap: checksum coverage is incomplete for all supported architectures.
+  - `oh_my_posh_supported_architectures`: `x86_64`, `aarch64`
+- Strategy: pinned binary download with checksum validation for each supported architecture.
 
 ### `pwsh`
 
@@ -103,7 +102,8 @@ The roles below are the current priority set because they carry versions, instal
 
 - Files: `defaults/main.yml`, `vars/main.yml`, `README.md`
 - User-overridable variables:
-  - `gh_version`: `v2.92.0`
+  - `gh_release_version`: `v2.100.0`
+  - `gh_version`: immutable commit `45437bc7eeeb3359bbfddd1742f79de7652fd3e2`
   - `gh_build_dir`: `/tmp/gh_build`
 - Internal variables:
   - `gh_git_repo`: `https://github.com/cli/cli.git`
@@ -130,8 +130,8 @@ The roles below are the current priority set because they carry versions, instal
 
 - Files: `defaults/main.yml`, `vars/main.yml`, `README.md`
 - User-overridable variables:
-  - `tmux_version`: `3.6a`
-  - `tmux_checksum`: `sha256:b6d8d9c76585db8ef5fa00d4931902fa4b8cbe8166f528f44fc403961a3f3759`
+  - `tmux_version`: `3.7c`
+  - `tmux_checksum`: `sha256:7c60cae9a0e25288e2e24750aafc9e8800fc7fd4555e447e1b29ee4201cfb3bf`
 - Internal variables:
   - `tmux_src_dir`: `/usr/local/src/tmux`
   - `tmux_install_dir`: `/usr/local`
@@ -146,7 +146,7 @@ The roles below are the current priority set because they carry versions, instal
   - `nvm_install_url`: installer URL template
   - `nvm_install_checksum`: `sha256:2ef7e8d4373c1ffd70daa55f919f629e98a619543ffc0a8d892d77a5247e50e4`
   - `nvm_ref`: `b6cf55f6adf3b953d0e5e00a4049444e300e3af8`
-  - `nvm_node_version`: `v24.19.0`
+  - `nvm_node_version`: `v24.20.0`
   - derived Node.js and npm executable paths under `nvm_dir`
 - Strategy: checksum-pinned installer, verified nvm Git commit, and exact nvm-managed Node.js LTS runtime.
 - Current gap: shell integration still lives outside the role in the Chezmoi-managed shell config.

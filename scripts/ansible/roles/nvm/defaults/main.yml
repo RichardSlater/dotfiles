@@ -4,7 +4,7 @@ nvm_install_url: "https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}
 nvm_install_checksum: "sha256:2ef7e8d4373c1ffd70daa55f919f629e98a619543ffc0a8d892d77a5247e50e4"
 nvm_ref: "b6cf55f6adf3b953d0e5e00a4049444e300e3af8"
 nvm_dir: "{{ ansible_facts['env'].HOME }}/.nvm"
-nvm_node_version: "v24.19.0"
+nvm_node_version: "v24.20.0"
 nvm_node_bin: "{{ nvm_dir }}/versions/node/{{ nvm_node_version }}/bin"
 nvm_node_executable: "{{ nvm_node_bin }}/node"
 nvm_npm_executable: "{{ nvm_node_bin }}/npm"

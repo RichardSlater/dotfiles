@@ -13,18 +13,24 @@
   git:
     repo: "https://github.com/junegunn/fzf.git"
     dest: "{{ fzf_install_dir }}"
+    version: "{{ fzf_version }}"
     depth: 1
     update: true
   register: fzf_clone
   when: not ansible_check_mode
 
+- name: Check whether fzf is installed
+  stat:
+    path: "{{ fzf_install_dir }}/bin/fzf"
+  register: fzf_binary
+
 - name: Build and install fzf
   command:
     cmd: "./install --all"
     chdir: "{{ fzf_install_dir }}"
-  args:
-    creates: "{{ fzf_install_dir }}/bin/fzf"
-  when: not ansible_check_mode
+  when:
+    - not ansible_check_mode
+    - fzf_clone.changed or not fzf_binary.stat.exists
 
 - name: Ensure fzf is available globally
   become: true

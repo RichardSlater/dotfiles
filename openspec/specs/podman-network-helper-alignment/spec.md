@@ -7,11 +7,11 @@ Provision the network helpers required by the repository's source-built Podman r
 ## Requirements
 
 ### Requirement: Reviewed Podman network-helper compatibility set
-The Podman provisioning role SHALL define an exact reviewed compatibility set containing the pinned source-built Podman version and matching exact Netavark and Aardvark-DNS versions. The configured Netavark and Aardvark-DNS versions SHALL have matching major-minor versions and SHALL be compatible with the configured Podman release.
+The Podman provisioning role SHALL define an exact reviewed compatibility set containing source-built Podman v6.1.1 and matching exact Netavark and Aardvark-DNS v2.1.0 versions. The configured Netavark and Aardvark-DNS versions SHALL have matching major-minor versions and SHALL be compatible with the configured Podman release.
 
 #### Scenario: Reviewing the configured Podman network stack
 - **WHEN** a maintainer reviews the Podman role inputs and provisioning-input inventory
-- **THEN** they can identify the exact Podman, Netavark, and Aardvark-DNS versions, compatibility rationale, authoritative release sources, and integrity mechanisms
+- **THEN** they can identify Podman v6.1.1, Netavark v2.1.0, Aardvark-DNS v2.1.0, compatibility rationale, authoritative release sources, and integrity mechanisms
 
 ### Requirement: Verified source-built network helpers
 The Podman provisioning role SHALL install Netavark and Aardvark-DNS from configured immutable upstream release artifacts using their publisher-provided SHA-256 digests. The role SHALL verify each artifact before installing its executable and SHALL verify each installed helper reports its configured exact version.
@@ -34,6 +34,17 @@ The Podman provisioning role SHALL make the active source-built Podman executabl
 #### Scenario: Verifying active helper selection
 - **WHEN** the role completes successfully on a supported rootless host
 - **THEN** a direct Podman network operation uses the configured compatible Netavark helper without an unsupported-subcommand error
+
+### Requirement: Rootless user storage configuration
+The Podman provisioning role SHALL configure user-owned rootless storage with the overlay driver, a runtime directory under the selected user's runtime directory, a graph root under that user's home directory, and `/usr/bin/fuse-overlayfs` as the overlay mount program. The role SHALL NOT reset, move, or delete existing Podman storage while applying this configuration.
+
+#### Scenario: Provisioning rootless Podman storage
+- **WHEN** the role configures a selected rootless Podman user
+- **THEN** it writes a user-owned `~/.config/containers/storage.conf` with the managed runtime and graph-root paths
+
+#### Scenario: Existing rootless storage is present
+- **WHEN** the user already has Podman images, containers, networks, or volumes
+- **THEN** the role does not invoke a storage reset or delete those resources
 
 ### Requirement: Rootless network lifecycle validation
 The repository SHALL provide focused validation that exercises rootless Podman network creation and removal independently of Compose after helper provisioning.

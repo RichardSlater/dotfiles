@@ -13,7 +13,8 @@ Ansible role to build and install the GitHub CLI from source.
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-gh_version: "v2.92.0"
+gh_release_version: "v2.100.0"
+gh_version: "45437bc7eeeb3359bbfddd1742f79de7652fd3e2"
 gh_build_dir: "/tmp/gh_build"
 ```
 

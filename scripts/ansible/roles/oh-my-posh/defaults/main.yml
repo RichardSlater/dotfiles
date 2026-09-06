@@ -5,17 +5,15 @@ oh_my_posh_bin_path: "/usr/local/bin/oh-my-posh"
 oh_my_posh_arch_map:
   x86_64: "amd64"
   aarch64: "arm64"
-  riscv64: "riscv64"
 
-oh_my_posh_version: "v29.13.1"
+oh_my_posh_version: "v31.1.2"
 
 oh_my_posh_checksums:
-  amd64: "sha256:6734935b1476c65d8db6e44d063634c3474311a997d4fd03b8f35d88983ef6b9"
-  # Add other architectures' checksums here when needed
+  amd64: "sha256:f691e8913cf5abaf941a2f73da4e5df3ceb0d99e979451ae1734347b775d843e"
+  arm64: "sha256:f89022231e1d031f46a5f8e6254bee1dd871c328432c4f9d3a05c823fe1d26a1"
 
-oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_architecture] | default('amd64') }}"
+oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_architecture] | default('unsupported') }}"
 oh_my_posh_checksum: "{{ oh_my_posh_checksums[oh_my_posh_arch] | default(omit) }}"
 oh_my_posh_supported_architectures:
   - x86_64
   - aarch64
-  - riscv64
