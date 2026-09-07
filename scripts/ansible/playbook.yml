@@ -75,6 +75,7 @@
   become: true
   roles:
     - packages
+    - tailscale
     - bat
     - fzf
     - geerlingguy.go

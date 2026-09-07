@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Richard Slater
+  description: Install the Tailscale client from the official stable repository.
+  license: MIT
+  min_ansible_version: '2.9'
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - tailscale
+    - vpn
+    - networking
+dependencies: []
