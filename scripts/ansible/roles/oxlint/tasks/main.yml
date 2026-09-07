@@ -1,0 +1,73 @@
+---
+- name: Reject unsupported Oxlint architecture
+  ansible.builtin.assert:
+    that:
+      - ansible_architecture in oxlint_artifacts
+    fail_msg: >-
+      Oxlint is unsupported on architecture {{ ansible_architecture }}. Reviewed
+      architectures: {{ oxlint_artifacts.keys() | join(', ') }}.
+
+- name: Select Oxlint artifact for host architecture
+  ansible.builtin.set_fact:
+    oxlint_artifact: "{{ oxlint_artifacts[ansible_architecture] }}"
+
+- name: Check installed Oxlint version
+  ansible.builtin.command: "{{ oxlint_binary_path }} --version"
+  register: oxlint_check
+  changed_when: false
+  failed_when: false
+
+- name: Determine whether Oxlint installation is needed
+  ansible.builtin.set_fact:
+    oxlint_install_needed: >-
+      {{ oxlint_check.rc != 0 or not ((oxlint_check.stdout | trim) is match(
+        '^Version:\\s+' ~ (oxlint_version | regex_escape) ~ '(\\s|$)')) }}
+
+- name: Install verified Oxlint binary
+  when: oxlint_install_needed
+  block:
+    - name: Ensure Oxlint installation directory exists
+      ansible.builtin.file:
+        path: "{{ oxlint_install_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Create temporary directory for Oxlint download
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: oxlint_download
+      register: oxlint_temp_dir
+
+    - name: Download verified Oxlint archive
+      ansible.builtin.get_url:
+        url: "{{ oxlint_artifact.url }}"
+        dest: "{{ oxlint_temp_dir.path }}/oxlint.tar.gz"
+        checksum: "{{ oxlint_artifact.checksum }}"
+        mode: '0644'
+
+    - name: Extract Oxlint archive
+      ansible.builtin.unarchive:
+        src: "{{ oxlint_temp_dir.path }}/oxlint.tar.gz"
+        dest: "{{ oxlint_temp_dir.path }}"
+        remote_src: true
+
+    - name: Install Oxlint binary
+      ansible.builtin.copy:
+        src: "{{ oxlint_temp_dir.path }}/{{ oxlint_artifact.archive_binary_name }}"
+        dest: "{{ oxlint_binary_path }}"
+        remote_src: true
+        mode: '0755'
+
+    - name: Verify installed Oxlint version
+      ansible.builtin.command: "{{ oxlint_binary_path }} --version"
+      register: oxlint_verify
+      changed_when: false
+      failed_when: >-
+        oxlint_verify.rc != 0 or not ((oxlint_verify.stdout | trim) is match(
+        '^Version:\\s+' ~ (oxlint_version | regex_escape) ~ '(\\s|$)'))
+  always:
+    - name: Remove temporary Oxlint download directory
+      ansible.builtin.file:
+        path: "{{ oxlint_temp_dir.path }}"
+        state: absent
+      when: oxlint_temp_dir.path is defined

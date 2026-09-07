@@ -96,6 +96,7 @@ User roles:
 - `hurricanehrndz.rustup`
 - `cargo`
 - `uv`
+- `oxlint`
 - `speckit`
 - `dotnet`
 - `copilot_cli`

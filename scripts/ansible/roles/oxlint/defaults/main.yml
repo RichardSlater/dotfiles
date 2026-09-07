@@ -1,0 +1,15 @@
+---
+# Pinned Oxlint release artifacts from the official Oxc GitHub release.
+oxlint_version: "1.81.0"
+oxlint_install_dir: "{{ ansible_facts['env'].HOME }}/.local/bin"
+oxlint_binary_name: oxlint
+oxlint_binary_path: "{{ oxlint_install_dir }}/{{ oxlint_binary_name }}"
+oxlint_artifacts:
+  x86_64:
+    url: "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
+    checksum: "sha256:d176d586ff131466383c70ce655afee7dc5a0f0e8fcbdebc8e1320021431e69c"
+    archive_binary_name: oxlint-x86_64-unknown-linux-gnu
+  aarch64:
+    url: "https://github.com/oxc-project/oxc/releases/download/apps_v1.81.0/oxlint-aarch64-unknown-linux-gnu.tar.gz"
+    checksum: "sha256:e80f0a157a6ebbba332848a19f93f2fe593c42bc69d51d316446ada1ae47abc8"
+    archive_binary_name: oxlint-aarch64-unknown-linux-gnu

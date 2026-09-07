@@ -51,6 +51,7 @@ User setup roles:
 - `cargo`
 - `uv`
 - `mise` (pinned user-local toolchain manager; shell activation is Chezmoi-managed)
+- `oxlint` (pinned, checksum-verified user-local linter binary)
 - `speckit`
 - `dotnet`
 - `copilot_cli`
