@@ -5,11 +5,13 @@ Ansible role to install [pnpm](https://pnpm.io/) from the official installer scr
 ## Defaults
 
 ```yaml
-pnpm_version: "11.4.0"
+pnpm_version: "12.3.4"
 pnpm_install_url: "https://get.pnpm.io/install.sh"
 pnpm_home: "{{ ansible_facts['env'].HOME }}/.local/share/pnpm"
 pnpm_global_packages: []
 ```
+
+The installer receives the exact `PNPM_VERSION` value and the role verifies the resulting executable version. The official installer endpoint does not publish an independently authoritative checksum for the script; this is a maintainer-approved bounded TLS/source exception recorded in `docs/COMPONENT_VERSION_INVENTORY.md`.
 
 ## Global packages
 
