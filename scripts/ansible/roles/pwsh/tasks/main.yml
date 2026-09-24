@@ -26,14 +26,26 @@
 
 - name: Install PowerShell (pwsh)
   become: true
+  when:
+    - ansible_facts['architecture'] in pwsh_supported_architectures
+    - pwsh_installed_version == '' or pwsh_installed_version is version(pwsh_target_version, '<')
   block:
+    - name: Download verified PowerShell package
+      ansible.builtin.get_url:
+        url: >-
+          https://github.com/PowerShell/PowerShell/releases/download/v{{ pwsh_target_version }}/powershell_{{ pwsh_target_version }}-1.deb_{{ pwsh_arch }}.deb
+        dest: "/tmp/powershell_{{ pwsh_target_version }}_{{ pwsh_arch }}.deb"
+        checksum: "{{ pwsh_checksums[pwsh_arch] }}"
+        mode: '0644'
+
     - name: Install PowerShell on Debian
       ansible.builtin.apt:
-        deb: >-
-          https://github.com/PowerShell/PowerShell/releases/download/v{{ pwsh_target_version }}/powershell_{{ pwsh_target_version }}-1.deb_{{ pwsh_arch }}.deb
-      when:
-        - pwsh_installed_version == '' or pwsh_installed_version is version(pwsh_target_version, '<')
-  when: ansible_facts['architecture'] in pwsh_supported_architectures
+        deb: "/tmp/powershell_{{ pwsh_target_version }}_{{ pwsh_arch }}.deb"
+  always:
+    - name: Remove downloaded PowerShell package
+      ansible.builtin.file:
+        path: "/tmp/powershell_{{ pwsh_target_version }}_{{ pwsh_arch }}.deb"
+        state: absent
 
 - name: Verify PowerShell Installation
   ansible.builtin.command: "pwsh --version"

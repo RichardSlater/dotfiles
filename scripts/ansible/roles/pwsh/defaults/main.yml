@@ -1,2 +1,5 @@
 ---
-pwsh_target_version: "7.6.1"
+pwsh_target_version: "7.6.6"
+pwsh_checksums:
+  amd64: "sha256:9585f38ab5a026c3fc0995486e26e12050777960fef47a22dca98b577c5d27a7"
+  arm64: "sha256:56aa313d5474602233e97a57104b661daf4a8c35fc91f1eb664938bcce8e11da"

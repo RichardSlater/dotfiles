@@ -2,8 +2,8 @@
 # Install the official npm distribution of GitHub Copilot CLI.
 copilot_cli_enabled: true
 copilot_cli_package: "@github/copilot"
-copilot_cli_version: "1.0.82"
-copilot_cli_tarball_url: "https://registry.npmjs.org/@github/copilot/-/copilot-1.0.82.tgz"
-copilot_cli_tarball_checksum: "sha512:fa60c8c013b7742a4bde4dab54b738fb5b45cea71505324d03fd1ca3ea2412998281c1e36b3f750aaabbfbea4928de72250b860ba6ca6a7826ecf4a885e2355f"
+copilot_cli_version: "1.0.88"
+copilot_cli_tarball_url: "https://registry.npmjs.org/@github/copilot/-/copilot-1.0.88.tgz"
+copilot_cli_tarball_checksum: "sha512:255a41a094bcbd759d9d0c5bf0581e1581fa743055a182f4fcb5495571cd10797239f51dee332a3b114b9955f0799ea990011a36f9a83edf63649792c7620f87"
 copilot_cli_install_prefix: "{{ ansible_facts['env'].HOME }}/.local"
 copilot_cli_package_dir: "{{ copilot_cli_install_prefix }}/lib/node_modules/@github/copilot"

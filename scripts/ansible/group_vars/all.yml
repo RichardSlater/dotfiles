@@ -20,13 +20,13 @@ go_checksum: "63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
 uv_tools:
   - pre-commit
 
-# mise v2026.9.1 release assets, reviewed against GitHub release metadata.
-mise_version: "2026.9.1"
+# mise v2026.9.12 release assets, reviewed against GitHub release metadata.
+mise_version: "2026.9.12"
 mise_install_dir: "{{ ansible_facts['env'].HOME }}/.local/bin"
 mise_artifacts:
   x86_64:
-    url: "https://github.com/jdx/mise/releases/download/v2026.9.1/mise-v2026.9.1-linux-x64"
-    checksum: "sha256:c98423c8470d6dc416d9f7036d0646d8ef5ae92ad9186907f8fcc84cbe7db4ea"
+    url: "https://github.com/jdx/mise/releases/download/v2026.9.12/mise-v2026.9.12-linux-x64"
+    checksum: "sha256:e79ae57945034903aee8aa2ea66b4c7ca9cd4f4edd5a8a78a589cbae6d0f428a"
   aarch64:
-    url: "https://github.com/jdx/mise/releases/download/v2026.9.1/mise-v2026.9.1-linux-arm64"
-    checksum: "sha256:0ef0a778eaa8599f3e90a8a0979c9fc3f79922cafb5fa6d39f366d974da33bba"
+    url: "https://github.com/jdx/mise/releases/download/v2026.9.12/mise-v2026.9.12-linux-arm64"
+    checksum: "sha256:f344c6961190ed2f68e595ed7cb4f03c36c17812bd608886bec799a3082180ff"
