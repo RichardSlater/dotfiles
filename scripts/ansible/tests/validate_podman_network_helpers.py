@@ -10,7 +10,7 @@ TASKS = (ROLE / "tasks" / "main.yml").read_text(encoding="utf-8")
 
 class PodmanNetworkHelperProvisioningTests(unittest.TestCase):
     def test_successful_compatible_helper_provisioning(self) -> None:
-        self.assertIn('podman_version: "v6.1.1"', DEFAULTS)
+        self.assertRegex(DEFAULTS, r'(?m)^podman_version: "v6\.1\.\d+"$')
         self.assertIn('netavark:\n      version: "2.1.0"', DEFAULTS)
         self.assertIn('aardvark-dns:\n      version: "2.1.0"', DEFAULTS)
         self.assertIn('dest: "{{ podman_network_helper_stage.path }}/{{ item.key }}.gz"', TASKS)

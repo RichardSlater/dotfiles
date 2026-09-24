@@ -138,11 +138,13 @@ jobs:
         env:
           CHEZMOI_EMAIL: "${{ matrix.email }}"
         run: |
+          chezmoi_bin="$(command -v chezmoi)"
+          test -x "$chezmoi_bin"
           sudo -H -u "${{ matrix.username }}" env \
             HOME="/home/${{ matrix.username }}" \
             XDG_CONFIG_HOME="/home/${{ matrix.username }}/.config" \
             GIT_CONFIG_GLOBAL="/dev/null" \
-            CHEZMOI="/usr/local/bin/chezmoi" \
+            CHEZMOI="$chezmoi_bin" \
             CHEZMOI_EMAIL="$CHEZMOI_EMAIL" \
             WORKSPACE_COPY="/tmp/chezmoi-${{ matrix.username }}" \
             bash -c '
