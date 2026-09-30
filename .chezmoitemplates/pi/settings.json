@@ -1,11 +1,12 @@
 {
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-sol",
+  "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
   "enabledModels": [
     "openrouter/qwen/qwen3.7-plus",
     "openai-codex/gpt-6-astra",
-    "openai-codex/gpt-6-sol"
+    "openai-codex/gpt-6.1-sol",
+    "xai/grok-4.7"
   ],
   "subagents": {
     "defaultModel": "openai-codex/gpt-6-luna"
