@@ -3,13 +3,15 @@
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
   "enabledModels": [
-    "openrouter/qwen/qwen3.7-plus",
+    "local-rig/qwen3.8-27b",
     "openai-codex/gpt-6-astra",
     "openai-codex/gpt-6.1-sol",
-    "xai/grok-4.7"
+    "xai/grok-4.7",
+    "openrouter/qwen/qwen3.8-27b",
+    "openrouter/qwen/qwen3.8-flash"
   ],
   "subagents": {
-    "defaultModel": "openai-codex/gpt-6-luna"
+    "defaultModel": "local-rig/qwen3.8-27b"
   },
   "packages": [
     "git:github.com/richards-ensono/pi-openspec-status",
