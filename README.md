@@ -51,6 +51,27 @@ For broader validation, use the repository tasks and helper scripts:
 - [docs/ANSIBLE_ROLE_TEMPLATE.md](docs/ANSIBLE_ROLE_TEMPLATE.md) for the preferred Ansible role structure and idempotence checklist.
 - [scripts/ansible/README.md](scripts/ansible/README.md) for play ordering, role categories, and privilege boundaries.
 
+## Shared coding-agent instructions
+
+Edit `dot_agents/AGENTS.md` to update the user-wide defaults shared by all three agents. Chezmoi installs it at `~/.agents/AGENTS.md` and creates relative symlinks:
+
+| Agent | Global instruction file |
+| --- | --- |
+| Pi | `~/.pi/agent/AGENTS.md` |
+| Claude Code | `~/.claude/CLAUDE.md` |
+| Antigravity | `~/.gemini/GEMINI.md` |
+
+The Claude Code and Antigravity locations follow their [memory](https://code.claude.com/docs/en/memory) and [rules](https://antigravity.google/docs/rules/) documentation. Antigravity also shares this file with Gemini CLI when it uses the same global path.
+
+Preview and apply only these files (leave unrelated dotfiles and scripts untouched):
+
+```sh
+chezmoi diff ~/.agents/AGENTS.md ~/.pi/agent/AGENTS.md ~/.claude/CLAUDE.md ~/.gemini/GEMINI.md
+chezmoi apply ~/.agents/AGENTS.md ~/.pi/agent/AGENTS.md ~/.claude/CLAUDE.md ~/.gemini/GEMINI.md
+```
+
+Review and preserve any existing app-specific instructions before applying: existing files at these paths will be replaced by symlinks. On Windows, symlink creation requires Developer Mode or appropriate privileges. Custom agent configuration/home directories need corresponding link locations.
+
 ## SSH Push URL
 
 ```sh
