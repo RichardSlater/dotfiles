@@ -71,11 +71,13 @@ Pinned Galaxy roles and collections currently include:
 - `geerlingguy.go`
 - `hurricanehrndz.rustup`
 - `ansible.posix 2.2.2`
-- `community.general 13.3.0`
+- `community.general 13.5.0` (requires ansible-core >=2.18)
 
 The reviewed versions, artifact checksums, immutable source commits, supported
 architectures, and integrity exceptions for direct provisioning inputs are in
 [`../../docs/PROVISIONING_INPUTS.md`](../../docs/PROVISIONING_INPUTS.md).
+The latest version refresh and publisher verification sources are recorded in
+[`../../docs/ANSIBLE_DEPENDENCY_REFRESH_2026-10-15.md`](../../docs/ANSIBLE_DEPENDENCY_REFRESH_2026-10-15.md).
 
 ## Variable guidance
 

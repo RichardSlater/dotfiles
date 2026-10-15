@@ -14,7 +14,8 @@ Ansible role to build and install Podman from source and configure rootless oper
 User-overridable variables from `defaults/main.yml`:
 
 ```yaml
-podman_version: "v6.1.1"
+podman_version: "v6.1.4"
+podman_ref: "464c15fec06f0074c916f9eff87c4806869c2833"
 podman_build_dir: "/tmp/podman_build"
 podman_network_handler: "pasta"
 podman_runtime: "crun"
@@ -38,7 +39,7 @@ podman_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
 
 ## Version Strategy
 
-This role uses a pinned Git tag and builds Podman from source, then configures rootless networking and user-level container settings. It removes the distribution `podman` and `podman-docker` packages so `/usr/local/bin/podman` is the only installation, and installs `/usr/local/bin/docker` as a Docker-compatible wrapper for it.
+This role uses the immutable `podman_ref` resolved from the signed `podman_version` release tag and builds Podman from source, then configures rootless networking and user-level container settings. It removes the distribution `podman` and `podman-docker` packages so `/usr/local/bin/podman` is the only installation, and installs `/usr/local/bin/docker` as a Docker-compatible wrapper for it.
 
 ## Example Playbook
 
@@ -49,13 +50,14 @@ This role uses a pinned Git tag and builds Podman from source, then configures r
     - podman
 ```
 
-Override the pinned version or runtime choices:
+Override the pinned version or runtime choices (update both `podman_version` and `podman_ref` when selecting another release):
 
 ```yaml
 - hosts: localhost
   become: true
   vars:
-    podman_version: "v6.1.1"
+    podman_version: "v6.1.4"
+    podman_ref: "464c15fec06f0074c916f9eff87c4806869c2833"
     podman_network_handler: "slirp4netns"
     podman_runtime: "runc"
   roles:
@@ -65,7 +67,7 @@ Override the pinned version or runtime choices:
 ## Notes
 
 - The role configures `/etc/containers/policy.json` and `/etc/containers/registries.conf` from `containers/image` at the reviewed immutable `podman_container_image_commit`. The project does not publish individual file checksums, so the full commit identity and TLS are the documented integrity boundary; see [`docs/PROVISIONING_INPUTS.md`](../../../../docs/PROVISIONING_INPUTS.md).
-- Netavark and Aardvark-DNS `v2.1.0` are downloaded from reviewed release assets, checksum-verified, and installed at `/usr/local/libexec/podman` for Podman `v6.1.1`. The rootless `containers.conf` puts that directory first in `helper_binaries_dir`; the role removes Debian helper packages only after both managed helpers pass version verification, without resetting Podman storage.
+- Netavark and Aardvark-DNS `v2.1.0` are downloaded from reviewed release assets, checksum-verified, and installed at `/usr/local/libexec/podman` for Podman `v6.1.4`. The rootless `containers.conf` puts that directory first in `helper_binaries_dir`; the role removes Debian helper packages only after both managed helpers pass version verification, without resetting Podman storage.
 
 ## Network validation
 

@@ -225,7 +225,7 @@
   git:
     repo: "{{ podman_git_repo }}"
     dest: "{{ podman_build_dir }}"
-    version: "{{ podman_version }}"
+    version: "{{ podman_ref }}"
     depth: 1
     update: true
   when: podman_current_version.rc != 0 or podman_expected_version not in podman_current_version.stdout

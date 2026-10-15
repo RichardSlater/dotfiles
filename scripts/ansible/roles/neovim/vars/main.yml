@@ -2,6 +2,6 @@
 neovim_repo: "https://github.com/neovim/neovim.git"
 neovim_dest: "/usr/local/src/neovim"
 neovim_install_dir: "/usr/local"
-# Verified signed release tag v0.12.5 resolves to this immutable commit.
-neovim_version: "5885a30e1e1225349079e7a1c4a3848aa8e43e42"
-neovim_ref: "5885a30e1e1225349079e7a1c4a3848aa8e43e42"
+# Verified signed release tag v0.12.6 resolves to this immutable commit.
+neovim_version: "779c36969e31080503be2dfccbcc3f999e289606"
+neovim_ref: "779c36969e31080503be2dfccbcc3f999e289606"

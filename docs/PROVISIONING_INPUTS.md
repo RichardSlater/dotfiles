@@ -1,6 +1,6 @@
 # Reviewed provisioning inputs
 
-This inventory is the review record for externally resolved inputs managed by the home profile. It deliberately excludes distribution-managed APT packages. Sources below were checked on 2026-08-17.
+This inventory is the review record for externally resolved inputs managed by the home profile. It deliberately excludes distribution-managed APT packages. Sources below were checked on 2026-08-17. This is a historical baseline; the [2026-10-15 dependency refresh](ANSIBLE_DEPENDENCY_REFRESH_2026-10-15.md) supersedes the versions and hashes of the components it lists.
 
 ## Baseline before this change
 

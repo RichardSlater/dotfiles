@@ -1,6 +1,6 @@
 # Component Version and Integrity Inventory
 
-This is the review boundary for externally sourced provisioning inputs. Role variables remain the operational configuration; this document records their publisher, selected version/ref, asset, and verification method. Versions are point-in-time selections from the approved `update-pin-verified-component-versions` change.
+This is the review boundary for externally sourced provisioning inputs. Role variables remain the operational configuration; this document records their publisher, selected version/ref, asset, and verification method. Versions are point-in-time selections from the approved `update-pin-verified-component-versions` change. This historical inventory is superseded for refreshed Ansible dependencies by the [2026-10-15 verification record](ANSIBLE_DEPENDENCY_REFRESH_2026-10-15.md).
 
 ## Versioned managed components
 

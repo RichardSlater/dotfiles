@@ -138,7 +138,7 @@
   changed_when: false
   failed_when: false
 
-- name: Install selected Node.js LTS with nvm
+- name: Install selected Node.js release with nvm
   ansible.builtin.shell: |
     . "{{ nvm_dir }}/nvm.sh"
     nvm install "{{ nvm_node_version }}"

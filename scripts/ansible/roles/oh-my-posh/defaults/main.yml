@@ -6,11 +6,11 @@ oh_my_posh_arch_map:
   x86_64: "amd64"
   aarch64: "arm64"
 
-oh_my_posh_version: "v31.3.0"
+oh_my_posh_version: "v31.8.0"
 
 oh_my_posh_checksums:
-  amd64: "sha256:92a253b607dbc632f9e45c9de06cb9650a1a3e7c36df2012a7b7600f22dcad80"
-  arm64: "sha256:6388a11cf0e228e591a36d6a6024ec73dbf649d5b53f3442d85bb37f1871f1ed"
+  amd64: "sha256:c0e1c088d2b366a60e5f4047a5eb02cf6f10b03989191bbc564d733aafba307f"
+  arm64: "sha256:c7ee6d1075b625a4f151bf177defbaed55995b2fcd98e410c7990d2394c3fd80"
 
 oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_architecture] | default('unsupported') }}"
 oh_my_posh_checksum: "{{ oh_my_posh_checksums[oh_my_posh_arch] | default(omit) }}"

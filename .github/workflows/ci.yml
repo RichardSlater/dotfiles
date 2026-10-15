@@ -66,9 +66,10 @@ jobs:
         working-directory: scripts/ansible
         run: ansible-playbook playbook.yml -i inventory/hosts.yml --syntax-check
 
-      - name: Run focused Podman provisioning checks
+      - name: Run focused provisioning pin and Podman checks
         working-directory: scripts/ansible
         run: |
+          python3 tests/validate_dependency_pins.py
           python3 tests/validate_podman_sources.py
           python3 tests/validate_podman_network_helpers.py
 

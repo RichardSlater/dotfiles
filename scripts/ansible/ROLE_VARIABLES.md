@@ -1,6 +1,6 @@
 # Role Variables
 
-This file documents the current role-variable surface for the Phase 3 cleanup pass.
+This file documents the role-variable surface for the Phase 3 cleanup pass. Version and hash examples below are historical; use the role defaults and [2026-10-15 verification record](../../docs/ANSIBLE_DEPENDENCY_REFRESH_2026-10-15.md) for current pins.
 
 Conventions intended by this repository:
 
