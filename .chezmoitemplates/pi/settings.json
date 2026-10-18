@@ -5,6 +5,7 @@
   "enabledModels": [
     "local-rig/qwen3.8-27b",
     "openai-codex/gpt-6-astra",
+    "openai-codex/gpt-6-luna",
     "openai-codex/gpt-6.1-sol",
     "xai/grok-4.7",
     "openrouter/qwen/qwen3.8-27b",
