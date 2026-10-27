@@ -1,13 +1,13 @@
 {
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6.1-sol",
+  "defaultProvider": "local-rig",
+  "defaultModel": "qwen3.8-27b",
   "defaultThinkingLevel": "medium",
   "enabledModels": [
     "local-rig/qwen3.8-27b",
     "openai-codex/gpt-6-astra",
-    "openai-codex/gpt-6-luna",
     "openai-codex/gpt-6.1-sol",
-    "xai/grok-4.7",
+    "openai-codex/gpt-6.1-terra",
+    "openai-codex/gpt-6-luna",
     "openrouter/qwen/qwen3.8-27b",
     "openrouter/qwen/qwen3.8-flash"
   ],
