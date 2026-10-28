@@ -50,6 +50,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Pinned to 3.13 (see e7fee6f): setup-python '3.x' resolves to CPython
+      # 3.15, where ansible-core 2.21.5 crashes at import. Relax to the
+      # runner default once the pinned ansible-core supports 3.15.
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -80,6 +83,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Pinned to 3.13 (see e7fee6f): setup-python '3.x' resolves to CPython
+      # 3.15, where ansible-core 2.21.5 crashes at import. Relax to the
+      # runner default once the pinned ansible-core supports 3.15.
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
