@@ -12,4 +12,4 @@ podman_package_map:
 podman_build_tags: "seccomp apparmor"
 
 # User for rootless configuration
-podman_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+podman_user: "{{ ansible_facts['env']['SUDO_USER'] | default(ansible_user_id) }}"

@@ -2,9 +2,9 @@
 - name: Check if architecture is supported
   ansible.builtin.assert:
     that:
-      - ansible_architecture in oh_my_posh_supported_architectures
+      - ansible_facts['architecture'] in oh_my_posh_supported_architectures
     fail_msg: >-
-      Architecture {{ ansible_architecture }} is not supported for Oh My Posh.
+      Architecture {{ ansible_facts['architecture'] }} is not supported for Oh My Posh.
       Supported: {{ oh_my_posh_supported_architectures | join(', ') }}
     quiet: true
 

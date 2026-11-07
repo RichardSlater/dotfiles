@@ -118,7 +118,7 @@
 
     - name: Check if LazyVim config is present
       ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.config/nvim/lazyvim.json"
+        path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lazyvim.json"
       register: lazyvim_config
 
     - name: Run LazyVim sync

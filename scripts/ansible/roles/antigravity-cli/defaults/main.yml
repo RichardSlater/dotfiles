@@ -2,7 +2,7 @@
 # Default variables for the antigravity-cli role.
 
 antigravity_cli_enabled: true
-antigravity_cli_install_prefix: "{{ ansible_env.HOME }}/.local"
+antigravity_cli_install_prefix: "{{ ansible_facts['env']['HOME'] }}/.local"
 antigravity_cli_install_dir: "{{ antigravity_cli_install_prefix }}/bin"
 antigravity_cli_binary_name: agy
 antigravity_cli_binary_path: "{{ antigravity_cli_install_dir }}/{{ antigravity_cli_binary_name }}"

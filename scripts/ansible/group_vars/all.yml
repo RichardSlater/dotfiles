@@ -22,7 +22,7 @@ uv_tools:
 
 # mise v2026.10.11 release assets, reviewed against GitHub release metadata.
 mise_version: "2026.10.11"
-mise_install_dir: "{{ ansible_facts['env'].HOME }}/.local/bin"
+mise_install_dir: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
 mise_artifacts:
   x86_64:
     url: "https://github.com/jdx/mise/releases/download/v2026.10.11/mise-v2026.10.11-linux-x64"

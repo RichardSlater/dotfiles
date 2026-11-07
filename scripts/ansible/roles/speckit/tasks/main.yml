@@ -5,7 +5,7 @@
   changed_when: false
   failed_when: false
   environment:
-    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ ansible_facts['env']['HOME'] }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
 
 - name: Install SpecKit (Specify CLI) using uv
   command: "uv tool install {{ speckit_package }} --from {{ speckit_repo_url }}"
@@ -14,14 +14,14 @@
       speckit_uv_tools.stdout_lines | default([])
     ) | select('match', '^' ~ speckit_package ~ ' ') | list | length == 0
   environment:
-    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ ansible_facts['env']['HOME'] }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
 
 - name: Verify Specify CLI installation
   command: "specify --help"
   register: speckit_verify
   changed_when: false
   environment:
-    PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ ansible_facts['env']['HOME'] }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
 
 - name: Show Specify CLI help
   debug:

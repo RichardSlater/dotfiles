@@ -3,7 +3,7 @@ nvm_version: "v0.40.8"
 nvm_install_url: "https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh"
 nvm_install_checksum: "sha256:48a0eee9a60e07422dce0eb5774754c83889570ca1ee2566c516acbe8af03a9e"
 nvm_ref: "a885b885fef16fac4bc544188fb25e9e37ae83e8"
-nvm_dir: "{{ ansible_facts['env'].HOME }}/.nvm"
+nvm_dir: "{{ ansible_facts['env']['HOME'] }}/.nvm"
 # Latest stable Current release; Node 24 LTS is a separate support policy.
 nvm_node_version: "v26.12.0"
 nvm_node_bin: "{{ nvm_dir }}/versions/node/{{ nvm_node_version }}/bin"

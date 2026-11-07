@@ -2,10 +2,10 @@
 - name: Reject unsupported .NET SDK architecture
   ansible.builtin.assert:
     that:
-      - ansible_architecture in dotnet_artifacts
+      - ansible_facts['architecture'] in dotnet_artifacts
     fail_msg: >-
       No reviewed .NET SDK artifact is configured for architecture
-      {{ ansible_architecture }}. Supported architectures are:
+      {{ ansible_facts['architecture'] }}. Supported architectures are:
       {{ dotnet_artifacts.keys() | join(', ') }}.
 
 - name: Check installed .NET SDK version
@@ -28,9 +28,9 @@
 
     - name: Download and verify the .NET SDK archive
       ansible.builtin.get_url:
-        url: "{{ dotnet_artifacts[ansible_architecture].url }}"
+        url: "{{ dotnet_artifacts[ansible_facts['architecture']].url }}"
         dest: "{{ dotnet_temporary_directory.path }}/dotnet-sdk.tar.gz"
-        checksum: "{{ dotnet_artifacts[ansible_architecture].checksum }}"
+        checksum: "{{ dotnet_artifacts[ansible_facts['architecture']].checksum }}"
         mode: '0600'
 
     - name: Create a staged .NET SDK directory

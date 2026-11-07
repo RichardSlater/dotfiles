@@ -1,6 +1,6 @@
 ---
 dotnet_sdk_version: "10.0.402"
-dotnet_install_dir: "{{ ansible_env.HOME }}/.dotnet"
+dotnet_install_dir: "{{ ansible_facts['env']['HOME'] }}/.dotnet"
 dotnet_artifacts:
   x86_64:
     url: "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.402/dotnet-sdk-10.0.402-linux-x64.tar.gz"

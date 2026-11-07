@@ -2,14 +2,14 @@
 - name: Reject unsupported Oxlint architecture
   ansible.builtin.assert:
     that:
-      - ansible_architecture in oxlint_artifacts
+      - ansible_facts['architecture'] in oxlint_artifacts
     fail_msg: >-
-      Oxlint is unsupported on architecture {{ ansible_architecture }}. Reviewed
+      Oxlint is unsupported on architecture {{ ansible_facts['architecture'] }}. Reviewed
       architectures: {{ oxlint_artifacts.keys() | join(', ') }}.
 
 - name: Select Oxlint artifact for host architecture
   ansible.builtin.set_fact:
-    oxlint_artifact: "{{ oxlint_artifacts[ansible_architecture] }}"
+    oxlint_artifact: "{{ oxlint_artifacts[ansible_facts['architecture']] }}"
 
 - name: Check installed Oxlint version
   ansible.builtin.command: "{{ oxlint_binary_path }} --version"

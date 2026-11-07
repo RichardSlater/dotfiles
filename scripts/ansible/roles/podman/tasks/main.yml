@@ -248,15 +248,15 @@
     - name: Reject unsupported Podman helper architecture
       ansible.builtin.assert:
         that:
-          - ansible_architecture in podman_network_helper_architectures
+          - ansible_facts['architecture'] in podman_network_helper_architectures
         fail_msg: >-
           Podman network helpers are only reviewed for
           {{ podman_network_helper_architectures.keys() | join(', ') }};
-          refusing {{ ansible_architecture }} before download or replacement.
+          refusing {{ ansible_facts['architecture'] }} before download or replacement.
 
     - name: Select reviewed Podman network helper artifacts
       ansible.builtin.set_fact:
-        podman_network_helpers: "{{ podman_network_helper_architectures[ansible_architecture] }}"
+        podman_network_helpers: "{{ podman_network_helper_architectures[ansible_facts['architecture']] }}"
 
     - name: Create Podman network-helper staging directory
       ansible.builtin.tempfile:
@@ -529,7 +529,7 @@
     section: network
     option: firewall_driver
     value: '"iptables"'
-  when: ansible_virtualization_type == "wsl"
+  when: ansible_facts['virtualization_type'] == "wsl"
 
 - name: Validate rootless Podman network-helper lifecycle
   become: true
@@ -562,7 +562,7 @@
           - /usr/local/bin/podman
           - network
           - create
-          - "podman-network-diagnostic-{{ ansible_date_time.epoch }}"
+          - "podman-network-diagnostic-{{ ansible_facts['date_time']['epoch'] }}"
       register: podman_diagnostic_network
       changed_when: true
 
@@ -573,7 +573,7 @@
           - /usr/local/bin/podman
           - network
           - rm
-          - "podman-network-diagnostic-{{ ansible_date_time.epoch }}"
+          - "podman-network-diagnostic-{{ ansible_facts['date_time']['epoch'] }}"
       when:
         - podman_diagnostic_network is defined
         - podman_diagnostic_network.rc == 0

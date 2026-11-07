@@ -43,12 +43,12 @@
   changed_when: false
   when:
     - systemd_available
-    - ansible_facts['env'].USER is not defined and ansible_facts['env'].SUDO_USER is not defined
+    - ansible_facts['env']['USER'] is not defined and ansible_facts['env']['SUDO_USER'] is not defined
 
 - name: Set facts for the real user and UID
   set_fact:
     real_user: >-
-      {{ ansible_facts['env'].SUDO_USER | default(ansible_facts['env'].USER) |
+      {{ ansible_facts['env']['SUDO_USER'] | default(ansible_facts['env']['USER']) |
       default(whoami_result.stdout | default('root')) }}
   when: systemd_available
 

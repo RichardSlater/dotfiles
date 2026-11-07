@@ -5,7 +5,7 @@
     - name: Check nvm-managed npm runtime
       ansible.builtin.command: "{{ nvm_npm_executable }} --version"
       environment:
-        PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env'].PATH }}"
+        PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env']['PATH'] }}"
       register: copilot_cli_npm_check
       changed_when: false
       failed_when: false
@@ -108,7 +108,7 @@
               - "{{ copilot_cli_temp_dir.path }}/copilot.tgz"
           environment:
             NPM_CONFIG_UPDATE_NOTIFIER: "false"
-            PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env'].PATH }}"
+            PATH: "{{ nvm_node_bin }}:{{ ansible_facts['env']['PATH'] }}"
           register: copilot_cli_install_result
           changed_when: copilot_cli_install_result.rc == 0
 

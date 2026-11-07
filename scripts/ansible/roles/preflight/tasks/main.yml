@@ -11,9 +11,9 @@
 - name: Assert supported package manager
   ansible.builtin.assert:
     that:
-      - ansible_pkg_mgr == preflight_required_package_manager
+      - ansible_facts['pkg_mgr'] == preflight_required_package_manager
     fail_msg: >-
-      Unsupported package manager {{ ansible_pkg_mgr }}.
+      Unsupported package manager {{ ansible_facts['pkg_mgr'] }}.
       Expected: {{ preflight_required_package_manager }}
     quiet: true
 

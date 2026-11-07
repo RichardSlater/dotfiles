@@ -12,7 +12,7 @@ oh_my_posh_checksums:
   amd64: "sha256:574074a4e84797180e0bda0d133da5f01fbda89ecdb450134c7e566b9a389212"
   arm64: "sha256:a04e7aed0d233ac861161c0f3d4d70912b0747764fd5b10f6bd19c0b6510eb49"
 
-oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_architecture] | default('unsupported') }}"
+oh_my_posh_arch: "{{ oh_my_posh_arch_map[ansible_facts['architecture']] | default('unsupported') }}"
 oh_my_posh_checksum: "{{ oh_my_posh_checksums[oh_my_posh_arch] | default(omit) }}"
 oh_my_posh_supported_architectures:
   - x86_64

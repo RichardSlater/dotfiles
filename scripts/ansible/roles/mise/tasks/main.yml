@@ -2,14 +2,14 @@
 - name: Reject unsupported mise architecture
   ansible.builtin.assert:
     that:
-      - ansible_architecture in mise_artifacts
+      - ansible_facts['architecture'] in mise_artifacts
     fail_msg: >-
-      mise is unsupported on architecture {{ ansible_architecture }}. Reviewed
+      mise is unsupported on architecture {{ ansible_facts['architecture'] }}. Reviewed
       architectures: {{ mise_artifacts.keys() | join(', ') }}.
 
 - name: Select mise artifact for host architecture
   ansible.builtin.set_fact:
-    mise_artifact: "{{ mise_artifacts[ansible_architecture] }}"
+    mise_artifact: "{{ mise_artifacts[ansible_facts['architecture']] }}"
 
 - name: Check installed mise version
   ansible.builtin.command: "{{ mise_binary_path }} --version"

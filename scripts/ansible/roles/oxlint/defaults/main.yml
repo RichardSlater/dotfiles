@@ -1,7 +1,7 @@
 ---
 # Pinned Oxlint release artifacts from the official Oxc GitHub release.
 oxlint_version: "1.88.0"
-oxlint_install_dir: "{{ ansible_facts['env'].HOME }}/.local/bin"
+oxlint_install_dir: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
 oxlint_binary_name: oxlint
 oxlint_binary_path: "{{ oxlint_install_dir }}/{{ oxlint_binary_name }}"
 oxlint_artifacts:
