@@ -2,56 +2,30 @@
 # shellcheck disable=SC1091
 set -e # Exit immediately if a command exits with a non-zero status
 
-# Function to check and install Ansible
+# Keep Ansible's Python modules and executables in one isolated environment.
+# Mixing distro and pip installations can leave Ansible's modules at different
+# versions (for example, distribution.py importing a helper absent from sys_info.py).
 install_ansible() {
-  if command -v ansible >/dev/null 2>&1; then
-    echo "Ansible is already installed."
-    return
-  fi
+  local ansible_venv="${HOME}/.cache/chezmoi/ansible-venv"
+  local ansible_python="${ansible_venv}/bin/python"
 
-  echo "Installing Ansible..."
-  if [[ -f /etc/os-release ]]; then
-    . /etc/os-release
-    case "$ID" in
-    ubuntu | debian)
-      if [[ ("$ID" == "ubuntu" && "$VERSION_ID" == "22.04") || ("$ID" == "debian" && "$VERSION" == *"bookworm"*) ]]; then
-        # ensure we have recent versions of python and ansible on previous versions of Debian/Ubuntu.
-        sudo apt install -y software-properties-common
-        UBUNTU_CODENAME=jammy
-        wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6A755776" | sudo gpg --dearmour --yes -o /usr/share/keyrings/deadsnakes-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/deadsnakes-archive-keyring.gpg] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/deadsnakes-ppa.list
-        wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour --yes -o /usr/share/keyrings/ansible-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
-      fi
-
-      if [[ ("$ID" == "ubuntu" && "$VERSION_ID" == "24.04") || ("$ID" == "debian" && "$VERSION" == *"trixie"*) ]]; then
-        echo "running on $ID $VERSION_ID, using not using deadsnakes or PPA as recent versions of python and ansible available in the os repository."
-      fi
-
-      sudo apt update
-      sudo apt install -y --fix-broken wget curl git python3-debian ansible
-      ;;
-    fedora)
-      sudo dnf install -y wget curl git ansible
-      ;;
-    centos | rhel)
-      sudo yum install -y wget
-      sudo yum install -y curl
-      sudo yum install -y epel-release
-      sudo yum install -y ansible
-      ;;
-    arch)
-      sudo pacman -Syu --noconfirm ansible
-      ;;
-    *)
-      echo "Unsupported Linux distribution: $ID"
-      exit 1
-      ;;
-    esac
-  else
-    echo "Could not detect the Linux distribution."
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo "Error: python3 is required to install Ansible."
     exit 1
   fi
+
+  mkdir -p "$(dirname "$ansible_venv")"
+  if [[ ! -x "${ansible_venv}/bin/ansible-playbook" ]]; then
+    echo "Creating isolated Ansible environment..."
+    python3 -m venv "$ansible_venv"
+  fi
+
+  if ! "$ansible_python" -c 'from ansible.module_utils.common.sys_info import get_distribution_cpe_name' >/dev/null 2>&1; then
+    echo "Installing or repairing Ansible in the isolated environment..."
+    "$ansible_python" -m pip install --upgrade --force-reinstall ansible
+  fi
+
+  export PATH="${ansible_venv}/bin:${PATH}"
 }
 
 # Function to install with ansible-galaxy

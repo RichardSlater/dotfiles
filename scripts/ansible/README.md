@@ -9,7 +9,7 @@ If a change belongs in `.bashrc`, `.zshrc`, Neovim config, or PowerShell profile
 - `playbook.yml` is the main orchestration file.
 - `requirements.yml` pins external Galaxy roles and collections.
 - `inventory/hosts.yml` defines a local `localhost` target with `/usr/bin/python3`.
-- `private_executable_exec.sh` bootstraps Ansible installation, installs Galaxy requirements, and runs the playbook.
+- `private_executable_exec.sh` bootstraps Ansible in an isolated user-local Python environment, installs Galaxy requirements, and runs the playbook. It validates the Ansible module imports before use to avoid mixed distro/pip installations.
 - `roles/preflight/` fails early when the host is outside the supported OS/package-manager/command baseline.
 
 ## Play ordering
