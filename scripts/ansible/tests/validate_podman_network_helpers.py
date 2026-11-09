@@ -32,7 +32,7 @@ class PodmanNetworkHelperProvisioningTests(unittest.TestCase):
         reject = TASKS.index("Reject unsupported Podman helper architecture")
         download = TASKS.index("Download verified Podman network helper artifacts")
         self.assertLess(reject, download)
-        self.assertIn("refusing {{ ansible_architecture }} before download or replacement", TASKS)
+        self.assertIn("refusing {{ ansible_facts['architecture'] }} before download or replacement", TASKS)
 
     def test_artifact_checksum_mismatch_is_rejected(self) -> None:
         self.assertIn('checksum: "{{ item.value.checksum }}"', TASKS)
