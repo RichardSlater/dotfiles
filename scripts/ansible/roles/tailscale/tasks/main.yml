@@ -27,11 +27,13 @@
         signed_by: /usr/share/keyrings/tailscale-archive-keyring.gpg
         state: present
         enabled: true
+      register: tailscale_repository
 
     - name: Install Tailscale client package
       ansible.builtin.apt:
         name: tailscale
         state: present
+        update_cache: "{{ tailscale_repository.changed }}"
 
     - name: Enable and start Tailscale daemon
       ansible.builtin.service:

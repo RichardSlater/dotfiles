@@ -3,10 +3,21 @@
 set -euo pipefail
 
 SOURCE_DIR=/tmp/dotfiles-source
+ANSIBLE_VENV=/tmp/dotfiles-ansible-venv
+# Bookworm's ansible-core 2.14 lacks deb822_repository (added in 2.15).
+# The 2.19 series supports Bookworm's controller Python 3.11.
+ANSIBLE_CORE_VERSION=2.19.15
 
 echo "=== Installing dependencies ==="
 apt-get update -qq
-apt-get install -y -qq ansible python3-apt sudo git curl ca-certificates > /dev/null
+apt-get install -y -qq python3-venv python3-apt python3-debian sudo git curl ca-certificates > /dev/null
+
+# Isolate the controller from distro Python packages. The inventory deliberately
+# keeps managed modules on /usr/bin/python3 for python3-apt and python3-debian.
+python3 -m venv "$ANSIBLE_VENV"
+"$ANSIBLE_VENV/bin/python" -m pip install "ansible-core==$ANSIBLE_CORE_VERSION"
+export PATH="$ANSIBLE_VENV/bin:$PATH"
+ansible --version
 
 rm -rf "$SOURCE_DIR"
 mkdir -p "$SOURCE_DIR"
