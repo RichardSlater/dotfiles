@@ -40,7 +40,7 @@ cd scripts/ansible && ansible-galaxy install -r requirements.yml && ansible-play
 For broader validation, use the repository tasks and helper scripts:
 
 - `.vscode/test-dotfiles.sh` for Docker-based Chezmoi rendering and doctor checks.
-- `.vscode/test-ansible-idempotence.sh` for a two-pass Docker Ansible apply.
+- The scheduled (or manually dispatched) CI job uses Lima to boot a disposable Debian 12 VM, then runs `.vscode/test-ansible-idempotence.sh` as an unprivileged user with passwordless sudo. The test applies the full playbook twice, including systemd services and rootless networking, and requires zero changes on the second pass. Do not run this script on a workstation; it applies system-wide provisioning.
 - `yamllint .`, `ansible-lint playbook.yml`, and shell linting for repo scripts.
 
 ## Documentation

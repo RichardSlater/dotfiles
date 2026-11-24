@@ -173,15 +173,38 @@ jobs:
 
   ansible-idempotence:
     name: Ansible Idempotence (Scheduled)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - name: Run Docker idempotence check
+      - name: Set up Lima
+        uses: lima-vm/lima-actions/setup@55627e31b78637bf254a8b2a14da8ea7d12564e5 # v1.1.0
+        with:
+          version: v2.3.0
+          ssh: 'false'
+
+      # Test real service management and rootless networking without mounting the runner's home.
+      - name: Boot a disposable Debian Bookworm VM
         run: >-
-          docker run --rm
-          -v "$GITHUB_WORKSPACE:/dotfiles:ro"
-          docker.io/library/debian:bookworm
-          bash /dotfiles/.vscode/test-ansible-idempotence.sh
+          limactl start --tty=false --name=ansible-ci --vm-type=qemu
+          --mount-none --containerd=none
+          --set '.user.home = "/home/{{.User}}"' template:debian-12
+
+      - name: Apply the playbook twice in the guest
+        run: |
+          set -o pipefail
+          # Expand the script's variables in the guest, not on the runner.
+          # shellcheck disable=SC2016
+          git archive HEAD | limactl shell --workdir /tmp ansible-ci bash -c '
+            set -euo pipefail
+            source_dir="$(mktemp -d)"
+            tar -xf - -C "$source_dir"
+            DOTFILES_DISPOSABLE_VM=1 exec bash "$source_dir/.vscode/test-ansible-idempotence.sh"
+          '
